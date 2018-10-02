@@ -1,0 +1,11 @@
+127.0.0.1 localhost
+::1 localhost
+
+10.1.1.1 ohpc  ohpc.local
+### ALL ENTRIES BELOW THIS LINE WILL BE OVERWRITTEN BY WAREWULF ###
+#
+# See provision.conf for configuration paramaters
+
+
+# Node Entry for node: c0 (ID=9)
+10.1.1.2                c0.localdomain c0 c0-enp0s8.localdomain c0-enp0s8
