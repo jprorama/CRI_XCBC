@@ -53,8 +53,7 @@
     dest: {{ item.dest }}
     owner: root
     group: root
-    mode: 0644
   with_items:
-    - { src: 'slurm.conf', dest: '/etc/slurm/slurm.conf' }
-    - { src: 'munge.key', dest: '/etc/munge/munge.key', mode: 0400 }
-    - { src: 'hosts', dest: '/etc/hosts'}
+    - { src: 'slurm.conf', dest: '/etc/slurm/slurm.conf', mode:0644}
+    - { src: 'munge.key', dest: '/etc/munge/munge.key', mode:0400 }
+    - { src: 'hosts', dest: '/etc/hosts', mode:0644}
