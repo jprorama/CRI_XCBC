@@ -47,13 +47,5 @@
 - name: Set SELinux to permissive mode without reboot
   command: setenforce 0
 
-- name: Copying slurm.conf file with owner and permissions to OOD
-  copy:
-    src: {{ item.src }}
-    dest: {{ item.dest }}
-    owner: root
-    group: root
-  with_items:
-    - { src: 'slurm.conf', dest: '/etc/slurm/slurm.conf', mode:0644}
-    - { src: 'munge.key', dest: '/etc/munge/munge.key', mode:0400 }
-    - { src: 'hosts', dest: '/etc/hosts', mode:0644}
+ - name: create slurm.conf
+     template: src=slurm_conf.j2 dest=/etc/slurm/slurm.conf
