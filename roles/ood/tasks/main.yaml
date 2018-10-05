@@ -46,3 +46,7 @@
 
 - name: Set SELinux to permissive mode without reboot
   command: setenforce 0
+
+- name: scp the slurm config
+  shell: scp ohpc:/etc/slurm/slurm.conf /etc/slurm/slurm.conf
+  
