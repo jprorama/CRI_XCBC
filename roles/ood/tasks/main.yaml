@@ -46,6 +46,3 @@
 
 - name: Set SELinux to permissive mode without reboot
   command: setenforce 0
-
-- name: create slurm.conf
-  template: src=slurm_conf.j2 dest=/etc/slurm/slurm.conf
