@@ -1,0 +1,4 @@
+---
+- hosts: ood
+  roles:
+    - ood

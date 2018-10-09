@@ -7,8 +7,8 @@
        - "ohpc-warewulf"
        - "ohpc-slurm-server"
 
-   - name: yum update
-     yum: name=* state=latest update_cache=yes
+#   - name: yum update
+#     yum: name=* state=latest update_cache=yes
 
    - name: add slurm user
      user: name=slurm state=present system=yes
@@ -20,7 +20,7 @@
      template: src=slurmdbd_conf.j2 dest=/etc/slurm/slurmdbd.conf
 
    - name: put the sacctmgr config in /etc/slurm
-     copy: src=xcbc-example.cfg dest=/etc/slurm/sacctmgr-heirarchy.cfg
+     template: src=xcbc-example.j2 dest=/etc/slurm/sacctmgr-heirarchy.cfg
 
    - name: set the gres.conf on the master
      copy: src=gres.conf dest=/etc/slurm/gres.conf
