@@ -49,3 +49,4 @@
 
 - name: scp the slurm config
   shell: scp ohpc:/etc/slurm/slurm.conf /etc/slurm/slurm.conf
+
