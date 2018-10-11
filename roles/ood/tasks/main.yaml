@@ -34,7 +34,7 @@
     permanent: true
     state: enabled
 
-- firewalld:
+-  firewalld:
     service: https
     permanent: true
     state: enabled
