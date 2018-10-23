@@ -47,6 +47,12 @@
     src: cluster.yml
     dest: /etc/ood/config/clusters.d/{{ cluster_name }}.yml
 
+- name: Add cluster name for the jupyter app to use
+  lineinfile:
+    path: /var/www/ood/apps/sys/jupyter/form.yml
+    regexp: '^cluster:'
+    line: 'cluster: "ohpc"'
+
 - name: Stage http authz file for ood
   copy:
     src: htpasswd
