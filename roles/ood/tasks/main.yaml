@@ -51,7 +51,7 @@
   lineinfile:
     path: /var/www/ood/apps/sys/jupyter/form.yml
     regexp: '^cluster:'
-    line: '{{ cluster_name }}'
+    line: 'cluster: {{ cluster_name }}'
 
 - name: Stage http authz file for ood
   copy:
