@@ -54,7 +54,7 @@
 
 - name: Clone the default jupyter app from OOD
   git:
-    repo: ssh://git@github.com:OSC/bc_osc_jupyter.git 
+    repo: https://github.com/OSC/bc_osc_jupyter.git 
     version: master
     dest: /var/www/ood/apps/sys/jupyter
 
