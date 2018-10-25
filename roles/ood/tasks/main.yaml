@@ -56,7 +56,7 @@
   git:
     repo: ssh://git@github.com:OSC/bc_osc_jupyter.git 
     version: master
-    dest: /var/www/ood/apps/sys/
+    dest: /var/www/ood/apps/sys/jupyter
 
 - name: Add cluster name for the jupyter app to use
   lineinfile:
