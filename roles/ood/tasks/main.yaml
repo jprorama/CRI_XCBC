@@ -47,6 +47,11 @@
     src: cluster.yml
     dest: /etc/ood/config/clusters.d/{{ cluster_name }}.yml
 
+- name: Clone the default jupyter app from OOD
+  git:
+    repo: ssh://git@github.com:OSC/bc_osc_jupyter.git
+    dest: /var/www/ood/apps/sys/
+
 - name: Add cluster name for the jupyter app to use
   lineinfile:
     path: /var/www/ood/apps/sys/jupyter/form.yml
