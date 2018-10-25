@@ -47,6 +47,11 @@
     src: cluster.yml
     dest: /etc/ood/config/clusters.d/{{ cluster_name }}.yml
 
+- name: Creates directory to clone the jupyter app
+  file:
+    path: /var/www/ood/apps/sys/jupyter/
+    state: directory
+
 - name: Clone the default jupyter app from OOD
   git:
     repo: ssh://git@github.com:OSC/bc_osc_jupyter.git 
