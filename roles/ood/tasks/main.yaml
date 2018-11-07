@@ -98,11 +98,6 @@
     - "node_uri: '/node'"
     - "rnode_uri: '/rnode'"
 
-- name: Restart service httpd24-httpd to load jupyter app.
-  service:
-    name: httpd24-httpd
-    state: restarted
-
 - name: Stage http authz file for ood
   copy:
     src: htpasswd
