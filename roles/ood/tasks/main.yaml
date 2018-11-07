@@ -112,28 +112,7 @@
   with_items:
     - "{{ hostvars[inventory_hostname]['ansible_interfaces'] }}"
 
-- name: install warewulf file synchronization
-  copy:
-    src: warewulf
-    dest: /
-    owner: root
-    group: root
-
-# ensure script files are executable
-- file:
-    path: /warewulf/bin
-    recurse: true
-    mode: u+x,g+x
-
-- name: create custom warewulf config file for node
-  template:
-    src: wwnodeconf.j2
-    dest: /warewulf/config
-    owner: root
-    group: root
-    mode: 0640
-
-- name: add warewulf file sync via cron
+- name: Stage http authz file for ood
   copy:
     src: wwupdatefiles
     dest: /etc/cron.d
