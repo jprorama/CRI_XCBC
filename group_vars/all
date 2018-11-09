@@ -18,6 +18,11 @@
   compute_ip_maximum: "10.1.1.255"
   gpu_ip_minimum: "10.1.1.128" #This could be more clever, like compute_ip_minimum + num_nodes...
 
+# Cheaha setting
+  project_path: "/data/project"
+  scratch_path: "/data/scratch"
+  user_data_path: "/data/user"
+
 #slurm.conf variables
   cluster_name: "ohpc"
 #  gres_types: "gpu"
