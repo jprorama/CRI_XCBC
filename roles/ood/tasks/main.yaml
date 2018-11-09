@@ -64,6 +64,7 @@
     regexp: '^cluster:'
     line: 'cluster: {{ cluster_name }}'
 
+<<<<<<< HEAD
 - name: Stage http authz file for ood
   copy:
     src: htpasswd
@@ -71,6 +72,12 @@
     owner: root
     group: root
     mode: 0644
+=======
+- name: Create interactive desktop settings directory
+  file:
+    path: /etc/ood/config/apps/bc_desktop
+    state: directory
+>>>>>>> ca9cfc4... remove submit.yml from template dir.
 
 - name: Enable http service
   systemd:
