@@ -54,8 +54,8 @@
 
 - name: Clone the default jupyter app from OOD
   git:
-    repo: https://github.com/OSC/bc_osc_jupyter.git 
-    version: master
+    repo: https://github.com/OSC/bc_example_jupyter.git 
+    version: custom_environment
     dest: /var/www/ood/apps/sys/jupyter
 
 - name: Add cluster name for the jupyter app to use
