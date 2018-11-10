@@ -4,3 +4,7 @@
     src: env_local
     dest: /var/www/ood/apps/sys/dashboard/.env.local
 
+- name: Add shared directories into files menu
+  template:
+    src: ood_rb.j2
+    dest: /var/www/ood/apps/sys/dashboard/config/initializers/ood.rb
