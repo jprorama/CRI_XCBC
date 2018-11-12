@@ -1,0 +1,13 @@
+# Job submission configuration file
+#
+---
+# This config comes from https://github.com/OSC/bc_example_jupyter/blob/custom_environment/submit.yml.erb. 
+# The code that uses PBS/Torque schedulers has been removed because UAB uses slurm scheduler.
+
+batch_connect:
+  template: "basic"
+
+script:
+  native: [ "-N", "<%= bc_num_slots.blank? ? 1 : bc_num_slots.to_i %>" ]
+~
+~
