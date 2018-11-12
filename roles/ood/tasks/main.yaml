@@ -64,6 +64,11 @@
     regexp: '^cluster:'
     line: 'cluster: {{ cluster_name }}'
 
+- name: Use submit.yml.erb file tailored for slurm usage at UAB 
+  copy:
+    src: jupyter-submit.yml.erb
+    dest: /var/www/ood/apps/sys/jupyter/submit.yml.erb
+
 - name: Create interactive desktop settings directory
   file:
     path: /etc/ood/config/apps/bc_desktop
