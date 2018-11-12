@@ -1,8 +1,10 @@
 # Job submission configuration file
 #
 ---
-# This config comes from https://github.com/OSC/bc_example_jupyter/blob/custom_environment/submit.yml.erb. 
-# The code that uses PBS/Torque schedulers has been removed because UAB uses slurm scheduler.
+# This config comes from below URL
+# https://github.com/OSC/bc_example_jupyter/blob/custom_environment/submit.yml.erb
+# The -C option in the config provided for slurm has been removed because it does 
+# not apply to implementation at UAB. We do not use constraint list to be used with -C. 
 
 batch_connect:
   template: "basic"
