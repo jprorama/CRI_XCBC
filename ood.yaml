@@ -2,3 +2,4 @@
 - hosts: ood
   roles:
     - ood
+    - { name: 'ood_jupyter', when: jupyter_provision == true, tags: 'ood_jupyter'}
