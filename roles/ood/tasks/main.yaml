@@ -47,31 +47,6 @@
     src: cluster.yml
     dest: /etc/ood/config/clusters.d/{{ cluster_name }}.yml
 
-- name: Creates directory to clone the jupyter app
-  file:
-    path: /var/www/ood/apps/sys/jupyter/
-    state: directory
-
-- name: Clone the default jupyter app from OOD
-  git:
-    repo: https://github.com/OSC/bc_example_jupyter.git 
-    version: custom_environment
-    dest: /var/www/ood/apps/sys/jupyter
-
-- name: Add cluster name for the jupyter app to use
-  lineinfile:
-    path: /var/www/ood/apps/sys/jupyter/form.yml
-    regexp: '^cluster:'
-    line: 'cluster: {{ cluster_name }}'
-
-- name: Stage http authz file for ood
-  copy:
-    src: htpasswd
-    dest: /opt/rh/httpd24/root/etc/httpd/.htpasswd
-    owner: root
-    group: root
-    mode: 0644
-
 - name: Create interactive desktop settings directory
   file:
     path: /etc/ood/config/apps/bc_desktop
