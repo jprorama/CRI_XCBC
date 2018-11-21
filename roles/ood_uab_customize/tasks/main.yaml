@@ -1,7 +1,7 @@
 ---
 - name: Copy the configure file
-  copy:
-    src: env_local
+  template:
+    src: env_local.js
     dest: /var/www/ood/apps/sys/dashboard/.env.local
 
 - name: Add shared directories into files menu
