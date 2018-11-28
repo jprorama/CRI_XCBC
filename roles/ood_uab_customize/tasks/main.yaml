@@ -26,3 +26,8 @@
     replace: '\1cheaha-logo.png\2'
     backup: yes
   when: cheaha_logo.stdout == ""
+
+- name: Force Dashboard app to restart
+  file:
+    path: /var/www/ood/apps/sys/dashboard/tmp/restart.txt
+    state: touch
