@@ -113,3 +113,6 @@
   easybuild_tmpdir: "/tmp"
   easybuild_buildpath: "/tmp/build"
   easybuild_sourcepath: "/tmp/source"
+
+#UAB customize
+  navbar_inverse_bg: "rgb(0,99,65)"
