@@ -57,3 +57,22 @@
   file:
     path: /var/www/ood/apps/sys/activejobs/tmp/restart.txt
     state: touch
+
+- name: Copy the configure file for Job Composer app
+  template:
+    src: env_local.j2
+    dest: "/var/www/ood/apps/sys/{{ app_name }}/.env.local"
+  vars:
+    app_name: "myjobs"
+
+- name: Rebuild assets for Job Composer app
+  shell: |
+    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
+    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+  args:
+    chdir: /var/www/ood/apps/sys/myjobs
+
+- name: Force Job Composer app to restart
+  file:
+    path: /var/www/ood/apps/sys/myjobs/tmp/restart.txt
+    state: touch
