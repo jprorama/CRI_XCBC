@@ -27,17 +27,13 @@
     backup: yes
   when: cheaha_logo.stdout == ""
 
-- name: Rebuild assets for Dashboard app
+- name: Rebuild assets for Dashboard app and force app to restart
   shell: |
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+    touch tmp/restart.txt
   args:
     chdir: /var/www/ood/apps/sys/dashboard
-
-- name: Force Dashboard app to restart
-  file:
-    path: /var/www/ood/apps/sys/dashboard/tmp/restart.txt
-    state: touch
 
 - name: Copy the configure file for Active Jobs app
   template:
@@ -46,17 +42,13 @@
   vars:
     app_name: "activejobs"
 
-- name: Rebuild assets for Active Jobs app
+- name: Rebuild assets for Active Jobs app and force app to restart
   shell: |
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+    touch tmp/restart.txt
   args:
     chdir: /var/www/ood/apps/sys/activejobs
-
-- name: Force Active Jobs app to restart
-  file:
-    path: /var/www/ood/apps/sys/activejobs/tmp/restart.txt
-    state: touch
 
 - name: Copy the configure file for Job Composer app
   template:
@@ -65,14 +57,10 @@
   vars:
     app_name: "myjobs"
 
-- name: Rebuild assets for Job Composer app
+- name: Rebuild assets for Job Composer app and force app to restart
   shell: |
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
     scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+    touch tmp/restart.txt
   args:
     chdir: /var/www/ood/apps/sys/myjobs
-
-- name: Force Job Composer app to restart
-  file:
-    path: /var/www/ood/apps/sys/myjobs/tmp/restart.txt
-    state: touch
