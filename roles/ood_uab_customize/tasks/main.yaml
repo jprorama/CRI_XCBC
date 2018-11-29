@@ -27,6 +27,13 @@
     backup: yes
   when: cheaha_logo.stdout == ""
 
+- name: Rebuild assets for Dashboard app
+  shell: |
+    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
+    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
+  args:
+    chdir: /var/www/ood/apps/sys/dashboard
+
 - name: Force Dashboard app to restart
   file:
     path: /var/www/ood/apps/sys/dashboard/tmp/restart.txt
