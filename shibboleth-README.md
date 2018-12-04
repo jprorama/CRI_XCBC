@@ -73,7 +73,7 @@ done
 for rpm in $RPMS_ORDER; do echo $rpm;
   if [[ $rpm != shibboleth* ]]; then
     sudo rpmbuild --rebuild $rpm
-    sudo yum localinstall -y /usr/src/rpm/RPMS/x86_64/*.rpm
+    sudo yum localinstall -y /home/vagrant/rpmbuild/RPMS/x86_64/*.rpm
   fi
 done
 ```
@@ -94,12 +94,12 @@ sudo -E rpmbuild --rebuild --without builtinapache -D 'shib_options -with-apxs24
 > If you got the RPM directly from [here](https://github.com/eesaanatluri/CRI_XCBC/blob/feat-shibboleth/shibboleth-3.0.2-1.1.x86_64.rpm) you just need to run this after following the initial steps of Apache2.4 install as software collections pkg.
 
 ```
-sudo yum localinstall /usr/src/rpm/RPMS/x86_64/shibboleth-3.0.2-1.1.x86_64.rpm
+sudo yum localinstall /root/rpmbuild/RPMS/x86_64/shibboleth-3.0.2-1.1.x86_64.rpm
 ```
 
 ### Confirm it has the apache mod you need
 ```
-rpm -qpl /usr/src/rpm/RPMS/x86_64/shibboleth-3.0.2-1.1.x86_64.rpm | grep mod_shib
+rpm -qpl /root/rpmbuild/RPMS/x86_64/shibboleth-3.0.2-1.1.x86_64.rpm | grep mod_shib
 ```
 Expected output: /usr/lib64/shibboleth/mod_shib_24.so
 
