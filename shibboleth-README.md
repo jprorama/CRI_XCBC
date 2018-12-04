@@ -6,7 +6,7 @@ authentication module (mod_auth_*) used will need to be compiled against the apx
 
 ```
 
-Install Apache HTTP Server 2.4 as Software collections package.
+# Install Apache HTTP Server 2.4 as Software collections package.
 
 ```
 Install a package with repository for your system:
@@ -110,3 +110,9 @@ ln -s /etc/shibboleth/apache24.config /etc/httpd/conf.modules.d/shib.conf
 ```
 
 # Test the Shib installation.
+
+```
+shibd -t
+```
+Expected ouput: overall configuration is loadable, check console or log for non-fatal problems
+
