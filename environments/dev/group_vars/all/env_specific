@@ -47,3 +47,6 @@
 
 # Shibboleth SSO
   enable_shib: false
+
+  partitions:
+    - low
