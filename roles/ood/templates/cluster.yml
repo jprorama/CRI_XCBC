@@ -6,7 +6,7 @@ v2:
     host: "{{ cluster_name }}"
   job:
     adapter: "slurm"
-    bin: "/bin"
+    bin: "{{ slurm_bin }}"
   batch_connect:
     basic:
       script_wrapper: |

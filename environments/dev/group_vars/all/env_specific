@@ -8,6 +8,7 @@
 
 #slurm.conf variables
   cluster_name: "ohpc"
+  slurm_bin: "/bin"
 
 # sacct user list
   cluster_users:
