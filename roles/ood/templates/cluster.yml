@@ -1,7 +1,7 @@
 ---
 v2:
   metadata:
-    title: "{{ cluster_name }}"
+    title: "{{ ood_cluster_title }}"
   login:
     host: "{{ ood_cluster_host }}"
   job:
