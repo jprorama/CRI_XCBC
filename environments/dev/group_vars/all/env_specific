@@ -22,6 +22,7 @@
   ood_nodename: "ood"
   ood_ip_addr: 10.1.1.254
   ood_provision: true
+  ood_cluster_host: "ohpc"
 
 #Jupyter related
   jupyter_provision: false

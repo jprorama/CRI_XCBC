@@ -3,7 +3,7 @@ v2:
   metadata:
     title: "{{ cluster_name }}"
   login:
-    host: "{{ cluster_name }}"
+    host: "{{ ood_cluster_host }}"
   job:
     adapter: "slurm"
     bin: "{{ slurm_bin }}"
