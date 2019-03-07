@@ -44,5 +44,5 @@ attributes:
     options:
       # Define functioning R version overloads using a colon after the module load statement
 {% for ver in r_versions %}
-      - [ "{{ ver.full }}", "rstudio_singularity/{{ ver.full }}"]
+      - [ "{{ ver.full }}", "{{ r_module_name }}/{{ ver.full }}"]
 {% endfor %}
