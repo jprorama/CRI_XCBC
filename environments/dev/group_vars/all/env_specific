@@ -7,7 +7,7 @@
   build_kernel_ver: "3.10.0-957.1.3.el7.x86_64"
 
 #slurm.conf variables
-  cluster_name: "ohpc"
+  slurm_cluster_name: "ohpc"
   slurm_bin: "/bin"
 
 # sacct user list

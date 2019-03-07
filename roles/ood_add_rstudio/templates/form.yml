@@ -1,5 +1,5 @@
 ---
-cluster: "{{ cluster_name }}"
+cluster: "{{ slurm_cluster_name }}"
 form:
   - version
   - bc_account

@@ -6,6 +6,7 @@ v2:
     host: "{{ ood_cluster_host }}"
   job:
     adapter: "slurm"
+    cluster: "{{ slurm_cluster_name }}"
     bin: "{{ slurm_bin }}"
     conf: "/etc/slurm/slurm.conf"
   batch_connect:
