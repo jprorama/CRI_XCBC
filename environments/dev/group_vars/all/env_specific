@@ -53,4 +53,4 @@
   enable_shib: false
 
   partitions:
-    - low
+    - { name: "low", hours: 1, max_nodes: 0, priority: 2 }
