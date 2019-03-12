@@ -10,7 +10,7 @@
 # Account - 'test':MaxNodesPerJob=1:MaxJobs=1:MaxTRESMins=cpu=1:FairShare=1:MaxWallDuration=1:Description='Test Account':Organization='Test'
 # To add users to a account add a line like this after a Parent - 'line'
 # User - 'lipari':MaxNodesPerJob=2:MaxJobs=3:MaxTRESMins=cpu=4:FairShare=1:MaxWallDurationPerJob=1
-Cluster - '{{ cluster_name }}':Fairshare=1:QOS='normal'
+Cluster - '{{ slurm_cluster_name }}':Fairshare=1:QOS='normal'
 Parent - 'root'
 User - 'root':DefaultAccount='root':AdminLevel='Administrator':Fairshare=1
 Account - 'test':Description='test users':Organization='xsede':Fairshare=1

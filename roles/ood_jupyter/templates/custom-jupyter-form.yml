@@ -8,7 +8,7 @@
 # under /etc/ood/config/clusters.d/*.yml
 # @example Use the Owens cluster at Ohio Supercomputer Center
 #     cluster: "owens"
-cluster: {{ cluster_name }} 
+cluster: {{ slurm_cluster_name }}
 
 # Title of the app displayed in the Dashboard
 title: "Jupyter Notebook"

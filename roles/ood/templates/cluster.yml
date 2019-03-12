@@ -1,12 +1,14 @@
 ---
 v2:
   metadata:
-    title: "{{ cluster_name }}"
+    title: "{{ ood_cluster_title }}"
   login:
-    host: "{{ cluster_name }}"
+    host: "{{ ood_cluster_host }}"
   job:
     adapter: "slurm"
-    bin: "/bin"
+    cluster: "{{ slurm_cluster_name }}"
+    bin: "{{ slurm_bin }}"
+    conf: "/etc/slurm/slurm.conf"
   batch_connect:
     basic:
       script_wrapper: |
