@@ -70,6 +70,10 @@
        state: started
        enabled: yes
 
+   - name: Add delay for slurmdbd to register the Cluster 
+     pause:
+       seconds: 5
+
    - name: load sacctmgr config
      command: sacctmgr -i load /etc/slurm/sacctmgr-heirarchy.cfg
 
