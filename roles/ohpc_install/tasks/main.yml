@@ -70,6 +70,10 @@
        state: started
        enabled: yes
 
+   - name: Add cluster to DB
+     command: sacctmgr add cluster ohpc
+     become: yes
+
    - name: load sacctmgr config
      command: sacctmgr -i load /etc/slurm/sacctmgr-heirarchy.cfg
 
