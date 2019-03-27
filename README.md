@@ -20,3 +20,19 @@ None of these Ansible roles actually touch the compute nodes directly - at most,
 trigger a reboot. 
 
 A more detailed description is available in the /doc folder.
+
+### Issues and Work arounds
+
+1. If you encounter an issue with OHPC node provisioning due to GPG key errors as mentioned in https://github.com/jprorama/CRI_XCBC/issues/77. Please run the below command as a work around from outside your VM:
+
+    `vagrant box update`
+
+2. After you run the above command if you were to get a `"kernel mismatch error"`. To get past this error please run the below commands:
+
+    `vagrant ssh ohpc`
+
+    `uname -r`
+
+    Copy and paste this kernel version in the group_vars/all to update the kernel version in the `build_kernel_ver` variable.
+
+3. If you encounter an issue with nodes_vivify role in updating the slurm status on nodes, specifically the error `slurm_update error: Invalid node state specified`. Please increase the compute node memory to 6GB in your Virtual Box.
