@@ -9,3 +9,11 @@
   git:
     repo: https://gitlab.rc.uab.edu/tr27p/ohpc_user_create.git
     dest: /opt/ohpc_user_create
+
+- name: Commands access for Next Sudo
+  lineinfile:
+    dest: /etc/sudoers
+    insertafter: EOF
+    line: "nsudo ALL= NOPASSWD: /opt/ohpc_user_create/user_create"
+    #line: "nsudo ALL= NOPASSWD: /bin/passwd, /bin/wwsh, /bin/sacctmgr, /bin/id, /etc/ohpc_user_create/user_create, /sbin/useradd"
+    state: present
