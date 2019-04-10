@@ -1,0 +1,23 @@
+---
+- name: Create Next Sudo users on OHPC
+  shell: ssh ohpc 'sudo useradd -c "Next to Sudo" nsudo'
+  become_user: vagrant
+
+- name : delay
+  command: sleep 2
+
+- name: Change passwd Next Sudo users on OHPC
+  shell: ssh ohpc 'sudo echo "qweasd" | sudo passwd --stdin "nsudo"'
+  become_user: vagrant
+
+- name: Get UID of Next Sudo user from OHPC
+  shell: ssh ohpc "sudo id -u nsudo"
+  become_user: vagrant
+  # shell: gid=`id -g "$uname"`
+  register: uid
+
+- name : delay
+  command: sleep 1
+
+- name: Create Next Sudo users on OOD
+  shell: sudo useradd -M -s "/bin/bash" -u {{ uid.stdout }} -U -c "Next to Sudo" nsudo
