@@ -1,0 +1,11 @@
+---
+- name: Creates directory to clone ohpc user create
+  file:
+    path: /opt/ohpc_user_create/
+    state: directory
+    mode: 755
+
+- name: Clone template repo from upstream
+  git:
+    repo: https://gitlab.rc.uab.edu/tr27p/ohpc_user_create.git
+    dest: /opt/ohpc_user_create
