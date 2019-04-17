@@ -128,7 +128,8 @@
   enable_shib: false
 
 # User Registration
-  enable_user_reg: true
+  enable_user_reg: false
   master_user_name: "nsudo"
   master_user_full_name: "Next to Sudo"
   master_user_passwd: "qweasd"
+  user_create_scripts_provision: false
