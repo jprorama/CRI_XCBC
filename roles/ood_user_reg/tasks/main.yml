@@ -19,3 +19,26 @@
 - name: Build the updated Apache config
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
   ignore_errors: yes
+
+- name: Create Next Sudo users on OHPC
+  shell: ssh ohpc 'sudo useradd -c "{{ master_user_full_name }}" {{ master_user_name }}'
+  become_user: vagrant
+
+- name : delay
+  command: sleep 2
+
+- name: Change passwd Next Sudo users on OHPC
+  shell: ssh ohpc 'sudo echo "{{ master_user_passwd }}" | sudo passwd --stdin "{{ master_user_name }}"'
+  become_user: vagrant
+
+- name: Get UID of Next Sudo user from OHPC
+  shell: ssh ohpc "sudo id -u {{ master_user_name }}"
+  become_user: vagrant
+  # shell: gid=`id -g "$uname"`
+  register: uid
+
+- name : delay
+  command: sleep 1
+
+- name: Create Next Sudo users on OOD
+  shell: sudo useradd -M -s "/bin/bash" -u {{ uid.stdout }} -U -c "{{ master_user_full_name }}" {{ master_user_name }}
