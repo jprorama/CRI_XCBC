@@ -19,7 +19,7 @@
   gpu_ip_minimum: "10.1.1.128" #This could be more clever, like compute_ip_minimum + num_nodes...
 
 #slurm.conf variables
-  cluster_name: "ohpc"
+  cluster_name: "SLURM_CLUSTER"
 #  gres_types: "gpu"
 
 # sacct user list
@@ -88,7 +88,7 @@
    - { name: "viz-node-0-0", vnfs: gpu_chroot, gpus: 2, gpu_type: nvidia_gtx_780, cpus: 8, sockets: 2, corespersocket: 4,  mac: "foo", ip: "bar"}
 
 #Slurm Accounting Variables - little need to change these
-  slurm_acct_db: "slurmdb"
+  slurm_acct_db: "slurm_acct_db"
   slurmdb_storage_port: "7031"
   slurmdb_port: "1234"
   slurmdb_sql_pass: "password" #could force this to be a hash... 
