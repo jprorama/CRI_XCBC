@@ -148,3 +148,7 @@
   user_register_app_path: "/var/www/ood/register/{{ user_register_app }}"
   user_register_app_repo: "https://gitlab.rc.uab.edu/mmoo97/flask_user_reg.git"
   mod_wsgi_pkg_name: "uab-httpd24-mod_wsgi"
+
+# Slurm Partitions
+  partitions:
+    - { name: "low", hours: 1, max_nodes: 0, priority: 2 }
