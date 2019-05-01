@@ -149,7 +149,7 @@
   user_register_app_repo: "https://gitlab.rc.uab.edu/mmoo97/flask_user_reg.git"
   mod_wsgi_pkg_name: "uab-httpd24-mod_wsgi"
   user_register_app_user_full_name: "RegUser of user register app"
-  user_register_app_user_full_name: "qweasd"
+  user_register_app_user_passwd: "qweasd"
   
 # User Create Scripts
   enable_user_create_scripts: false
