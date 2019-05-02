@@ -68,6 +68,7 @@
   with_items:
     - bc_partition
     - bc_num_mems
+    - bc_num_slots
 
 - name: Stage http authz file for ood
   copy:
