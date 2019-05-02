@@ -67,6 +67,7 @@
     dest: /var/www/ood/apps/sys/dashboard/lib/smart_attributes/attributes
   with_items:
     - bc_partition
+    - bc_num_mems
 
 - name: Stage http authz file for ood
   copy:
