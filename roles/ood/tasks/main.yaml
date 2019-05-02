@@ -61,6 +61,13 @@
       - { regexp: "^#?node_uri:.*$", replace: "node_uri: '/node'" }
       - { regexp: "^#?rnode_uri:.*$", replace: "rnode_uri: '/rnode'" }
 
+- name: Setup cluster-wise ood form attibutes
+  template:
+    src: "attributes/{{ item }}.rb"
+    dest: /var/www/ood/apps/sys/dashboard/lib/smart_attributes/attributes
+  with_items:
+    - bc_partition
+
 - name: Stage http authz file for ood
   copy:
     src: htpasswd
