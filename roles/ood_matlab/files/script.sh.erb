@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-
-# Clean the environment
-module purge
-
 # Set working directory to home directory
 cd "${HOME}"
 
@@ -16,7 +12,7 @@ cd "${HOME}"
   export XDG_CONFIG_HOME="<%= session.staged_root.join("config") %>"
   export XDG_DATA_HOME="<%= session.staged_root.join("share") %>"
   export XDG_CACHE_HOME="$(mktemp -d)"
-  module restore
+  module reset
   set -x
   xfwm4 --compositor=off --daemon --sm-client-disable
   xsetroot -solid "#D3D3D3"
@@ -29,7 +25,7 @@ cd "${HOME}"
 #
 
 # Load the required environment
-module load matlab/r2018a
+module load <%= context.version %>
 # Launch MATLAB
 module list
 set -x
