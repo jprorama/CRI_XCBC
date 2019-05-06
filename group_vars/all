@@ -106,6 +106,8 @@
 
 #EasyBuild variables
   cluster_shared_dir: "/export"
+  cluster_apps_dir: "{{ cluster_shared_dir }}/apps"
+  cluster_modulefiles_dir: "{{ cluster_shared_dir }}/modulefiles"
   easybuild_prefix: "{{ cluster_shared_dir }}/eb"
   easybuild_tmpdir: "/tmp"
   easybuild_buildpath: "/tmp/build"
