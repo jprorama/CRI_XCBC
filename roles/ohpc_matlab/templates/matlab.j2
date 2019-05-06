@@ -1,7 +1,7 @@
 #%Module
 
-set ver {{ matlab_ver }}
-set matlabroot {{ matlab_install_root }}
+set ver {{ item.ver }}
+set matlabroot {{ matlab_install_root }}/$ver
 set url {{ matlab_docs_url }}
 set msg "This module adds Matlab $ver to various paths\n\nSee $url for usage examples\n"
 

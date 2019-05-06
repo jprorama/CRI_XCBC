@@ -1,3 +1,4 @@
+---
 - name: install the latest version of libXtst
   yum:
     name: libXt
@@ -5,28 +6,26 @@
 
 - name: Create directory
   file:
-    path: "{{ matlab_clustershare }}"
+    path: "{{ matlab_install_root }}/{{ item.ver }}"
     state: directory
     mode: 0755
-
-- name: Download matlab
-  get_url:
-    url: "{{ matlab_download_url }}"
-    dest: "{{ matlab_destination  }}"
+  with_items: "{{ matlab_versions }}"
 
 - name: Extract matlab
   unarchive:
-    src: "{{ matlab_destination  }}"
-    dest: "{{ matlab_clustershare }}"
+    src: "{{ item.url }}"
+    dest: "{{ matlab_install_root }}/{{ item.ver }}"
     remote_src: yes
+  with_items: "{{ matlab_versions }}"
 
 - name: Create directory
   file:
-    path: "{{ matlab_module_path }}/{{ matlab_module_appdir }}"
+    path: "{{ matlab_modulefiles_dir }}"
     state: directory
     mode: 0755
 
 - name: Copy modulefile from template to module path
   template:
-    src: "{{ matlab_module_file }}"
-    dest: "{{ matlab_module_path }}/{{ matlab_module_appdir }}/{{ matlab_module_file }}"
+    src: matlab.j2
+    dest: "{{ matlab_modulefiles_dir }}/{{ item.ver }}"
+  with_items: "{{ matlab_versions }}"
