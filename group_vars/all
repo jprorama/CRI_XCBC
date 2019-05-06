@@ -105,8 +105,8 @@
   jupyter_provision: false
 
 #EasyBuild variables
-  cluster_shared_folder: "/export"
-  easybuild_prefix: "{{ cluster_shared_folder }}/eb"
+  cluster_shared_dir: "/export"
+  easybuild_prefix: "{{ cluster_shared_dir }}/eb"
   easybuild_tmpdir: "/tmp"
   easybuild_buildpath: "/tmp/build"
   easybuild_sourcepath: "/tmp/source"
