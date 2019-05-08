@@ -122,7 +122,7 @@
   matlab_docs_url: "https://www.mathworks.com/products/matlab.html"
   matlab_license_file: "{{ matlab_install_root }}/licenses/licenses.lic"
   matlab_versions:
-    - { ver: 'R2018a', url: "https://uab.box.com/shared/static/y01qu7oo1gpne6j2s6nqwcuee63epivo.gz" }
+    - { ver: 'R2018a', url: "https://uab.box.com/shared/static/4a027wd442juo82arq3oqxb4uwkft3gt.gz" }
 
 #Rstudio related
   rstudio_provision: false
