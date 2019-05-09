@@ -74,3 +74,27 @@
        src: /root/.ssh/cluster.pub
        dest: ./cluster_root.pub
        flat: yes
+
+   - name: Check if cluster modulepath is in default MODULEPATH
+     shell: grep "{{ cluster_modulefiles_dir }}" /etc/profile.d/lmod.sh
+     ignore_errors: yes
+     register: default_modulepath_sh
+
+   - shell: grep "{{ cluster_modulefiles_dir }}" /etc/profile.d/lmod.csh
+     ignore_errors: yes
+     register: default_modulepath_csh
+
+   - name: Add cluster modulepath into default MODULEPATH
+     replace:
+       path: /etc/profile.d/lmod.sh
+       regexp: '(MODULEPATH=.*)'
+       replace: '\1:{{ cluster_modulefiles_dir }}'
+       backup: yes
+     when: default_modulepath_sh.stdout == ""
+
+   - replace:
+       path: /etc/profile.d/lmod.csh
+       regexp: '(MODULEPATH "[^"]*)'
+       replace: '\1:{{ cluster_modulefiles_dir }}'
+       backup: yes
+     when: default_modulepath_csh.stdout == ""
