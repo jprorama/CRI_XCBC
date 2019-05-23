@@ -124,6 +124,14 @@
   matlab_versions:
     - { ver: 'R2018a', url: "https://uab.box.com/shared/static/4a027wd442juo82arq3oqxb4uwkft3gt.gz" }
 
+#SAS install related
+  sas_provision: false
+  sas_clustershare: "/export/apps/sas/"
+  sas_module_path: "{{ easybuild_prefix }}/modules/all"
+  sas_module_appdir: "sas"
+  sas_module_file: "9.4"
+  sas_ver: "{{ sas_module_file }}"
+
 #Rstudio related
   rstudio_provision: false
   singularity_ver: '2.4.2'
