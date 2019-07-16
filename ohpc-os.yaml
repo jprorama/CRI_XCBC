@@ -1,0 +1,6 @@
+---
+- hosts: ohpc
+  roles:
+    - { name: 'pre_ohpc', tags: 'pre_ohpc' }
+    - { name: 'ohpc_install', tags: 'ohpc_install' }
+    - { name: 'ohpc_config', tags: 'ohpc_config' }
