@@ -12,7 +12,7 @@
     dest: /var/www/ood/apps/sys/bc_rstudio_server/form.yml
 
 - name: Replace form submission template
-  copy:
+  template:
     src: submit.yml
     dest: /var/www/ood/apps/sys/bc_rstudio_server/submit.yml.erb
 

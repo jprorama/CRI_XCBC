@@ -1,7 +1,7 @@
 <%-
-    user = ENV['USER']
-    if !user.include? '@'
-        user = user + '@uab.edu'
+    mail = ENV['USER_EMAIL'] || ENV['USER']
+    if !mail.include? '@'
+        mail = mail + "@{{ mail_domain }}"
     end
 -%>
 ---
@@ -17,7 +17,7 @@ script:
     - "--job-name=ood-r-<%= version.split("/")[-1] %>"
 <%- if bc_email_on_started == "1" -%>
     - "--mail-type=BEGIN"
-    - "--mail-user=<%= user %>"
+    - "--mail-user=<%= mail %>"
 <%- end -%>
 <%- if bc_partition == "pascalnodes" -%>
     - "--gres=gpu:1"
