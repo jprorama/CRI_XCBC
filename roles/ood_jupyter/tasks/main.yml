@@ -21,7 +21,7 @@
     dest: /var/www/ood/apps/sys/jupyter/form.yml
 
 - name: Use submit.yml.erb file tailored for slurm usage at UAB
-  copy:
+  template:
     src: jupyter-submit.yml.erb
     dest: /var/www/ood/apps/sys/jupyter/submit.yml.erb
 

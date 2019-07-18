@@ -24,7 +24,7 @@
     state: absent
 
 - name: Replace form submission template
-  copy:
+  template:
     src: submit.yml
     dest: /var/www/ood/apps/sys/matlab/submit.yml.erb
 
