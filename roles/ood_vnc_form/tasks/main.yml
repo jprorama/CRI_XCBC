@@ -6,7 +6,7 @@
     backup: yes
 
 - name: Put submit.yml.erb in place
-  copy:
+  template:
     src: vnc-submit.yml.erb
     dest: /etc/ood/config/apps/bc_desktop/submit/submit.yml.erb
     backup: yes
