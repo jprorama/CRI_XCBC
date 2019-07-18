@@ -86,8 +86,8 @@
      register: network_profile_name
 
    - name: simplify the name of the private network profile name
-     command: nmcli con mod 'System {{ private_interface }}' connection.id '{{ private_interface }}'
-     when: "'System' in network_profile_name.stdout"
+     command: nmcli con mod 'Wired connection 1' connection.id '{{ private_interface }}'
+     when: "'Wired' in network_profile_name.stdout"
 
    - name: add private interface to internal zone via nmcli
      command: nmcli connection modify {{ private_interface }} connection.zone internal
