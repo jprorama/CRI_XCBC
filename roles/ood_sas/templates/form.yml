@@ -30,7 +30,10 @@ attributes:
     label: "SAS version"
     help: "This defines the version of SAS you want to load."
     options:
-      - [ "v9.4", "sas/v9.4" ]
+{% for ver in sas_versions %}
+      - [ "{{ ver }}", "{{ sas_module_name }}/{{ ver }}"]
+{% endfor %}
+
 form:
   - version
   - bc_num_hours
