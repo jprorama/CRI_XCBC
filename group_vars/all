@@ -129,13 +129,8 @@
 #SAS install related
   sas_provision: false
   sas_module_name: "sas"
-  sas_clustershare: "/export/apps/sas/"
   sas_install_root: "{{ cluster_apps_dir }}/{{ sas_module_name }}"
-  sas_module_path: "{{ easybuild_prefix }}/modules/all"
   sas_modulefiles_dir: "{{ cluster_modulefiles_dir }}/{{ sas_module_name }}"
-  sas_module_appdir: "sas"
-  sas_module_file: "9.4"
-  sas_ver: "{{ sas_module_file }}"
   sas_versions:
     - "9.4"
 
