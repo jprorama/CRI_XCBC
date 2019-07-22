@@ -68,7 +68,9 @@
 
 #OpenOnDemand
   ood_nodename: "ood"
+  ood_version: 1.5
   ood_ip_addr: 10.1.1.254
+  ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.el7.noarch.rpm"
 
 #Node Inventory - not in the Ansible inventory sense! Just for WW and Slurm config.
 # Someday I will need a role that can run wwnodescan, and add nodes to this file! Probably horrifying practice.
@@ -155,3 +157,13 @@
   user_register_app_path: "/var/www/ood/register/{{ user_register_app }}"
   user_register_app_repo: "https://gitlab.rc.uab.edu/mmoo97/flask_user_reg.git"
   mod_wsgi_pkg_name: "uab-httpd24-mod_wsgi"
+  RegUser_app_user: "reggie"
+  RegUser_app_user_full_name: "RegUser of user register app"
+  RegUser_app_user_passwd: "qweasd"
+
+# User Create Scripts
+  enable_user_create_scripts: false
+  user_create_scripts: "ohpc_user_create"
+  user_create_scripts_path: "/opt/{{ user_create_scripts }}"
+  user_create_script_repo: "https://gitlab.rc.uab.edu/tr27p/ohpc_user_create.git"
+
