@@ -4,7 +4,7 @@
 ##
 ## Sets up the SAS environment
 ##
-set ver 9.4
+set ver {{ item }}
 set name sas
 #set loading [module-info mode load]
 #set subname [lrange [split $name - ] 0 0 ]
@@ -15,10 +15,10 @@ proc ModulesHelp { } {
 
 module-whatis   "Set environment variables to use $name version $ver"
 
-set base /export/apps/$name/$ver
+set base {{ cluster_apps_dir }}/$name/$ver
 
 ## Add bin directories to the path
-prepend-path PATH $base/SASFoundation/9.4
+prepend-path PATH $base/SASFoundation/$ver
 
 if { [ module-info mode load ] } {
   puts stderr "Note: $name $ver environment loaded."

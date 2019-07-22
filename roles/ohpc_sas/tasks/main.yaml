@@ -1,22 +1,26 @@
+---
 - name: Create directory
   file:
-    path: "{{ sas_clustershare }}/{{ sas_module_file }}/SASFoundation/{{ sas_module_file }}"
+    path: "{{ sas_install_root }}/{{ item }}/SASFoundation/{{ item }}"
     state: directory
     mode: 0755
+  with_items: "{{ sas_versions }}"
 
-- name: Install SAS (Executable file to run  xfce4desktop)
-  template:
-    src: "{{ sas_module_appdir }}"
-    dest: "{{ sas_clustershare }}/{{ sas_module_file }}/SASFoundation/{{ sas_module_file }}/{{ sas_module_appdir }}"
+- name: Install SAS (Executable file to run xfce4desktop)
+  copy:
+    src: sas
+    dest: "{{ sas_install_root }}/{{ item }}/SASFoundation/{{ item }}/sas"
     mode: a+x
+  with_items: "{{ sas_versions }}"
 
 - name: Create modules directory
   file:
-    path: "{{ sas_module_path }}/{{ sas_module_appdir }}"
+    path: "{{ sas_modulefiles_dir }}"
     state: directory
     mode: 0755
 
 - name: Copy modulefile from template to module path
   template:
-    src: "{{ sas_module_file }}"
-    dest: "{{ sas_module_path }}/{{ sas_module_appdir }}/{{ sas_module_file }}"
+    src: sas.j2
+    dest: "{{ sas_modulefiles_dir }}/{{ item }}"
+  with_items: "{{ sas_versions }}"
