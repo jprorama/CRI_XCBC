@@ -45,31 +45,20 @@
     repo: 'https://github.com/nickjer/singularity-rstudio.git'
     dest: '/tmp/singularity-rstudio'
     force: yes
-  become_user: build
-
-- name: Delete folder and modulefile of old version
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "/tmp/singularity-rstudio/example_module/3.4.3"
-    - "/tmp/singularity-rstudio/example_module/modulefiles/rstudio_singularity/3.4.3.lua"
 
 - name: Create folder for different R versions
   file:
-    path: /tmp/singularity-rstudio/example_module/{{ item.full }}
+    path: "{{ r_install_root }}/{{ item.full }}"
     state: directory
   with_items:
     "{{ r_versions }}"
-  become_user: build
 
 - name: Create library folder for different R versions
   file:
-    path: /tmp/singularity-rstudio/example_module/library-{{ item.short }}
+    path: "{{ r_install_root}}/library-{{ item.short }}"
     state: directory
   with_items:
     "{{ r_versions }}"
-  become_user: build
 
 - name: Download Rstudio singularity image
   shell: |
@@ -78,14 +67,17 @@
     SINGULARITY_PULLFOLDER={{ item.full }} singularity pull --name singularity-rstudio.simg shub://nickjer/singularity-rstudio:{{ item.full }}
   with_items:
     "{{ r_versions }}"
-  become_user: build
   args:
-    chdir: /tmp/singularity-rstudio/example_module
+    chdir: "{{ r_install_root }}"
 
 - name: Generate modulefiles for each version
-  template:
+  file:
+    path: "{{ r_modulefiles_dir }}"
+    state: directory
+
+- template:
     src: modulefiles/rstudio.j2
-    dest: /tmp/singularity-rstudio/example_module/modulefiles/rstudio_singularity/{{ item.full }}.lua
+    dest: "{{ r_modulefiles_dir }}/{{ item.full }}.lua"
   vars:
     ver: "{{ item }}"
   with_items:
@@ -97,21 +89,8 @@
     creates: "{{ dest }}"
     removes: "{{ src }}"
   vars:
-    src: /tmp/singularity-rstudio/example_module/modulefiles/rstudio_singularity
-    dest: "{{ easybuild_prefix }}/modules/all/rstudio_singularity"
-
-- file:
-    path: /tmp/singularity-rstudio/example_module/modulefiles
-    state: absent
-
-- name: Move Singularity image and executable into shared folder
-  command: mv {{ src }} {{ dest }}
-  args:
-    creates: "{{ dest }}"
-    removes: "{{ src }}"
-  vars:
-    src: /tmp/singularity-rstudio/example_module
-    dest: "{{ easybuild_prefix }}/software/singularity-rstudio"
+    src: /tmp/singularity-rstudio/example_module/bin
+    dest: "{{ r_install_root }}/bin"
 
 - name: Clean up
   file:

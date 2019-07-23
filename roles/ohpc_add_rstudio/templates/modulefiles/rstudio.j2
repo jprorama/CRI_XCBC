@@ -5,7 +5,7 @@ image for portability.
 
 whatis([[Description: RStudio Server environment using Singularity]])
 
-local root = "{{ easybuild_prefix }}/software/singularity-rstudio"
+local root = "{{ r_install_root }}"
 local bin = pathJoin(root, "/bin")
 local img = pathJoin(root, "/{{ ver.full }}/singularity-rstudio.simg")
 local library = pathJoin(root, "/library-{{ ver.short }}")
