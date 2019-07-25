@@ -1,5 +1,2 @@
 ---
 - import_playbook: ohpc-ops.yaml
-  #- import_playbook: ohpc.yaml
-  #- import_playbook: ood.yaml
-  #- import_playbook: compute.yaml
