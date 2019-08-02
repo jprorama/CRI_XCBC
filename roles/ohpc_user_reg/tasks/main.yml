@@ -1,4 +1,7 @@
 ---
+- name: Add passwd,group,shadow files to the warewulf database
+  command: wwsh file import /etc/passwd /etc/group /etc/shadow
+
 - name: Create RegUser on OHPC
   user:
     name: "{{ RegUser_app_user }}"
