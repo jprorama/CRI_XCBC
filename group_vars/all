@@ -104,7 +104,7 @@
   gpu_node_glob_bash: "{{ compute_node_prefix }}{0..{{ num_compute_nodes|int - 1}}}"
 
 #Jupyter related
-  jupyter_provision: false
+  jupyter_provision: true
 
 #EasyBuild variables
   cluster_shared_folder: "/export"
@@ -114,7 +114,7 @@
   easybuild_sourcepath: "/tmp/source"
 
 #matlab install related
-  matlab_provision: false
+  matlab_provision: true
   matlab_download_url: "https://uab.box.com/shared/static/y01qu7oo1gpne6j2s6nqwcuee63epivo.gz"
   matlab_clustershare: "/opt/ohpc/pub/apps/matlab/"
   matlab_destination: "/tmp/matlab.tar.gz"
@@ -128,7 +128,7 @@
   matlab_ver: "{{ matlab_module_file }}"
 
 #SAS install related
-  sas_provision: false
+  sas_provision: true
   sas_clustershare: "/export/apps/sas/"
   sas_module_path: "{{ easybuild_prefix }}/modules/all"
   sas_module_appdir: "sas"
@@ -136,7 +136,7 @@
   sas_ver: "{{ sas_module_file }}"
 
 #Rstudio related
-  rstudio_provision: false
+  rstudio_provision: true
   singularity_ver: '2.4.2'
   r_versions:
     - { full: '3.5.1', short: '3.5' }
@@ -150,10 +150,10 @@
     - { repo_name: "atlurie/shibboleth-3.0-ood", host: ["{{ ood_nodename }}"] }
 
 # Shibboleth SSO
-  enable_shib: false
+  enable_shib: true
 
 # User Registration
-  enable_user_reg: false
+  enable_user_reg: true
   user_register_app: "flask_user_reg"
   user_register_app_path: "/var/www/ood/register/{{ user_register_app }}"
   user_register_app_repo: "https://gitlab.rc.uab.edu/mmoo97/flask_user_reg.git"
