@@ -39,6 +39,10 @@
     executable: /bin/bash
     chdir: /tmp
 
+- name: Add the lmod.sh into warewulf database
+  command: wwsh file import /etc/profile.d/lmod.sh
+  become: true
+
 - name: Check if EasyBuild installation path is in default MODULEPATH
   shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.sh
   ignore_errors: yes
@@ -66,6 +70,7 @@
 
 - name: Update file in warewulf file database
   command: wwsh file sync
+  become: true
 
 - name: Verify EasyBuild installation
   shell: |
