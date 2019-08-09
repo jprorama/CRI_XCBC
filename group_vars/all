@@ -77,8 +77,8 @@
 # There is a real difference between building from scratch, and using these for maintenance / node addition!
 #
   compute_private_nic: "eth0"
-  compute_nodes:
-   - { name: "compute-1", vnfs: '{{compute_chroot}}',  cpus: 1, sockets: 1, corespersocket: 1,  mac: "08:00:27:EC:E2:FF", ip: "10.0.0.254"}
+#  compute_nodes:
+#   - { name: "compute-1", vnfs: '{{compute_chroot}}',  cpus: 1, sockets: 1, corespersocket: 1,  mac: "08:00:27:EC:E2:FF", ip: "10.0.0.254"}
 
   login_nodes:
    - { name: "login-1", vnfs: '{{login_chroot}}', cpus: 8, sockets: 2, corespersocket: 4,  mac: "00:26:b9:2e:21:ed", ip: "10.2.255.137"}
