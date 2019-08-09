@@ -1,8 +1,8 @@
 ---
 
-   - name: Waiting for the compute node to bootup
-     pause:
-       seconds: 150
+#   - name: Waiting for the compute node to bootup
+#     pause:
+#       seconds: 150
 
    - name: tell nodes to get files
      command: pdsh -w $(wwsh node list | tail --lines=+3 | cut -f 1 -d' '| tr '\n' ',') /warewulf/bin/wwgetfiles
@@ -30,8 +30,8 @@
        seconds: 30
 
    - name: update slurm status on nodes
-     shell: scontrol update nodename=$(wwsh node list | tail --lines=+3 | cut -f 1 -d' '| tr '\n' ',') state=IDLE
+     shell: scontrol update nodename=$(wwsh node list | tail --lines=+3 | cut -f 1 -d' '| tr '\n' '') state=IDLE
 
-   - name: update pxeconfig to let node boot locally
-     shell: wwsh -y object modify -s bootlocal=EXIT -t node $(wwsh node list | tail --lines=+3 | cut -f 1 -d' '| tr '\n' ' ') 
-     when: stateful_nodes == true
+     #   - name: update pxeconfig to let node boot locally
+     #     shell: wwsh -y object modify -s bootlocal=EXIT -t node $(wwsh node list | tail --lines=+3 | cut -f 1 -d' '| tr '\n' ' ') 
+     #     when: stateful_nodes == true
