@@ -1,0 +1,6 @@
+127.0.0.1 localhost
+::1 localhost
+
+{% for host in groups['headnode'] %}
+{{ hostvars[inventory_hostname]['ansible_eth1']['ipv4']['address'] }} {{ hostvars[host]['inventory_hostname'] }}  {{ hostvars[host]['inventory_hostname'] }}.local
+{% endfor %}
