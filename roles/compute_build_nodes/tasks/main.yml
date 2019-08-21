@@ -13,10 +13,22 @@
 #       msg: "Quick fail for test!"
 
    - block:
-     - name: add node to ww db
-       command: wwsh -y node new {{ compute_node_glob }} --ipaddr={{ compute_ip }} --hwaddr={{ compute_mac }} -D {{ compute_private_nic }} --groups=computenodes
-       #with_items: "{{ compute_nodes }}"
-  
+     - name: Check if node is already in warewulf database
+       command: sudo wwsh node list
+       register: wwsh_node_list
+       ignore_errors: yes
+
+     - name: Add node(s) into warewulf database
+       command: wwsh -y node new {{ node_name }} --ipaddr={{ node_ip_v4 }} --hwaddr={{ node_mac }} -D {{ compute_private_nic }} --groups=computenodes
+       when: "'{{ node_name }}' not in wwsh_node_list.stdout"
+
+     - name: Register node IP and MAC address in warewulf database
+       command: sudo wwsh node set {{node_name}} -y -I {{ node_ip_v4 }} --hwadd {{ node_mac }}
+       when: "'{{ node_name }}' in wwsh_node_list.stdout"
+
+     - name: Setup ood node provision in warewult database
+       command: sudo wwsh provision set {{ node_name }} -y --files dynamic_hosts,munge.key,slurm.conf  --bootlocal=exit
+     
      - name: set nodes bootloader
        command: wwsh -y object modify -s bootloader=sda -t node {{ item.name }}
        with_items: "{{ compute_nodes }}"
