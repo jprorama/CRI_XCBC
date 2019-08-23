@@ -74,3 +74,16 @@
        src: /root/.ssh/cluster.pub
        dest: ./cluster_root.pub
        flat: yes
+
+   - name: import files into WW database
+     command: wwsh file import "{{ item }}"
+     become: true
+     with_items:
+             - /etc/passwd 
+             - /etc/group
+             - /etc/shadow
+             - /etc/munge/munge.key
+             - /etc/slurm/slurm.conf
+             - /etc/hosts
+             - /etc/profile.d/lmod.sh
+             - /etc/profile.d/lmod.csh
