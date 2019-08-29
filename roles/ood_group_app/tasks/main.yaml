@@ -1,0 +1,8 @@
+---
+- name: Create app folder
+  file:
+    path: "/var/www/ood/apps/sys/{{ app_name }}"
+    state: directory
+    owner: root
+    group: "{{ app_group_name }}"
+    mode: '0750'
