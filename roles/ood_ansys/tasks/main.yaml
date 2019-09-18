@@ -1,0 +1,24 @@
+- name: Remove existing ANSYS app install
+  file:
+    path: /var/www/ood/apps/sys/ansys/
+    state: absent
+
+- name: Create ANSYS app directory
+  file:
+    path: /var/www/ood/apps/sys/ansys
+    state: directory
+
+- git:
+    repo: 'https://github.com/uabrc/ood_ansys.git'
+    dest: /var/www/ood/apps/sys/ansys/
+    clone: yes
+
+- name: Replace form.yml
+  template:
+    src: form.yml
+    dest: /var/www/ood/apps/sys/ansys/form.yml
+
+- name: Remove form.js
+  file:
+    path: /var/www/ood/apps/sys/ansys/form.js
+    state: absent
