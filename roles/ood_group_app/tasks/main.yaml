@@ -18,3 +18,14 @@
     owner: root
     group: "{{ app_group_name }}"
     mode: '0750'
+
+- git:
+    repo: "{{ app_repo }}"
+    dest: "/var/www/ood/apps/sys/{{ app_name }}/"
+    clone: yes
+  when: app_repo is defined
+
+- template:
+    src: "/var/www/ood/apps/sys/{{ app_name }}/form.yml"
+    dest: "/var/www/ood/apps/sys/{{ app_name }}/form.yml"
+  when: app_repo is defined
