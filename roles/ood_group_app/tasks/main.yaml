@@ -1,4 +1,16 @@
 ---
+- name: Ensure group exists
+  group:
+    name: "{{ app_group_name }}"
+    state: present
+
+- name: Add user into the group if provided
+  user:
+    name: "{{ item }}"
+    groups: "{{ app_group_name }}"
+  with_items: "{{ app_users }}"
+  when: app_users is defined and (app_users|length > 0)
+
 - name: Create app folder
   file:
     path: "/var/www/ood/apps/sys/{{ app_name }}"
