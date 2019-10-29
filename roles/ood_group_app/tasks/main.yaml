@@ -18,6 +18,7 @@
     owner: root
     group: "{{ app_group_name }}"
     mode: '0750'
+    recurse: yes
 
 - git:
     repo: "{{ app_repo }}"
