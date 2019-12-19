@@ -22,3 +22,11 @@
     - https://dl.bintray.com/pcp/el7/pcp-system-tools-3.12.2-1.x86_64.rpm
     - https://dl.bintray.com/pcp/el7/perl-PCP-LogImport-3.12.2-1.x86_64.rpm
 
+- name: pmlogger control file template
+  template:
+    src: control.j2
+    dest: /etc/pcp/pmlogger/control
+    owner: root
+    group: root
+    mode: 0644
+
