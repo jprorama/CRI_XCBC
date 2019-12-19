@@ -73,3 +73,11 @@
     group: root
     mode: 0644
 
+- name: Disable daily archive rollup
+  template:
+    src: pcp-pmlogger.j2
+    dest: /etc/cron.d/pcp-pmlogger
+    owner: root
+    group: root
+    mode: 0644
+
