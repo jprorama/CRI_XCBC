@@ -43,3 +43,11 @@
     group: root
     mode: 0644
 
+- name: process logging config file template
+  template:
+    src: hotproc.conf.j2
+    dest: /var/lib/pcp/pmdas/proc/hotproc.conf
+    owner: root
+    group: root
+    mode: 0644
+
