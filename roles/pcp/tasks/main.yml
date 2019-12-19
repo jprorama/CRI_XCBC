@@ -81,3 +81,5 @@
     group: root
     mode: 0644
 
+- name: Restart PMCD
+  command: systemctl restart pmcd
