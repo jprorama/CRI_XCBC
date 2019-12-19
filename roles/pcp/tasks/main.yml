@@ -35,3 +35,11 @@
     path: /etc/pcp/pmlogger/control.d/local
     state: absent
 
+- name: pmlogger supremm config file template
+  template:
+    src: pmlogger-supremm.config.j2
+    dest: /etc/pcp/pmlogger/pmlogger-supremm.config
+    owner: root
+    group: root
+    mode: 0644
+
