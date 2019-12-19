@@ -170,3 +170,4 @@
 
 # PCP
   enable_pcp: true
+  PCP_LOG_DIR: "/home/centos/supremm"
