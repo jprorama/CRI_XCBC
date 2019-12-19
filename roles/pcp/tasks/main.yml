@@ -51,3 +51,17 @@
     group: root
     mode: 0644
 
+- name: enable logging modules PMDAs
+  file:
+    path: '/var/lib/pcp/pmdas/{{ item }}'
+    state: touch
+    owner: root
+    group: root
+  loop:
+    - slurm/.NeedInstall
+    - nvidia/.NeedInstall
+    - gpfs/.NeedInstall
+    - nfsclient/.NeedInstall
+    - perfevent/.NeedInstall
+    - mic/.NeedInstall
+
