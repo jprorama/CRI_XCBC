@@ -1,0 +1,24 @@
+---
+
+- name: Install PCP related packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - https://dl.bintray.com/pcp/el7/pcp-conf-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-libs-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-libs-devel-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-selinux-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-3.12.2-1.x86_64.rpm 
+    - https://dl.bintray.com/pcp/el7/perl-PCP-PMDA-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/python-pcp-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-gpfs-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-lustre-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-mic-3.12.2-1.x86_64.rpm	 
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-nfsclient-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-nvidia-gpu-3.12.2-1.x86_64.rpm 
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-perfevent-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-pmda-slurm-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/pcp-system-tools-3.12.2-1.x86_64.rpm
+    - https://dl.bintray.com/pcp/el7/perl-PCP-LogImport-3.12.2-1.x86_64.rpm
+
