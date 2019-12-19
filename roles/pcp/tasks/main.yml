@@ -65,3 +65,11 @@
     - perfevent/.NeedInstall
     - mic/.NeedInstall
 
+- name: Configure Global process capture
+  template:
+    src: pmcd.conf.j2
+    dest: /etc/pcp/pmcd/pmcd.conf
+    owner: root
+    group: root
+    mode: 0644
+
