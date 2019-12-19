@@ -30,3 +30,8 @@
     group: root
     mode: 0644
 
+- name: remove existing files under /etc/pcp/pmlogger/control.d/
+  file:
+    path: /etc/pcp/pmlogger/control.d/local
+    state: absent
+
