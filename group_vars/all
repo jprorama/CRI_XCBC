@@ -168,3 +168,10 @@
   user_create_scripts_path: "/opt/{{ user_create_scripts }}"
   user_create_script_repo: "https://gitlab.rc.uab.edu/tr27p/ohpc_user_create.git"
 
+# Slurm-accounting-fix-related 
+  slurm_db_fix_repo_url: "https://github.com/eesaanatluri/slurm-accounting-fix.git"
+  slurmdb_dump_file_path: "/home/centos/slurmdb_backup_20191014_032723.tar.gz"
+  db_fix_hierarchy_archive: "/home/centos/hierarchy-files.tar.gz"
+  uid_name_file_path: "/home/centos/fix-uids-name.csv"
+  hierarchy_file_path: "/home/centos/depttoschoolmapping.csv"
+  group_to_hierarchy_file_path: "/home/centos/cheahausers.csv" 
