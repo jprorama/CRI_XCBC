@@ -2,7 +2,7 @@
 
 - name: Unzip the Slurm accounting DB
   unarchive:
-    src: {{ slurmdb_dump_file_path }}
+    src: "{{ slurmdb_dump_file_path }}"
     dest: /home/centos/
 
 - name: Modify the table names in the database dump file to match dev setup
