@@ -1,0 +1,21 @@
+---
+# this loads a stock shibboleth config that will work with rpm-provided
+# shibboleth credentials against the samltest.id
+# must use the SP target host name testshib.dev.rc.uab.edu for ood node
+# from client running web browser.  e.g. edit /etc/hosts to map to localhost
+# also requires ood to be accessible on port 8080 to match entityID
+# note testshib.dev.rc.uab.edu is not a real Hostname
+- name: load samltest.id shibboleth config
+  unarchive:
+    src: "{{ shib_config_files }}"
+    dest: /etc/shibboleth/
+    remote_src: no 
+
+- name: Build the updated Apache config
+  command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
+  ignore_errors: yes
+
+- name: Restart service httpd, in all cases
+  service:
+    name: httpd24-httpd
+    state: restarted

@@ -1,0 +1,28 @@
+---
+- name: add saml-to-ood user map file
+  copy:
+    src: ood-user-mapfile
+    dest: /etc/ood/ood-user-mapfile
+
+- name: update ood portal config with user mapfile
+  replace:
+    path: /etc/ood/config/ood_portal.yml
+    regexp: '^#user_map_cmd:.*$'
+    replace: "user_map_cmd: '/opt/ood/ood_auth_map/bin/ood_auth_map.mapfile --file /etc/ood/ood-user-mapfile'\nuser_env: 'REMOTE_USER'\n"
+    backup: yes
+
+- name: update ood portal config for shibboleth authn
+  replace:
+    path: /etc/ood/config/ood_portal.yml
+    regexp: "^(#  - 'Require valid-user')"
+    replace: '\1\nauth:\n - "AuthType shibboleth"\n - "ShibRequestSetting requireSession 1"\n - "Require valid-user"\n'
+    backup: yes
+
+- name: Build the updated Apache config
+  command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
+  ignore_errors: yes
+
+- name: Restart service httpd, in all cases
+  service:
+    name: httpd24-httpd
+    state: restarted
