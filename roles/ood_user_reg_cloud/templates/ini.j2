@@ -1,7 +1,6 @@
 [uwsgi]
 mount = /register=wsgi.py
 
-uid = {{ RegUser_app_user }}
 req-logger = file:{{ user_register_app_path }}/log/req
 logger = file:{{ user_register_app_path }}/log/err
 
