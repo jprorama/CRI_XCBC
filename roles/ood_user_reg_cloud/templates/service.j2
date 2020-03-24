@@ -3,7 +3,7 @@ Description=uWSGI server for flask user registration
 After=network.target
 
 [Service]
-User={{ RegUser_app_user }}
+User=apache
 Group=apache
 WorkingDirectory={{ user_register_app_path }}
 Environment="PATH={{ user_register_app_path }}/venv/bin"
