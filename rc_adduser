@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [[ $(id -u) -ne 0 ]]; then
+    echo "This script must be run as root"
+    exit 1
+fi
+
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $(basename $0) USERNAME PASSWORD"
+    exit 1
+fi
+
+username=$1
+password=$2
+file='/opt/rh/httpd24/root/etc/httpd/.htpasswd'
+
+read -r -p "Adding User:
+	Username: $username
+	Password: $password
+[y/N]? " response
+case "$response" in
+    [yY][eE][sS]|[yY])
+	if [ -f $file ]; then
+		scl enable ondemand -- htpasswd -b $file $username $password
+	else
+		scl enable ondemand -- htpasswd -cb $file $username $password
+	fi
+	echo "Added."
+        ;;
+    *)
+	echo "Abort."
+        ;;
+esac
