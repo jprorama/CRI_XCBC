@@ -81,17 +81,6 @@
     group: root
     mode: 0644
 
-- name: Create pcp group
-  group:
-    name: pcp
-    state: present
-
-- name: Create pcp user with primary group pcp 
-  user:
-    name: pcp
-    group: pcp
-    state: present
-
 - name: enable pmcd and pmlogger
   command: systemctl enable pmcd pmlogger
 
