@@ -84,5 +84,5 @@
 - name: enable pmcd and pmlogger
   command: systemctl enable pmcd pmlogger
 
-- name: start pmlogger and pmlogger
+- name: start pmcd and pmlogger
   command: systemctl start pmcd pmlogger
