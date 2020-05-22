@@ -68,9 +68,11 @@
 
 #OpenOnDemand
   ood_nodename: "ood"
-  ood_version: 1.5
   ood_private_ip: "10.1.1.11"
-  ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.el7.noarch.rpm"
+  # check https://yum.osc.edu/ondemand/ for ood repo
+  # default use ood 1.7 https://yum.osc.edu/ondemand/1.7/ondemand-release-web-1.7-1.noarch.rpm
+  ood_rpm_repo: "https://yum.osc.edu/ondemand/1.7/ondemand-release-web-1.7-1.noarch.rpm"
+
 
 #Node Inventory - not in the Ansible inventory sense! Just for WW and Slurm config.
 # Someday I will need a role that can run wwnodescan, and add nodes to this file! Probably horrifying practice.
