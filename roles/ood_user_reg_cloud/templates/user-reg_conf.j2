@@ -10,4 +10,5 @@ ProxyPass /register http://127.0.0.1:8000/register/
         AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"
         RequestHeader unset Authorization
         Require valid-user
+        ShibUseHeaders On
 </Location>
