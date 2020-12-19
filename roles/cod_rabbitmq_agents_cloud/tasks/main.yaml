@@ -1,13 +1,12 @@
 ---
 - name: Change the default min UID and GID to replicate prod
-  lineinfile:
+  replace:
     path: /etc/login.defs
     regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: present
+    replace: "{{ item.line }}"
   loop:
-    - { regexp: '^UID_MIN\t{3}1000', line: 'UID_MIN\t{3}10000' }
-    - { regexp: '^GID_MIN\t{3}1000', line: 'GID_MIN\t{3}10000' }
+    - { regexp: '^UID_MIN\s*1000', line: 'UID_MIN\t\t\t10000' }
+    - { regexp: '^GID_MIN\s*1000', line: 'GID_MIN\t\t\t10000' }
 
 - name: Create .agent_db dir for sqlite DB if not present
   file:
