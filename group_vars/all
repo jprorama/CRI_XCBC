@@ -188,3 +188,6 @@
   celery_user: "reggie"
   celery_user_password: "reggie"
   celery_vhost: "socketio"
+
+#ClusteronDemand CoD
+  cod_deploy: true
