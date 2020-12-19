@@ -180,6 +180,7 @@
   rabbitmq_agents_loc: "/cm/shared/rabbitmq_agents"
   rabbitmq_agents_repo: "https://github.com/uabrc/rabbitmq_agents.git"
   rabbitmq_agents_version: "feat-cod-rmq"
+  rabbitmq_agents_service_user: "root"
   rc_users_ldap_repo: "git@gitlab.rc.uab.edu:atlurie/rc-user-add-test.git"
   rc_users_ldap_repo_loc: "~/git/rc-users"
 
