@@ -27,12 +27,12 @@
   ignore_errors: yes 
   register: result
 
-#- debug:
-#    msg: "{{ result }}"
-#  when: result.rc!=0
+- debug:
+    msg: "{{ result }}"
+  when: result.failed == 'true'
 
-- name: "Error: {{ result.stderr_lines[0] }}"
+- name: "Action needed:"
   fail:
-    msg: You need to upload the ssh key to "{{ rc_users_ldap_repo }}"
-  when:  result.rc!=0
+    msg: "You need to upload the ssh key to {{ rc_users_ldap_repo }}"
+  when:  result.failed == 'true'
 
