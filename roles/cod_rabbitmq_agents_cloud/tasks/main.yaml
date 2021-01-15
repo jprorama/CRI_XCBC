@@ -29,10 +29,10 @@
 
 - debug:
     msg: "{{ result }}"
-  when: result.failed == 'true'
+  when: result.failed == 'true' or result.rc is defined
 
 - name: "Action needed:"
   fail:
     msg: "You need to upload the ssh key to {{ rc_users_ldap_repo }}"
-  when:  result.failed == 'true'
+  when:  result.failed == 'true' or result.rc is defined
 
