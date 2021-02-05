@@ -4,3 +4,45 @@ Password = "{{ rabbitmq_user_password }}"
 VHost = "{{ rabbitmq_vhost }}"
 Server = "{{ rabbitmq_host }}"
 Port = {{ rabbitmq_port }}
+
+# git_commit agent config
+rc_users_ldap_repo_loc = "{{ rc_users_ldap_repo_loc }}"
+
+# Config related to email
+Server = "{{ mail_server }}"
+Admin_email = "{{ admin_email }}"
+Sender = "{{ sender }}"
+Sender_alias = "{{ sender_alias }}"
+Subject = "{{ subject }}"
+Info_url = "{{ info_url }}"
+Mail_list = "{{ mail_list }}"
+Mail_list_bcc = "{{ mail_list_bcc }}"
+
+{# Head = f"""From: {Sender_alias} <{Sender}>
+To: <{{{{ to }}}}>
+Subject: {Subject}
+"""
+
+Body = f"""
+Hi {{{{ username }}}}
+Your account has been set up with:
+
+============================
+User ID:  {{{{ username }}}}
+============================
+
+If you have any questions, please visit:
+{Info_url}
+
+or email at {Admin_email}
+
+Cheers,
+"""
+
+Whole_mail = Head + Body
+
+UserReportHead = f"""From: {Sender_alias} <{Sender}>
+To: <{Admin_email}>
+Subject: User Creation Report:
+"""
+#}
