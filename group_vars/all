@@ -182,6 +182,17 @@
   rabbitmq_agents_version: "feat-cod-rmq"
   rabbitmq_agents_service_user: "root"
 
+  # rabbit_config
+  mail_server: "localhost"
+  admin_email: "root@localhost"
+  sender: "ROOT@LOCALHOST"
+  sender_alias: "Services"
+  subject: "New User Account"
+  info_url: "https://www.google.com"
+  mail_list: "root@localhost"
+  mail_list_bcc: "cmsupport@localhost"
+  rc_users_ldap_repo_loc: "~/git/rc-users"
+
 # Celery
   celery_user: "reggie"
   celery_user_password: "reggie"
