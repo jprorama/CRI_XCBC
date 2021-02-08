@@ -18,7 +18,8 @@ Info_url = "{{ info_url }}"
 Mail_list = "{{ mail_list }}"
 Mail_list_bcc = "{{ mail_list_bcc }}"
 
-{# Head = f"""From: {Sender_alias} <{Sender}>
+{% raw %}
+Head = f"""From: {Sender_alias} <{Sender}>
 To: <{{{{ to }}}}>
 Subject: {Subject}
 """
@@ -45,4 +46,4 @@ UserReportHead = f"""From: {Sender_alias} <{Sender}>
 To: <{Admin_email}>
 Subject: User Creation Report:
 """
-#}
+{% endraw %}
