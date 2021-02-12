@@ -7,7 +7,7 @@ Port = {{ rabbitmq_port }}
 
 # time delay to let account creation finish 
 # to avoid concurrency with downstream agents
-Delay = "{{ delay }}"
+Delay = {{ delay }}
 
 # dir_verify agent config
 User_dirs = {{ user_dirs }}
