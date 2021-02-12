@@ -9,6 +9,9 @@ Port = {{ rabbitmq_port }}
 # to avoid concurrency with downstream agents
 Delay = "{{ delay }}"
 
+# dir_verify agent config
+User_dirs = {{ user_dirs }}
+
 # git_commit agent config
 rc_users_ldap_repo_loc = "{{ rc_users_ldap_repo_loc }}"
 

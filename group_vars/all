@@ -193,6 +193,7 @@
   mail_list_bcc: "cmsupport@localhost"
   rc_users_ldap_repo_loc: "~/git/rc-users"
   delay: "5" #time delay to let account creation finish to avoid concurrency
+  user_dirs: ['/home', '/data/user', '/data/scratch']
 
 # Celery
   celery_user: "reggie"
