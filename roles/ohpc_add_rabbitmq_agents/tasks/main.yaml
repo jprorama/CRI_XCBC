@@ -61,3 +61,14 @@
     enabled: yes
   loop: "{{ lookup('fileglob', '{{ rabbitmq_agents_loc }}/prod_rmq_agents/*.py', wantlist=True) }}"
   when: cod_deploy | bool
+  loop:
+    - ohpc_account_agent
+    - slurm_account_agent
+    - get-next-uid-gid_agent
+    - dir_verify_agent
+    - git_commit_agent
+    - subscribe_mail_lists_agent
+    - notify_user_agent
+    - task_manager_agent
+    - user_reg_logger_agent
+    - user_reg_event_logger_agent
