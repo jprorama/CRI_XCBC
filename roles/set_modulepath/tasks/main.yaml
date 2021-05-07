@@ -1,0 +1,6 @@
+---
+- name: Add /export/modulefiles/all path into default MODULEPATH
+  replace:
+    path: /etc/profile.d/lmod.sh
+    regexp: (MODULEPATH=.*)
+    replace: \1:/export/modulefiles/all
