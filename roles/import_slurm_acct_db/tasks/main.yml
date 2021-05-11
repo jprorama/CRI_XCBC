@@ -2,26 +2,26 @@
 
 - name: Unzip the Slurm accounting DB
   unarchive:
-    src: "{{ slurmdb_dump_file_path }}"
-    dest: /home/centos/
+    src: "{{ slurmdb_dump_file_src }}"
+    dest: "{{ slurmdb_dump_file_dest }}"
 
 - name: Modify the table names in the database dump file to match dev setup
-  command: perl -pi.bak -e 's/slurm_cluster/ohpc/g;' /home/centos/slurmdb_backup_20191014_032723
+  command: perl -pi.bak -e 's/slurm_cluster//g;' "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file }}"
 
 - name: Stop the slurmdbd service before restoring the dump file into new database
   command: systemctl stop slurmdbd
 
 - name: Drop the existing slurm accounting database
-  command: mysql -u root -e "drop database slurmdb;"
+  command: mysql -u root -e "drop database {{ slurm_acct_db }};"
 
 - name: Create new database with the name defined in the slurm config
-  command: mysql -u root -e "create database slurmdb;"
+  command: mysql -u root -e "create database {{ slurm_acct_db }};"
 
 - name: Restore the database from the modified backup file.
   mysql_db:
     state: import
-    name: slurmdb
-    target: /home/centos/slurmdb_backup_20191014_032723
+    name: "{{ slurm_acct_db }}"
+    target: "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file }}"
 
 - name: Start slurmdbd manually
   command: slurmdbd -vvvv
