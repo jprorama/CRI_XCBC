@@ -68,7 +68,7 @@
 
 #OpenOnDemand
   ood_nodename: "ood"
-  ood_version: 1.5
+  ood_version: 1.6
   ood_private_ip: "10.1.1.11"
   ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.el7.noarch.rpm"
 
@@ -155,8 +155,9 @@
 # User Registration
   enable_user_reg: true
   user_register_app: "flask_user_reg"
+  user_register_app_tag: "master"
   user_register_app_path: "/var/www/ood/register/{{ user_register_app }}"
-  user_register_app_repo: "https://gitlab.rc.uab.edu/mmoo97/flask_user_reg.git"
+  user_register_app_repo: "https://gitlab.rc.uab.edu/rc/self-reg-form.git"
   mod_wsgi_pkg_name: "uab-httpd24-mod_wsgi"
   RegUser_app_user: "reggie"
   RegUser_app_user_full_name: "RegUser of user register app"
@@ -168,10 +169,38 @@
   user_create_scripts_path: "/opt/{{ user_create_scripts }}"
   user_create_script_repo: "https://gitlab.rc.uab.edu/tr27p/ohpc_user_create.git"
 
-# Slurm-accounting-fix-related 
-  slurm_db_fix_repo_url: "https://github.com/eesaanatluri/slurm-accounting-fix.git"
-  slurmdb_dump_file_path: "/home/centos/slurmdb_backup_20191014_032723.tar.gz"
-  db_fix_hierarchy_archive: "/home/centos/hierarchy-files.tar.gz"
-  uid_name_file_path: "/home/centos/fix-uids-name.csv"
-  hierarchy_file_path: "/home/centos/depttoschoolmapping.csv"
-  group_to_hierarchy_file_path: "/home/centos/cheahausers.csv" 
+# RabbitMQ
+  rabbitmq_provision: true
+  rabbitmq_user: "reggie"
+  rabbitmq_user_password: "reggie"
+  rabbitmq_host: "master"
+  rabbitmq_exchange: "RegUsr"
+  rabbitmq_vhost: "adduser"
+  rabbitmq_port: "5672"
+  rabbitmq_agents_loc: "/cm/shared/rabbitmq_agents"
+  rabbitmq_agents_repo: "https://github.com/uabrc/rabbitmq_agents.git"
+  rabbitmq_agents_version: "feat-cod-rmq"
+  rabbitmq_agents_service_user: "root"
+  
+  # rabbit_config
+  mail_server: "localhost"
+  admin_email: "root@localhost"
+  sender: "ROOT@LOCALHOST"
+  sender_alias: "Services"
+  subject: "New User Account"
+  info_url: "https://www.google.com"
+  mail_list: "root@localhost"
+  mail_list_bcc: "cmsupport@localhost"
+
+  delay: "5" #time delay to let account creation finish to avoid concurrency
+  user_dirs: ['/home', '/data/user', '/data/scratch']
+  rc_users_ldap_repo: "git@gitlab.rc.uab.edu:atlurie/rc-user-add-test.git"
+  rc_users_ldap_repo_loc: "~/git/rc-users"
+
+# Celery
+  celery_user: "reggie"
+  celery_user_password: "reggie"
+  celery_vhost: "socketio"
+
+#ClusteronDemand CoD
+  cod_deploy: true
