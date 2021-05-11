@@ -8,13 +8,13 @@
     state: present
     key: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
 
-- name: Add RabbitMQ bintray repository
-  yum_repository:
-    name: bintray-rabbitmq-rpm
-    description: RabbitMQ (CentOS 7)
-    baseurl: https://dl.bintray.com/rabbitmq/rpm/rabbitmq-server/v3.8.x/el/7/
-    gpgcheck: no
-    enabled: yes
+#- name: Add RabbitMQ repository
+#  yum_repository:
+#    name: github-rabbitmq-rpm
+#    description: RabbitMQ (CentOS 7)
+#    baseurl: https://github.com/rabbitmq/rabbitmq-server/releases 
+#    gpgcheck: no
+#    enabled: yes
 
 - name: Install Erlang
   yum:
@@ -23,7 +23,7 @@
 
 - name: Install RabbitMQ Server
   yum:
-    name: rabbitmq-server
+    name: https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.8.16/rabbitmq-server-3.8.16-1.el7.noarch.rpm 
     state: present
 
 - name: Start and enable RabbitMQ Server
