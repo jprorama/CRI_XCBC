@@ -24,7 +24,7 @@ jobs:
     - name: Install ansible and ansible-lint
       run: |
         python -m pip install --upgrade pip
-        pip install ansible==2.9 ansible-lint==4.2.0
+        pip install ansible ansible-lint
 
     - name: Lint Ansible Playbook
       run: |
