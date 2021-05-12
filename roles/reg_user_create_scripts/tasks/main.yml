@@ -1,6 +1,6 @@
 ---
 - name: Remove existing cloned repo
-  file: 
+  file:
     path: "{{ user_create_scripts_path }}"
     state: absent
 
@@ -8,7 +8,7 @@
   file:
     path: "{{ user_create_scripts_path }}"
     state: directory
-    
+
 - name: Clone template repo from upstream
   git:
     repo: "{{ user_create_script_repo }}"

@@ -46,7 +46,7 @@
       - "{{ nvidia_driver_installer }}"
       - "{{ cuda_toolkit_installer }}"
       - "{{ cuda_samples_installer }}"
- 
+
    - name: build nvidia kernel modules in the vnfs
      shell: chroot {{ gpu_chroot_loc }} {{ nvidia_kernel_build_cmd }}
      vars:
@@ -79,7 +79,7 @@
 
    - name: create rebuild-grub service
      copy: src=rebuild-grub.service dest={{ gpu_chroot_loc }}/etc/systemd/system/rebuild-grub.service
- 
+
    - name: enable rebuild-grub.service
      command: chroot {{ gpu_chroot_loc }} systemctl enable rebuild-grub.service
 
@@ -101,7 +101,7 @@
    - name: put NFS opt mount info in image
      lineinfile: line="{{ headnode_private_ip }}:/export /share nfs nfsvers=3 0 0" dest={{ gpu_chroot_loc }}/etc/fstab state=present
 
-   - name: chronyd on compute image enabled 
+   - name: chronyd on compute image enabled
      command: chroot '{{ gpu_chroot_loc }}' systemctl enable chronyd
 
    - name: add headnode to compute chrony.conf
@@ -128,7 +128,7 @@
    - name: build bootstrap image
      shell: wwbootstrap {{ build_kernel_ver }}
 
-   - name: build the vnfs 
+   - name: build the vnfs
      command: wwvnfs -y --chroot "{{ gpu_chroot_loc }}/"
 
    - name: fix export of usr/include

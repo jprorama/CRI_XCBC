@@ -25,7 +25,7 @@
      command: wwsh -y object modify -s filesystems="{{ sda1 }},{{ sda2 }},{{ sda3 }}" -t node {{ item.name }}
      with_items: "{{ viz_nodes }}"
 #" for vim
-  
+
    - name: remove node from slurm.conf if it exists already # to avoid duplication!
      lineinfile:
        dest: /etc/slurm/slurm.conf
@@ -47,11 +47,11 @@
 
    - name: restart dhcp
      service: name=dhcpd state=restarted
- 
+
    - name: update pxeconfig to let node boot from pxe
      command: wwsh -y object modify -D bootlocal -t node {{ item.name }}
      with_items: "{{ compute_nodes }}"
- 
+
    - name: wwsh pxe update
      command: wwsh -v pxe update
      register: command_result

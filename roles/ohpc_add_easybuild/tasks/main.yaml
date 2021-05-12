@@ -2,7 +2,7 @@
 - name: Install pip for system python and build tools
   yum:
     state: present
-    name: 
+    name:
       - '@Development Tools'
       - python3
       - python3-pip

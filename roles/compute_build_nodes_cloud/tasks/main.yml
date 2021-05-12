@@ -39,7 +39,7 @@
          regexp: "^NodeName={{ item.name }}"
          state: absent
        with_items: "{{ compute_nodes }}"
-  
+
      - name: add node to slurm.conf
        lineinfile:
          dest: /etc/slurm/slurm.conf
@@ -49,13 +49,13 @@
        with_items: "{{ compute_nodes }}"
 
      when: node_inventory_auto == false
-  
+
    - name: sync files #also generates dynamic hosts on headnode!
      command: wwsh file sync
 
 #   - name: add compute nodes to ansible inventory for wait
 #     add_host: name={{ node_glob }} group="compute nodes"
-    
+
 #   - name: wait for compute nodes to boot
 #     local_action: wait_for host={{ last_node }} state=started delay=30 timeout=600
 

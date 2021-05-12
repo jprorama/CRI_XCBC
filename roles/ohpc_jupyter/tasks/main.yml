@@ -1,7 +1,7 @@
 ---
 - name: Install Anaconda3 for jupyter.
   shell: |
-    source /etc/profile.d/lmod.sh 
+    source /etc/profile.d/lmod.sh
     export EASYBUILD_PREFIX={{ easybuild_prefix }}
     module load EasyBuild
     eb Anaconda3-5.3.0.eb --toolchain-name=system -r --force
