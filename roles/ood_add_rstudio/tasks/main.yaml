@@ -13,7 +13,7 @@
 
 - name: Replace form submission template
   copy:
-    src: submit.yml
+    src: submit.yml.erb
     dest: /var/www/ood/apps/sys/bc_rstudio_server/submit.yml.erb
 
 - name: Replace manifest file
