@@ -3,3 +3,4 @@
   roles:
     - compute_build_image
     - install_ww_bin
+    - {role: pcp, tags: pcp, when: enable_pcp}

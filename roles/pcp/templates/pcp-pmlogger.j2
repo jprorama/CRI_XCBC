@@ -1,0 +1,9 @@
+#
+# Performance Co-Pilot crontab entries for a monitored site
+# with one or more pmlogger instances running
+#
+# daily processing of archive logs (with compression enabled)
+#10     0  *  *  *  pcp  /usr/libexec/pcp/bin/pmlogger_daily -X xz -x 3
+10     0  *  *  *  pcp  /usr/libexec/pcp/bin/pmlogger_daily -M -k forever
+# every 30 minutes, check pmlogger instances are running
+25,55  *  *  *  *  pcp  /usr/libexec/pcp/bin/pmlogger_check -C
