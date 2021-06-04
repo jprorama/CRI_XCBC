@@ -20,6 +20,8 @@
 
 #slurm.conf variables
   cluster_name: "ohpc"
+  slurm_bin_path: "/bin"
+  slurm_conf_path: "/etc/slurm/slurm.conf"
 #  gres_types: "gpu"
 
 # sacct user list
@@ -54,6 +56,8 @@
   gpu_chroot: centos7-gpu
   login_chroot_loc: "/opt/ohpc/admin/images/{{ login_chroot }}"
   login_chroot: centos7-login 
+  bright_cod_login_chroot_loc: "/cm/images/{{ bright_cod_login_chroot }}"
+  bright_cod_login_chroot: login-image
 
 # Node Inventory method - automatic, or manual
   node_inventory_auto: false
@@ -201,6 +205,7 @@
   celery_user: "reggie"
   celery_user_password: "reggie"
   celery_vhost: "socketio"
+  celery_user_key: "1234"
 
 #ClusteronDemand CoD
   cod_deploy: true
