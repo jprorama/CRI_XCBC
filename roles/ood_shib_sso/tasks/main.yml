@@ -34,6 +34,11 @@
     src: shibboleth2.xml
     dest: /etc/shibboleth/shibboleth2.xml
 
+- name: copy attributes file
+  copy:
+    src: attribute-xml.j2
+    dest: /etc/shibboleth/attribute-map.xml
+
 - name: update ood portal config with user mapfile
   replace:
     path: /etc/ood/config/ood_portal.yml
