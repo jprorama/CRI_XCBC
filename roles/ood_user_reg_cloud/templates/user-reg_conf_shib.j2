@@ -4,8 +4,17 @@ ProxyPassReverse /socket.io/ http://127.0.0.1:8000/socket.io/
 ProxyPass /register http://127.0.0.1:8000/
 ProxyPassReverse /register http://127.0.0.1:8000/
 
+ProxyPass /register http://127.0.0.1:8000/defaultpage
+ProxyPassReverse /register http://127.0.0.1:8000/defaultpage
+
 ProxyPass /static http://127.0.0.1:8000/static
 ProxyPassReverse /static http://127.0.0.1:8000/static
+
+<Location "/defaultpage">
+        AuthType shibboleth
+        ShibRequestSetting requireSession 1
+        Require valid-user
+</Location>
 
 <Location /register>
         AuthType shibboleth
