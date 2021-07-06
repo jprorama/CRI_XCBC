@@ -209,3 +209,9 @@
 
 #ClusteronDemand CoD
   cod_deploy: true
+
+# Slurmdb import related
+  slurmdb_dump_file: "slurmdb_backup_20210316_040509"
+  slurmdb_dump_file_src: "/tmp/{{ slurmdb_dump_file }}.tar.gz"
+  slurmdb_dump_file_dest: "/home/centos"
+
