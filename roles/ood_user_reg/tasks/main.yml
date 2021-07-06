@@ -68,7 +68,7 @@
   ignore_errors: yes
 
 - name: Get UID and GID of RegUser from OHPC
-  stat: 
+  stat:
      path: /home/{{ RegUser_app_user }}
   register: RegUser_stat
 

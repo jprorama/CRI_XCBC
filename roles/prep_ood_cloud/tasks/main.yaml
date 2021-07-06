@@ -12,7 +12,7 @@
   when: enable_copr == true and inventory_hostname in item.host
 
 - name: Install dependencies-nfs-utils, ohpc packages, ntp and other required tools.
-  yum: 
+  yum:
     state: installed
     update_cache: true
     name:

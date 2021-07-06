@@ -16,22 +16,22 @@
      - name: add node to ww db
        command: wwsh -y node new {{ item.name }} --ipaddr={{ item.ip }} --hwaddr={{ item.mac }} -D {{ compute_private_nic }}
        with_items: "{{ compute_nodes }}"
-  
+
      - name: set nodes bootloader
        command: wwsh -y object modify -s bootloader=sda -t node {{ item.name }}
        with_items: "{{ compute_nodes }}"
        when: stateful_nodes == true
-  
+
      - name: set nodes partitions
        command: wwsh -y object modify -s diskpartition=sda -t node {{ item.name }}
        with_items: "{{ compute_nodes }}"
        when: stateful_nodes == true
-  
+
      - name: format partitions
        command: wwsh -y object modify -s diskformat=sda1,sda2,sda3 -t node {{ item.name }}
        with_items: "{{ compute_nodes }}"
        when: stateful_nodes == true
-  
+
      - name: define filesystems
        command: wwsh -y object modify -s filesystems="{{ sda1 }},{{ sda2 }},{{ sda3 }}" -t node {{ item.name }}
        with_items: "{{ compute_nodes }}"
@@ -48,7 +48,7 @@
          regexp: "^NodeName={{ item.name }}"
          state: absent
        with_items: "{{ compute_nodes }}"
-  
+
      - name: add node to slurm.conf
        lineinfile:
          dest: /etc/slurm/slurm.conf
@@ -56,7 +56,7 @@
          insertbefore: "^# PARTITIONS"
          state: present
        with_items: "{{ compute_nodes }}"
-  
+
      when: node_inventory_auto == false
 
    - name: add nodes via wwnodescan - BOOT NODES NOW, IN ORDER
@@ -76,7 +76,7 @@
 
 #   - name: add compute nodes to ansible inventory for wait
 #     add_host: name={{ node_glob }} group="compute nodes"
-    
+
 #   - name: wait for compute nodes to boot
 #     local_action: wait_for host={{ last_node }} state=started delay=30 timeout=600
 
@@ -86,11 +86,11 @@
    - name: update pxeconfig to force node to boot from pxe
      command: wwsh -y object modify -D bootlocal -t node {{ compute_node_glob}}
      when: stateful_nodes == false and node_inventory_auto == true
- 
+
    - name: update pxeconfig to let node boot from local disk
      command: wwsh -y object modify -s bootlocal=EXIT -t node {{ compute_node_glob}}
      when: stateful_nodes == true and node_inventory_auto == true
- 
+
    - name: wwsh pxe update
      command: wwsh -v pxe update
      register: command_result

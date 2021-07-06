@@ -15,7 +15,7 @@
     version: custom_environment
     dest: /var/www/ood/apps/sys/jupyter
 
-- name: Use custom form.yml from templates for jupyter app 
+- name: Use custom form.yml from templates for jupyter app
   template:
     src: custom-jupyter-form.yml
     dest: /var/www/ood/apps/sys/jupyter/form.yml

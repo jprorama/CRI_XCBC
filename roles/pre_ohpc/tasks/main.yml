@@ -19,14 +19,14 @@
          - "python3"
          - "MySQL-python"
          - "epel-release"
-         - "wget" 
+         - "wget"
          - "tcpdump"
-         - "whois" 
-         - "lsof" 
+         - "whois"
+         - "lsof"
          - "xinetd"
-         - "vim" 
+         - "vim"
          - "net-tools"
-         - "exportfs" 
+         - "exportfs"
          - "firewalld"
          - "chrony"
          - "pciutils"
@@ -51,7 +51,7 @@
      when: enable_copr == true and inventory_hostname in item.host
 
    - name: install fail2ban # separate b/c it's in epel
-     yum: name=fail2ban state=latest 
+     yum: name=fail2ban state=latest
 
 #this is only necessary for non-local ansible!
 #   - name: turn off requiretty for sudo
@@ -62,7 +62,7 @@
 #       state: present
 
    - template: src=firewall_conf/services/slurm.xml dest=/etc/firewalld/services/slurm.xml
- 
+
    - template: src=firewall_conf/firewalld.conf dest=/etc/firewalld/firewalld.conf
 
    - template: src=firewall_conf/zones/internal.xml dest=/etc/firewalld/zones/internal.xml
@@ -103,7 +103,7 @@
    - name: firewalld restart # to load new slurm service
      service: name=firewalld state=stopped enabled=false
 
-## This section seems to be redundant 
+## This section seems to be redundant
 ##   - name: add interface to internal zone firewall-cmd
 ##     firewalld:
 ##       zone: internal
@@ -144,7 +144,7 @@
 ##
 ##   - name: firewalld restart
 ##     service: name=firewalld state=restarted
- 
+
    - name: set up /etc/hosts
      template: src=hosts.j2 dest=/etc/hosts
 
@@ -155,7 +155,7 @@
      service: name=sshd state=restarted
 
    - name: selinux allow homedirs
-     seboolean: 
+     seboolean:
        name: use_nfs_home_dirs
        state: yes
        persistent: yes
@@ -169,8 +169,8 @@
        regexp: '^#allow 192'
        line: "allow all {{ private_network }}/24"
        state: present
-       
- 
+
+
    - name: enable and restart chrony
      service: name=chronyd state=restarted enabled=yes
 
