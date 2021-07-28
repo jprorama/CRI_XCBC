@@ -21,7 +21,7 @@
 - name: Install easybuild as module
   shell: |
       source /opt/ohpc/admin/lmod/lmod/init/bash
-      /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix /export/eb
+      /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
   become_user: build
 
 - name: Remove temporary easybuild
