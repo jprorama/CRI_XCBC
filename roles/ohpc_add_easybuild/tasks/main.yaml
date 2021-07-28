@@ -2,44 +2,32 @@
 - name: Install pip for system python and build tools
   yum:
     state: present
-    name: 
+    name:
       - '@Development Tools'
       - python3
       - python3-pip
-
 
 - name: Create user build
   user:
     name: build
 
-- name: Change owner and permission of easybuild installation directory
-  file:
-    path: "{{ easybuild_prefix }}"
-    owner: root
-    group: build
-    mode: "g+w"
-    recurse: yes
+- name: Install temporary easybuild via pip
+  pip:
+    name: easybuild
+    virtualenv: eb_venv
+    virtualenv_command: /usr/bin/python3 -m venv
+    chdir: /tmp
 
-# EasyBuild bootstrap will fail with outdated setuptools on CentOS
-# This is a work-around that updates the sytem installed setuptools
-# Ideal solution is to provide a python specific to EasyBuild
-# likely via software collections
-- name: Fix EasyBuild setuptools dependency on version > 17.1
-  shell: pip3 install -U pip setuptools wheel
-
-- name: Download EasyBuild bootstrap script
-  get_url:
-    url: https://raw.githubusercontent.com/easybuilders/easybuild-framework/develop/easybuild/scripts/bootstrap_eb.py
-    dest: /tmp/bootstrap_eb.py
-
-- name: Boostrap EasyBuild
+- name: Install easybuild as module
   shell: |
       source /opt/ohpc/admin/lmod/lmod/init/bash
-      python bootstrap_eb.py "{{ easybuild_prefix }}"
+      /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix /export/eb
   become_user: build
-  args:
-    executable: /bin/bash
-    chdir: /tmp
+
+- name: Remove temporary easybuild
+  file:
+    state: absent
+    path: /tmp/eb_venv
 
 - name: Check if EasyBuild installation path is in default MODULEPATH
   shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.sh
