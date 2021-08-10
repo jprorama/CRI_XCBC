@@ -1,18 +1,16 @@
 ---
 
 - name: Unzip the Slurm accounting DB
-  unarchive:
-    src: "{{ slurmdb_dump_file_src }}"
-    dest: "{{ slurmdb_dump_file_dest }}"
+  command: gunzip -c "{{ slurmdb_dump_file_src }}/{{ slurmdb_dump_file }}" > "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
 
 - name: Modify the table names in the database dump file to match dev setup
-  command: perl -pi.bak -e 's/slurm_cluster//g;' "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file }}"
+  command: perl -pi.bak -e 's/slurm_cluster/{{ cluster_name }}/g;' "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
 
 - name: Stop the slurmdbd service before restoring the dump file into new database
   command: systemctl stop slurmdbd
 
 - name: Drop the existing slurm accounting database
-  command: mysql -u root -e "drop database {{ slurm_acct_db }};"
+  command: mysql -u root -e "drop database IF EXISTS {{ slurm_acct_db }};"
 
 - name: Create new database with the name defined in the slurm config
   command: mysql -u root -e "create database {{ slurm_acct_db }};"
@@ -21,7 +19,7 @@
   mysql_db:
     state: import
     name: "{{ slurm_acct_db }}"
-    target: "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file }}"
+    target: "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
 
 - name: Start slurmdbd manually
   command: slurmdbd -vvvv
