@@ -5,7 +5,7 @@ require 'ood_auth_map'
 
 class Regex < OodAuthMap
   # Default regular expression to use when parsing authenticated username
-  DEFAULT_REGEX = "^(.+)$"
+  DEFAULT_REGEX = "([^!]+)@uab.edu$"
 
   # Body of option parser
   define_body do |parser|
@@ -42,10 +42,22 @@ class Regex < OodAuthMap
   end
 
   define_run do |auth_user|
-    user_check = `getent passwd #{auth_user} | cut -d : -f 1`
-    #puts user_check
-    if user_check != ""
-      puts auth_user
+    sys_user = Helpers.parse_string(auth_user, /#{options[:regex]}/i)
+    # downcase the result
+    sys_user = ( sys_user || Helpers.parse_string(auth_user, /uabgrid.uab.edu\/shibboleth!(.+)$/) || auth_user).downcase
+
+    # Add blocked users list
+    block_user_file = File.join(File.dirname(__FILE__), "block_users_ood.txt")
+    if File.exists? (block_user_file)
+      block_users = File::readlines(block_user_file).map(&:chomp)
+      if block_users.include? sys_user
+        puts ""
+        exit(false)
+      end
+    end
+
+    if `getent passwd #{sys_user} | cut -d \' \' -f 1` != ""
+      puts sys_user
     else
       puts ""
       exit(false)

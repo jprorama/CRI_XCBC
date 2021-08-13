@@ -28,5 +28,5 @@
     - { test_str: "louistw@uab.edu", expected: "louistw" }
     - { test_str: "LoUiStW@uab.edu", expected: "louistw" }
     - { test_str: "FaKeAcCoUnT@uab.edu", expected: "" }
-    - { test_str: "rtripath89@gmail.com", expected: "rtripath89@gmail.com" }
-    - { test_str: "RTRipath89@gmail.com", expected: "rtripath89@gmail.com" }
+    - { test_str: "urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!rtripath89@gmail.com", expected: "rtripath89@gmail.com" }
+    - { test_str: "urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!RtRiPaTh89@gmail.com", expected: "rtripath89@gmail.com" }
