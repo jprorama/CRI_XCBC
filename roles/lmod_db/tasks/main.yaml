@@ -53,13 +53,13 @@
     backup: yes
 
 - name: Put rsyslog config file in place
-  copy:
-    src: moduleTracking.conf
+  template:
+    src: rsyslog.j2
     dest: /etc/rsyslog.d/moduleTracking.conf
 
 - name: Set up log rotate for module usage
-  copy:
-    src: moduleUsage
+  template:
+    src: logrotate.j2
     dest: /etc/logrotate.d/moduleUsage
 
 - name: Set up module tracking database user
