@@ -214,7 +214,8 @@
 # Lmod
   lmod_loc: "/opt/ohpc/admin/lmod/lmod"
   lmod_archive_loc: "{{ cluster_shared_folder }}/rc/lmod"
-  lmod_log_filename: "/var/log/moduleUsage.log"
+  lmod_log_loc: "/var/log"
+  lmod_log_filename: "{{ lmod_log_loc }}/moduleUsage.log"
   lmod_module_tracking_loc: "{{ lmod_loc }}/tools/tracking_module_usage"
   lmod_version: "8.5.9"
   lmod_cron_user: "root"

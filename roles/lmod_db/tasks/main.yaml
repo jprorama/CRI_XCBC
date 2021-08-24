@@ -46,6 +46,11 @@
     path: "{{ lmod_archive_loc }}"
     state: directory
 
+- name: Create module log directory
+  file:
+    path: "{{ lmod_log_loc }}"
+    state: directory
+
 - name: Update rsyslog.d
   lineinfile:
     path: /etc/rsyslog.conf
