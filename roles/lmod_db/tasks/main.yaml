@@ -87,7 +87,8 @@
 - name: Modify store db script
   lineinfile:
     path: "{{ lmod_module_tracking_loc }}/store_module_data"
-    line: "    dataT['syshost'] = syshost(dataT['host'])"
+    regexp: "syshost\\(dataT"
+    line: "    dataT['syshost'] = dataT['host']"
     state: absent
     backup: yes
 
