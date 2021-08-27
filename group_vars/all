@@ -219,6 +219,7 @@
   lmod_module_tracking_loc: "{{ lmod_loc }}/tools/tracking_module_usage"
   lmod_version: "8.5.9"
   lmod_cron_user: "root"
+  lmod_share_loc: "{{ cluster_shared_folder }}/lmod_script"
   lmod_db: "lmod"
   lmod_db_user: "lmod"
   lmod_db_passwd: "password"
