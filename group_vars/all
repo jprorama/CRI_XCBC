@@ -276,3 +276,7 @@
   lmod_db_user: "lmod"
   lmod_db_passwd: "password"
   lmod_db_host_machine: "ohpc"
+
+# Polling interval from dashboard to slurm in milliseconds
+  poll_interval: 120000 
+  env_file_loc: "/etc/ood/config/apps/dashboard/"
