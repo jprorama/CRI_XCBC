@@ -107,6 +107,18 @@
     user: "{{ lmod_cron_user }}"
     special_time: daily
 
+- name: Copy analyzeLmodDB script to share location
+  copy:
+    src: "{{ lmod_module_tracking_loc }}/{{ item.name }}"
+    dest: "{{ lmod_share_loc }}"
+    mode: "{{ item.mode }}"
+    remote_src: yes
+  loop:
+    - { name: analyzeLmodDB, mode: "0755" }
+    - { name: BeautifulTbl.py, mode: "0644" }
+    - { name: LMODdb.py, mode: "0644" }
+    - { name: "{{ lmod_db }}_db.conf", mode: "0644" }
+
 - name: Restart rsyslog
   service:
     name: rsyslog
