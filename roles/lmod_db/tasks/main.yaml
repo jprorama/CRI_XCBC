@@ -72,10 +72,11 @@
     name: "{{ lmod_db_user }}"
     password: "{{ lmod_db_passwd }}"
     priv: "{{ lmod_db }}.*:ALL"
+    host: "{{ lmod_db_allow_host }}"
     state: present
 
 - name: Setup config file for module tracking
-  command: ./conf_create --dbhost="localhost" --dbuser="{{ lmod_db_user }}" --passwd="{{ lmod_db_passwd }}" --dbname="{{ lmod_db }}"
+  command: ./conf_create --dbhost="{{ lmod_db_host_machine }}" --dbuser="{{ lmod_db_user }}" --passwd="{{ lmod_db_passwd }}" --dbname="{{ lmod_db }}"
   args:
     chdir: "{{ lmod_module_tracking_loc }}"
 
