@@ -1,7 +1,7 @@
 ---
 
 - name: Unzip the Slurm accounting DB
-  command: gunzip -c "{{ slurmdb_dump_file_src }}/{{ slurmdb_dump_file }}" > "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
+  shell: gunzip -c "{{ slurmdb_dump_file_src }}/{{ slurmdb_dump_file }}" > "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
 
 - name: Modify the table names in the database dump file to match dev setup
   command: perl -pi.bak -e 's/slurm_cluster/{{ cluster_name }}/g;' "{{ slurmdb_dump_file_dest }}/{{ slurmdb_dump_file | basename | splitext | first }}"
