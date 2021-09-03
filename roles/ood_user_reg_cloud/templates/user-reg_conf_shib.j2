@@ -8,11 +8,13 @@ ProxyPass /static http://127.0.0.1:8000/static
 ProxyPassReverse /static http://127.0.0.1:8000/static
 
 <Location /register-self>
+        RewriteEngine on
         AuthType shibboleth
         ShibRequestSetting requireSession 1
         Require valid-user
         RewriteCond %{IS_SUBREQ} ^false$
-        RewriteCond %{LA-U:REMOTE_USER} "^([a-z]+)@samltest.id$"
+        RewriteCond %{LA-U:REMOTE_USER} "([^!]+)@uab\.edu$" [OR]
+        RewriteCond %{LA-U:REMOTE_USER} "urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$"
         RewriteRule . - [E=RU:%1]
         RequestHeader set REMOTE_USER %{RU}e
         RewriteCond %{IS_SUBREQ} ^false$

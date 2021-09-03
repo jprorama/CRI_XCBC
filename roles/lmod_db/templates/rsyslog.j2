@@ -1,5 +1,5 @@
 $Ruleset remote
-if $programname contains 'ModuleUsageTracking' then /var/log/moduleUsage.log
+if $programname contains 'ModuleUsageTracking' then {{ lmod_log_filename }}
 $Ruleset RSYSLOG_DefaultRuleset
 
 # provides UDP syslog reception
