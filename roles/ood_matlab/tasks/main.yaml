@@ -13,7 +13,7 @@
     repo: 'https://github.com/OSC/bc_osc_matlab.git'
     dest: /var/www/ood/apps/sys/matlab/
     clone: yes
-    version: {{ matlab_git_version }}
+    version: "{{ matlab_git_version }}"
 
 - name: Replace form.yml
   template:
