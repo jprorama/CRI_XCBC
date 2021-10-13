@@ -19,6 +19,7 @@
     #value: http://www.gtlib.gatech.edu/pub/centos/7/sclo/$basearch/rh/
     value: http://mirror.centos.org/centos/7/sclo/x86_64/rh/
     backup: yes
+  when: ansible_distribution == "CentOS"
 
 - name: Fix remove mirrorlist from SCL RH7
   ini_file:
@@ -27,6 +28,7 @@
     state: absent
     option: mirrorlist
     backup: no
+  when: ansible_distribution == "CentOS"
 
 - name: Add Open OnDemand’s repository hosted by the Ohio Supercomputer Center
   yum:
