@@ -13,8 +13,12 @@
     enabled: yes
 
 # note the copr repo for shibboleth was added during node prep roles
-- name: install shibboleth rpm for scl apache
-  yum: name=shibboleth state=latest
+- name: install shibboleth and dependency
+  yum:
+    state: latest
+    name:
+      - "shibboleth"
+      - "libxerces-c-3_2"
 
 # note the shibboleth rpm is not fully scl-yet so need hand correction
 - name: copy shibbolth apache module into ood scl installe
