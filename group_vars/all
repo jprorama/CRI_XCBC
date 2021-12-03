@@ -138,6 +138,8 @@
   matlab_ver: "{{ matlab_module_file }}"
   matlab_module_name: "rc/matlab"
   matlab_vers:
+    - 'R2021b'
+    - 'R2021a'
     - 'R2020a'
     - 'R2019b'
     - 'R2019a'
@@ -168,6 +170,7 @@
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
   ansys_ood_repo: "http://github.com/uabrc/ood_ansys.git"
   ansys_versions:
+    - '2021R1'
     - "2020R2"
     - "2020R1"
 
