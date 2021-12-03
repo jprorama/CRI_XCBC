@@ -29,6 +29,10 @@ attributes:
       - [ "long", "long" ]
       - [ "interactive", "interactive" ]
       - [ "pascalnodes", "pascalnodes" ]
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
 
   version:
     widget: select

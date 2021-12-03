@@ -90,6 +90,11 @@ attributes:
       - [ "long", "long" ]
       - [ "interactive", "interactive" ]
       - [ "pascalnodes", "pascalnodes" ]
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
+
 # All of the attributes that make up the Dashboard form (in respective order),
 # and made available to the submit configuration file and the template ERB
 # files
