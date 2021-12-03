@@ -1,7 +1,7 @@
 ---
 - name: Create dashboard app config location
   file:
-    path: {{ env_file_loc }}
+    path: "{{ env_file_loc }}"
     state: directory
     mode: '0755'
 
