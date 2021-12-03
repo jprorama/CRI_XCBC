@@ -24,6 +24,9 @@
   cluster_host: "login001"
   slurm_bin_path: "/cm/shared/apps/slurm/current/bin"
   slurm_conf_path: "/cm/shared/apps/slurm/var/etc/slurm/slurm.conf"
+  slurm_partitions:
+    - { name: "defq", hours: 1, max_nodes: 0, priority: 2 }
+    - { name: "low", hours: 1, max_nodes: 0, priority: 2 }
 #  gres_types: "gpu"
 
 # sacct user list
