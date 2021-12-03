@@ -29,8 +29,12 @@ attributes:
       - [ "long", "long" ]
       - [ "interactive", "interactive" ]
       - [ "pascalnodes", "pascalnodes" ]
-
-  version:
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
+  
+version:
     widget: select
     label: "SAS version"
     help: "This defines the version of SAS you want to load."
