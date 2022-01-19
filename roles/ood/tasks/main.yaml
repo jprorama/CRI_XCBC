@@ -78,6 +78,13 @@
       - { regexp: "^#?node_uri:.*$", replace: "node_uri: '/node'" }
       - { regexp: "^#?rnode_uri:.*$", replace: "rnode_uri: '/rnode'" }
 
+- name: update ood portal config for basic authentication
+  replace:
+    path: /etc/ood/config/ood_portal.yml
+    regexp: "^(#  - 'Require valid-user')"
+    replace: '\1\nauth:\n - "AuthType Basic"\n - "AuthName "private""\n - "AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd""\n' - "RequestHeader unset Authorization"\n' - "Require valid-user"\n'
+    backup: yes
+
 - name: Stage http authz file for ood
   copy:
     src: htpasswd
