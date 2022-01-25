@@ -7,6 +7,15 @@ ProxyPassReverse /register http://127.0.0.1:8000/
 ProxyPass /static http://127.0.0.1:8000/static
 ProxyPassReverse /static http://127.0.0.1:8000/static
 
+ProxyPass /test http://www.google.com
+ProxyPassReverse /test http://www.google.com
+
+<Location /test>
+        AuthType shibboleth
+        ShibRequestSetting requireSession 1
+        Require valid-user
+</Location>
+
 <Location /register>
         AuthType shibboleth
         ShibRequestSetting requireSession 1
