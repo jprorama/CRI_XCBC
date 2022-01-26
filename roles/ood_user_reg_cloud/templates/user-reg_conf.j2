@@ -9,7 +9,7 @@ ProxyPassReverse /static http://127.0.0.1:8000/static
 
 <Location /register>
         AuthType Basic
-        AuthName "Private"
+        AuthName "private"
         AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"
         RequestHeader unset Authorization
         Require valid-user
@@ -17,7 +17,7 @@ ProxyPassReverse /static http://127.0.0.1:8000/static
 
 <Location "/static/">
         AuthType Basic
-        AuthName "Private"
+        AuthName "private"
         AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"
         RequestHeader unset Authorization
         Require valid-user
