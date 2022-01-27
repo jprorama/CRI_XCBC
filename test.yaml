@@ -1,0 +1,4 @@
+---
+- hosts: ood
+  roles:
+    - { name: 'ood_test_feature', tags: 'ood_test_feature' }
