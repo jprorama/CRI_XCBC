@@ -3,6 +3,11 @@
   yum:
     state: present
     name:
+      - grub2
+      - tmux
+      - ruby
+      - turbojpeg
+      - nc
       - '@X Window System'
       - '@Xfce'
 
