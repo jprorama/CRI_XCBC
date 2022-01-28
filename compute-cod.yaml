@@ -1,0 +1,4 @@
+---
+- hosts: chroot
+  roles:
+    - { name: 'cod_compute_build_image', tags: 'cod_compute_build_image' }
