@@ -1,0 +1,34 @@
+---
+- name: yum install
+  yum:
+    state: present
+    name:
+      - '@X Window System'
+      - '@Xfce'
+
+- name: Install TurboVNC via rpm
+  yum:
+    name: https://sourceforge.net/projects/turbovnc/files/2.2/turbovnc-2.2.x86_64.rpm
+    state: present
+
+- name: Download and extract Websockify source code
+  unarchive:
+    src: https://github.com/novnc/websockify/archive/v0.8.0.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Install Websockify
+  command: python setup.py install
+  args:
+    chdir: /tmp/websockify-0.8.0
+
+# After we installed Xfce, the compute node is set to bootup in graphical mode.
+# This task is to unset that back to multi-user mode.
+- name: Set compute node to boot with multi-user mode
+  command: systemctl set-default multi-user.target
+
+- name: Enable slurmd on compute image
+  service:
+    name: slurmd
+    enabled: yes
+
