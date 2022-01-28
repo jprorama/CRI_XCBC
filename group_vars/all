@@ -58,6 +58,8 @@
   login_chroot: centos7-login 
   bright_cod_login_chroot_loc: "/cm/images/{{ bright_cod_login_chroot }}"
   bright_cod_login_chroot: login-image
+  bright_cod_compute_chroot_loc: "/cm/images/{{ bright_cod_compute_chroot }}"
+  bright_cod_compute_chroot: compute-image
 
 # Node Inventory method - automatic, or manual
   node_inventory_auto: false
