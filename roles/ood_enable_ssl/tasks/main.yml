@@ -7,6 +7,13 @@
       ssl:
         - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
         - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+      auth:
+        - 'AuthType Basic'
+        - 'AuthName "Private"'
+        - 'AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"'
+        - 'RequestHeader unset Authorization'
+        - 'Require valid-user'
+
 
 - name: Build the updated Apache config
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
