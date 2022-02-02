@@ -6,6 +6,8 @@
 - name: create a new category for the compute image
   command: cmsh -c "category; clone default compute; set softwareimage compute-image; roles; assign compute; commit --wait"
 
+- name: Config for slurm-client role
+  command: cmsh -c "configurationoverlay; use slurm-client; append categories compute; commit"
 
 - name: Add software to the image
   command: yum -y --installroot=/cm/images/compute-image install {{ item }}
