@@ -13,19 +13,23 @@
   command: cmsh -c "configurationoverlay; use slurm-submit; append categories login; commit"
 
 - name: Add software to the image
-  command: yum -y --installroot=/cm/images/login-image install {{ item }}
-  loop:
-    - ansible
-    - git
-    - vim
-    - bash-completion
-    - python3
-    - python3-devel
-    - shorewall
-    - nfs-utils
+  yum:
+    installroot: /cm/images/login-image
+    name:
+      - ansible
+      - git
+      - vim
+      - bash-completion
+      - python3
+      - python3-devel
+      - shorewall
+      - nfs-utils
 
 - name: Create a symlink for munge.key before enabling munge service
-  command: ln -s /cm/shared/apps/slurm/var/munge/keys/munge.key /cm/images/login-image/etc/munge/munge.key
+  file:
+    state: link
+    src: /cm/shared/apps/slurm/var/munge/keys/munge.key
+    dest: /cm/images/login-image/etc/munge/munge.key
 
 - name: Create a directory for CRI_XCBC in the login-image chroot path
   file:
@@ -36,7 +40,12 @@
     group: root
 
 - name: Mount dirs required for ansible scripts to function
-  command: mount -o bind /{{ item }} /cm/images/login-image/{{ item }}
+  mount:
+    src: /{{ item }}
+    path: /cm/images/login-image/{{ item }}
+    opts: bind
+    fstype: none
+    state: mounted
   loop:
     - dev
     - proc
