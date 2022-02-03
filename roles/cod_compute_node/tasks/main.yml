@@ -14,13 +14,28 @@
     installroot: /cm/images/compute-image
     name:
       - ansible
-      - git
-      - vim
       - bash-completion
+      - git
+      - nc
+      - nfs-utils
+      - python-websockify
+      - python2-numpy
       - python3
       - python3-devel
+      - ruby
       - shorewall
-      - nfs-utils
+      - tmux
+      - turbojpeg
+      - vim
+      - '@X Window System'
+      - '@Xfce'
+
+- name: Install TurboVNC via rpm
+  yum:
+    installroot: /cm/images/compute-image
+    name: https://sourceforge.net/projects/turbovnc/files/2.2/turbovnc-2.2.x86_64.rpm
+    state: present
+    validate_certs: no
 
 - name: Create a symlink for munge.key before enabling munge service
   file:
