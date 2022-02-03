@@ -43,31 +43,6 @@
     src: /cm/shared/apps/slurm/var/munge/keys/munge.key
     dest: /cm/images/compute-image/etc/munge/munge.key
 
-- name: Create a directory for CRI_XCBC in the compute-image chroot path
-  file:
-    path: "{{ bright_cod_compute_chroot_loc }}/CRI_XCBC"
-    state: directory
-    mode: 0755
-    owner: root
-    group: root
-
-- name: Mount dirs required for ansible scripts to function
-  mount:
-    src: /{{ item }}
-    path: /cm/images/compute-image/{{ item }}
-    opts: bind
-    fstype: none
-    state: mounted
-  loop:
-    - dev
-    - proc
-    - sys
-    - home
-    - CRI_XCBC
-
-- name: Run the Ansible roles related to compute image
-  command: ansible-playbook -c chroot -i '/cm/images/compute-image/CRI_XCBC/hosts' /CRI_XCBC/compute-cod.yaml -b
-
 # cod compute node deploy
 - name: Change node001 category to compute
   command: cmsh -c "device; use node001; set category compute; commit"
