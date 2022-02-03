@@ -11,7 +11,7 @@
 
 - name: Add software to the image
   yum:
-    installroot: /cm/images/compute-image
+    installroot: "{{ bright_cod_compute_chroot_loc }}"
     name:
       - ansible
       - bash-completion
@@ -32,7 +32,7 @@
 
 - name: Install TurboVNC via rpm
   yum:
-    installroot: /cm/images/compute-image
+    installroot: "{{ bright_cod_compute_chroot_loc }}"
     name: https://sourceforge.net/projects/turbovnc/files/2.2/turbovnc-2.2.x86_64.rpm
     state: present
     validate_certs: no
@@ -41,7 +41,7 @@
   file:
     state: link
     src: /cm/shared/apps/slurm/var/munge/keys/munge.key
-    dest: /cm/images/compute-image/etc/munge/munge.key
+    dest: "{{ bright_cod_compute_chroot_loc }}/etc/munge/munge.key"
 
 # cod compute node deploy
 - name: Change node001 category to compute
