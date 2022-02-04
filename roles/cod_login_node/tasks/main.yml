@@ -56,6 +56,17 @@
 - name: Run the Ansible roles related to login image
   command: ansible-playbook -c chroot -i '{{ bright_cod_login_chroot_loc }}/CRI_XCBC/hosts' /CRI_XCBC/ood-cod.yaml -b
 
+- name: Unmount mounted dirs
+  mount:
+    path: "{{ bright_cod_login_chroot_loc }}/{{ item }}"
+    state: unmounted
+  loop:
+    - dev
+    - proc
+    - sys
+    - home
+    - CRI_XCBC
+
 # cod login node deploy
 - name: Change login001 category to login
   command: cmsh -c "device; use login001; set category login; commit"
