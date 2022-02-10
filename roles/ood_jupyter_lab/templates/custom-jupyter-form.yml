@@ -11,12 +11,12 @@
 cluster: {{ cluster_name }} 
 
 # Title of the app displayed in the Dashboard
-title: "Jupyter Notebook"
+title: "Jupyter Lab"
 
 # Description of the app displayed in the Dashboard (can use multi-line string
 # and Markdown syntax)
 description: |
-  This app will launch a Jupyter Notebook server on one or more cores.
+  This app will launch a JupyterLab server on one or more cores.
 
 # Define attribute values that aren't meant to be modified by the user within
 # the Dashboard form
@@ -60,7 +60,7 @@ attributes:
   # command that launches the Jupyter notebook within the batch job
   extra_jupyter_args:
     widget: text_field
-    label: Extra jupyter arguments
+    label: Extra JupyterLab arguments
 
   bc_num_hours:
     value: 1
