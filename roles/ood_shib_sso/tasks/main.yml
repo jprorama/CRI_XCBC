@@ -9,7 +9,7 @@
     description: Shibboleth (CentOS_7)
     mirrorlist: https://shibboleth.net/cgi-bin/mirrorlist.cgi/CentOS_7
     gpgkey: https://shibboleth.net/downloads/service-provider/RPMS/repomd.xml.key
-    gpgcheck: yes
+    gpgcheck: no
     enabled: yes
 
 # note the copr repo for shibboleth was added during node prep roles
@@ -33,11 +33,6 @@
   copy:
     src: shibboleth2.xml
     dest: /etc/shibboleth/shibboleth2.xml
-
-- name: add saml-to-ood user map file
-  copy:
-    src: ood-user-mapfile
-    dest: /etc/ood/ood-user-mapfile
 
 - name: update ood portal config with user mapfile
   replace:
