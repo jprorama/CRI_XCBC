@@ -42,11 +42,16 @@
     backup: yes
 
 - name: update ood portal config for shibboleth authn
-  replace:
+  blockinfile:
     path: /etc/ood/config/ood_portal.yml
-    regexp: "^(#  - 'Require valid-user')"
-    replace: '\1\nauth:\n - "AuthType shibboleth"\n - "ShibRequestSetting requireSession 1"\n - "Require valid-user"\n'
+    insertbefore: "#auth:"
     backup: yes
+    marker: "# {mark} ANSIBLE MANAGED BLOCK auth"
+    block: |
+      auth:
+        - "AuthType shibboleth"
+        - "ShibRequestSetting requireSession 1"
+        - "Require valid-user"
 
 - name: Build the updated Apache config
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
