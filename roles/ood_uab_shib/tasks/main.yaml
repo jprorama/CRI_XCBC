@@ -1,0 +1,46 @@
+- name: Remove existing tmp shib dir
+  file:
+    path: /tmp/shib
+    state: absent
+
+- name: create a shib directory in /tmp
+  file:
+    path: /tmp/shib
+    state: directory
+
+- git:
+    repo: 'https://github.com/krishmoodbidri/uab-shib.git'
+    dest: /tmp/shib/
+    clone: yes
+
+- name: Rename existing/initial shib conf to shibboleth.orig
+  command: mv /etc/shibboleth /etc/shibboleth.orig
+
+- name: Extract shib_conf.tar.gz into /etc/
+  ansible.builtin.unarchive:
+    src: /tmp/shib/shib_conf.tar.gz
+    dest: /etc/
+
+- name: Recursively change ownership of a /etc/shibboleth to root
+  ansible.builtin.file:
+    path: /etc/shibboleth
+    state: directory
+    recurse: yes
+    owner: root
+    group: root
+
+- name: Build the updated Apache config
+  command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
+  ignore_errors: yes
+
+- name: start shibd and enable on boot
+  service:
+    name: shibd
+    state: started
+    enabled: yes
+
+- name: Restart service httpd, in all cases
+  service:
+    name: httpd24-httpd
+    state: restarted
+
