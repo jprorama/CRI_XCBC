@@ -13,6 +13,14 @@
     group: "{{ rabbitmq_agents_service_user }}"
     mode: '0755'
 
+- name: Create dirs that dir_verify needs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ user_dirs }}"
+  when: cod_deploy
+
 - name: Install rabbitmq agents config file
   template:
     src: config.j2
