@@ -2,15 +2,22 @@
 # cod login-image build
 - name: clone the default image to build a login image
   command: cmsh -c "softwareimage; clone default-image login-image; commit --wait"
+  register: add_image
+  changed_when: "'already' not in add_image.stderr"
 
 - name: create a new node category for the image, called login
   command: cmsh -c "category; clone default login; set softwareimage login-image; roles; assign login; commit --wait"
+  register: add_category
+  changed_when: "'already' not in add_category.stderr"
 
 - name: Change default gateway for the login category to access internet
   command: cmsh -c "category; use login; set defaultgateway 192.168.200.254; commit"
+  changed_when: True
 
 - name: Config for slurm-submit role
   command: cmsh -c "category; use login; roles; assign slurmsubmit; commit"
+  register: add_slurmsubmit
+  changed_when: "'already' not in add_slurmsubmit.stderr"
 
 - name: Add software to the image
   yum:
@@ -55,6 +62,7 @@
 
 - name: Run the Ansible roles related to login image
   command: ansible-playbook -c chroot -i '{{ bright_cod_login_chroot_loc }}/CRI_XCBC/hosts' /CRI_XCBC/ood-cod.yaml -b
+  changed_when: True
 
 - name: Unmount mounted dirs
   mount:
@@ -70,15 +78,19 @@
 # cod login node deploy
 - name: Change login001 category to login
   command: cmsh -c "device; use login001; set category login; commit"
+  changed_when: True
 
 - name: Set DHCP on BOOTIF device
   command: cmsh -c "device; use login001; interfaces; use bootif; set dhcp yes; commit"
+  changed_when: True
 
 - name: Add an extra interface to login from externalnet
   command: cmsh -c "device; use login001; addinterface -c login physical eth1 externalnet 192.168.200.1; commit"
+  changed_when: True
 
 - name: Set DHCP on the new interface added above
   command: cmsh -c "device; use login001; interfaces; use eth1; set dhcp yes; commit"
+  changed_when: True
 
 - name: Make sure tftp systemd service is running on head node
   systemd:
@@ -87,3 +99,4 @@
 
 - name: Reboot login001 to pick up the new image
   command: cmsh -c "device; use login001; reboot"
+  changed_when: True
