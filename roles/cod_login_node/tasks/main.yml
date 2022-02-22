@@ -10,7 +10,7 @@
   command: cmsh -c "category; use login; set defaultgateway 192.168.200.254; commit"
 
 - name: Config for slurm-submit role
-  command: cmsh -c "configurationoverlay; use slurm-submit; append categories login; commit"
+  command: cmsh -c "category; use login; roles; assign slurmsubmit; commit"
 
 - name: Add software to the image
   yum:
