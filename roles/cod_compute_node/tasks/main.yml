@@ -55,5 +55,5 @@
     state: started
     name: tftpd
 
-- name: Reboot node001 to pick up the new image
+- name: Reboot compute node to pick up the new image
   command: cmsh -c "device; use node001; reboot"
