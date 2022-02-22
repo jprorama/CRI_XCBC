@@ -4,7 +4,7 @@
   command: cmsh -c "softwareimage; clone default-image compute-image; commit --wait"
 
 - name: create a new category for the compute image
-  command: cmsh -c "category; clone default compute; set softwareimage compute-image; roles; assign compute; commit --wait"
+  command: cmsh -c "category; clone default compute; set softwareimage compute-image; commit --wait"
 
 - name: Config for slurm-client role
   command: cmsh -c "configurationoverlay; use slurm-client; append categories compute; commit"
