@@ -7,7 +7,7 @@
   command: cmsh -c "category; clone default compute; set softwareimage compute-image; commit --wait"
 
 - name: Config for slurm-client role
-  command: cmsh -c "configurationoverlay; use slurm-client; append categories compute; commit"
+  command: cmsh -c "category; use compute; roles; assign slurmclient; set wlmcluster slurm; commit --wait"
 
 - name: Add software to the image
   yum:
