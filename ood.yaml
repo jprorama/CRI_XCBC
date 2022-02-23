@@ -24,3 +24,4 @@
     - { name: 'warewulf_sync', tags: 'warewulf_sync' }
     - { name: 'reg_user_create_scripts', tags: 'reg_user_create_scripts', when: enable_user_create_scripts }
     - { name: 'ood_enable_sandbox', tags: 'ood_enable_sandbox', when: enable_sandbox }
+    - { name: 'ood_jupyter_lab', tags: 'ood_jupyter_lab', when: jupyter_provision}
