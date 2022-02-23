@@ -8,10 +8,10 @@
     path: /tmp/shib
     state: directory
 
-- git:
-    repo: 'https://github.com/krishmoodbidri/uab-shib.git'
+- name: Download tar
+    url: 'https://github.com/krishmoodbidri/uab-shib.git'
     dest: /tmp/shib/
-    clone: yes
+    mode: '0440'
 
 - name: Rename existing/initial shib conf to shibboleth.orig
   command: mv /etc/shibboleth /etc/shibboleth.orig
