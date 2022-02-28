@@ -68,10 +68,12 @@
 
 #Node naming variables - no need to change
   compute_node_prefix: "c"
+  compute_node_format: "{{ compute_node_prefix }}%04d"
   num_compute_nodes: 1
   gpu_node_prefix: "gpu-compute-"
   num_gpu_nodes: 1
   login_node_prefix: "login"
+  login_node_format: "{{ login_node_prefix }}%03d"
   num_login_nodes: 0
 
 #OpenOnDemand
