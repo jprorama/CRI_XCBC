@@ -2,22 +2,22 @@
 - name: Clone template repo from upstream
   git:
     repo: 'https://github.com/rtripath89/bc_osc_rstudio_server.git'
-    dest: '/var/www/ood/apps/sys/bc_rstudio_server'
+    dest: '/var/www/ood/apps/sys/bc_rstudio_server_deprecated'
     force: yes
     version: 0.6.0
 
 - name: Replace form.yml
   template:
     src: form.yml
-    dest: /var/www/ood/apps/sys/bc_rstudio_server/form.yml
+    dest: /var/www/ood/apps/sys/bc_rstudio_server_deprecated/form.yml
 
 - name: Replace form submission template
   copy:
     src: submit.yml
-    dest: /var/www/ood/apps/sys/bc_rstudio_server/submit.yml.erb
+    dest: /var/www/ood/apps/sys/bc_rstudio_server_deprecated/submit.yml.erb
 
 - name: Replace manifest file
   copy:
     src: manifest.yml
-    dest: /var/www/ood/apps/sys/bc_rstudio_server/manifest.yml
+    dest: /var/www/ood/apps/sys/bc_rstudio_server_deprecated/manifest.yml
 
