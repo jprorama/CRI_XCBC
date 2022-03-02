@@ -11,7 +11,7 @@
   changed_when: "'already' not in add_category.stderr"
 
 - name: Config for slurm-client role
-  command: cmsh -c "category; use compute; roles; assign slurmclient; set wlmcluster slurm; commit --wait"
+  command: cmsh -c "category; use compute; roles; assign slurmclient; set wlmcluster slurm; append queues defq; commit --wait"
   register: add_slurmclient
   changed_when: "'already' not in add_slurmclient.stderr"
 
