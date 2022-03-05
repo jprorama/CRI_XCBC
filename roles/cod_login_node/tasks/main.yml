@@ -15,7 +15,7 @@
   changed_when: True
 
 - name: Config for slurm-submit role
-  command: cmsh -c "category; use login; roles; assign slurmsubmit; commit"
+  command: cmsh -c "category; use login; roles; assign slurmsubmit; slurmjobqueueaccesslist; add slurm; commit"
   register: add_slurmsubmit
   changed_when: "'already' not in add_slurmsubmit.stderr"
 
