@@ -156,6 +156,15 @@
 # Shibboleth SSO
   enable_shib: false
 
+# LTS-S3 config
+  lts_access_key:
+  lts_secret_key:
+  s3_endpoint: https://amazonaws.com
+
+# S3-shib_config
+  s3_shibboleth_bucket_name: shib_bucketname
+  s3_shibboleth_object_name: shib_objectname
+
 # User Registration
   enable_user_reg: true
   user_register_app: "flask_user_reg"
