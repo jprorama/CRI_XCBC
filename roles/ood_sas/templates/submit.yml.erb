@@ -7,7 +7,7 @@
 # not apply to implementation at UAB. We do not use constraint list to be used with -C.
 
 batch_connect:
-  template: "basic"
+  template: "vnc"
 
 script:
   native:
@@ -16,7 +16,7 @@ script:
     - "--mem-per-cpu=<%= bc_num_mems.blank? ? 4 : bc_num_mems.to_i %>G"
     - "--partition=<%= bc_partition %>"
     - "--time=<%= bc_num_hours.blank? ? 1 : bc_num_hours.to_i %>:00:00"
-    - "--job-name=ood-jupyter"
+    - "--job-name=ood-sas"
 <%- if bc_partition.include? "pascalnodes" -%>
     - "--gres=gpu:1"
 <%- end -%>
