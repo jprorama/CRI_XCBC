@@ -59,11 +59,13 @@ attributes:
     widget: select
     label: "R version"
     help: "This defines the version of R you want to load."
+    value: "R/{{ default_r_ver }}"
     options:
       # Define functioning R version overloads using a colon after the module load statement
 {% for ver in r_versions %}
       - [ "{{ ver }}", "R/{{ ver }}"]
 {% endfor %}
+
 form:
   - custom_environment
   - rstudio_version
