@@ -30,7 +30,7 @@ jobs:
 
     - name: Lint Ansible Playbook
       # replace "master" with any valid ref
-      uses: iranzo/ansible-lint-action@master
+      uses: ansible-community/ansible-lint-action@v6
       with:
         # [required]
         # Paths to ansible files (i.e., playbooks, tasks, handlers etc..)
