@@ -44,7 +44,6 @@
   cuda_toolkit_installer: "cuda-linux.9.1.85-23083092.run"
   cuda_samples_installer: "cuda-samples.9.1.85-23083092-linux.run"
 
-
 # WW Template Names for wwmkchroot
   template_path: "/usr/libexec/warewulf/wwmkchroot/"
   compute_template: "compute-nodes"
@@ -157,6 +156,7 @@
 
 # Shibboleth SSO
   enable_shib: false
+  enable_shib_uab: false
 
 # User Registration
   enable_user_reg: true
