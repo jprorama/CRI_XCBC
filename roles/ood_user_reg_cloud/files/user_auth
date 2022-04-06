@@ -1,6 +1,0 @@
-#!/bin/bash
-
-username=$1
-
-export PYTHONPATH=/cm/shared/rabbitmq_agents
-/cm/shared/rabbitmq_agents/venv/bin/python /cm/shared/rabbitmq_agents/prod_rmq_agents/examples/user_auth.py $username
