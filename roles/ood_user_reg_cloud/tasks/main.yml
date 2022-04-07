@@ -95,7 +95,7 @@
   template:
     src: user-reg_conf_shib_uab.j2
     dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
-  when: enable_shib_uab
+  when: configure_shib_uab
 
 - name: Put wsgi file in place
   template:

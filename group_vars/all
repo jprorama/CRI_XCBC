@@ -157,7 +157,7 @@
 
 # Shibboleth SSO
   enable_shib: false
-  enable_shib_uab: false
+  configure_shib_uab: false
 
 # User Registration
   enable_user_reg: true
