@@ -2,7 +2,7 @@
 # from https://stackoverflow.com/questions/6250698
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
-regex="^(.+)$"
+regex="{{ ood_user_regex }}"
 
 remote_user=$(urldecode $1)
 username=$(echo $remote_user | sed -r "s/$regex/\1/")
