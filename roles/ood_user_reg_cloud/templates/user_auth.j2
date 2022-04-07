@@ -1,4 +1,6 @@
 #!/bin/bash
+# from https://stackoverflow.com/questions/6250698
+function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
 username=$1
 
