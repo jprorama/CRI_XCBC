@@ -77,6 +77,7 @@
   ood_version: 2.0
   ood_private_ip: "10.1.1.11"
   ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.noarch.rpm"
+  # a regex to extract username from remote_user in user_auth script"
   ood_user_regex: "^(.+)$"
 
 #Node Inventory - not in the Ansible inventory sense! Just for WW and Slurm config.
