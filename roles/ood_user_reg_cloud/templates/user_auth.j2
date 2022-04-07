@@ -2,6 +2,8 @@
 # from https://stackoverflow.com/questions/6250698
 function urldecode() { : "${*//+/ }"; echo -e "${_//%/\\x}"; }
 
+regex="^(.+)$"
+
 username=$1
 
 export PYTHONPATH={{ rabbitmq_agents_loc }}
