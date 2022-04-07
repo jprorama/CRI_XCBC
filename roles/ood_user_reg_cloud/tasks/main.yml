@@ -97,12 +97,6 @@
     dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
   when: enable_shib_uab
 
-- name: Put apache config file in place (user-reg_conf.j2 in case of basicauth)
-  template:
-    src: user-reg_conf.j2
-    dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
-  when: not enable_shib
-
 - name: Put wsgi file in place
   template:
     src: wsgi.j2
