@@ -7,5 +7,4 @@ regex="^(.+)$"
 remote_user=$(urldecode $1)
 username=$(echo $remote_user | sed -r "s/$regex/\1/")
 
-export PYTHONPATH={{ rabbitmq_agents_loc }}
-{{ rabbitmq_agents_loc }}/venv/bin/python {{ rabbitmq_agents_loc }}/prod_rmq_agents/examples/user_auth.py $username
+{{ rabbitmq_agents_loc }}/venv/bin/python {{ rabbitmq_agents_loc }}/user_auth.py $username
