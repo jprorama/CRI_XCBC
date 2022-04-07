@@ -80,13 +80,18 @@
     name: celery.service
     enabled: yes
 
-- name: Put apache config file in place 
+- name: Put default basic auth  apache config file in place
+  template:
+    src: user-reg_conf.j2
+    dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
+
+- name: Put shib_sso apache config file in place 
   template:
     src: user-reg_conf_shib.j2
     dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
   when: enable_shib
 
-- name: Put apache config file in place 
+- name: Put uab ipd shib apache config file in place 
   template:
     src: user-reg_conf_shib_uab.j2
     dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
@@ -142,6 +147,6 @@
     enabled: yes
 
 - name: Start and enable flask app gunicorn service
-  service:
+  ansible.builtin.systemd: 
     name: "{{ user_register_app }}"
-    enabled: yes
+    state: restarted
