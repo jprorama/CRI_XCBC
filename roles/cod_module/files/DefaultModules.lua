@@ -11,7 +11,7 @@ end
 local uid, status = chomp(capture("/usr/bin/id -u"))
 
 if uid == "0" then
-  try_load("shared", "cmd", "cluster-tools", "slurm/slurm")
+  try_load("shared", "cmd", "cluster-tools", "slurm/slurm", "cmsh")
 else
   try_load("shared", "slurm/slurm") -- DEFAULT_MODULES_OTHER
 end
