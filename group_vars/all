@@ -178,16 +178,16 @@
 
 # Shibboleth SSO
   install_shib: false
-  configure_shib: false
+  configure_shib: true 
 
 # LTS-S3 config
-  lts_access_key:  ACCESS_KEY
-  lts_secret_key: SECRET_KEY
-  s3_endpoint:  S3_ENDPOINT
+  lts_access_key: VW7S7R34D42E4JIE065D  
+  lts_secret_key: EBWgsLoIGqQLhMQHUPtea03DXPyVfODFF50iH8vO
+  s3_endpoint:  https://s3.lts.rc.uab.edu 
 
 #S3-shib_config
-  s3_shibboleth_bucket_name: UAB_SHIB_BUCKET
-  s3_shibboleth_object_name: UAB_SHIB_OBJECT
+  s3_shibboleth_bucket_name: uab-shib 
+  s3_shibboleth_object_name: shib_conf.tar.gz 
 
 # User Registration
   enable_user_reg: true
@@ -205,7 +205,7 @@
   RegUser_app_user_full_name: "RegUser of user register app"
   RegUser_app_user_passwd: "qweasd"
 # Authorized user group
-  valid_eppa:  'faculty|staff|student|affiliate'
+  valid_eppa:  '(faculty|staff|student|affiliate)'
 
 # RabbitMQ
   rabbitmq_provision: true
