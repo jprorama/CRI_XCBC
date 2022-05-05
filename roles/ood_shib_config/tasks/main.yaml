@@ -61,8 +61,8 @@
         - "RewriteCond %{HTTP:REMOTE_USER} 'urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$'"
         - "RewriteRule . - [E=REMOTE_USER:%1]"
         - "RewriteCond %{IS_SUBREQ} ^false$"
-        - "RewriteCond %{HTTP:unscoped-affiliation} !(affiliate|student|staff|faculty) [NC]"
-        - "RewriteRule ^(.*)$   /register/ [L]"
+        - "RewriteCond %{HTTP:unscoped-affiliation} !{{ valid_eppa }} [NC]"
+        - "RewriteRule ^(.*)$   {{ user_register_app_url }} [L]"
         
 - name: update servername on ood_portal
   ansible.builtin.lineinfile:
