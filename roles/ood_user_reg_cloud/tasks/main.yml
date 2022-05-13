@@ -15,15 +15,35 @@
   git:
     repo: "{{ user_register_app_repo }}"
     dest: "{{ user_register_app_path }}"
+    refspec: "{{ user_register_app_refspec }}"
     version: "{{ user_register_app_tag }}"
 
 - name: Change ownership of directory
   file:
     path: "{{ user_register_app_path }}"
-    owner: apache
-    group: apache
+    owner: root
+    group: root
     state: directory
     recurse: yes
+
+- name: Create __pycache__ in app dir
+  file:
+    path: "{{ user_register_app_path }}/__pycache__"
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
+    state: directory
+
+- name: Create  __pycache__ in app dir
+  file:
+    path: "{{ user_register_app_path }}/app/__pycache__"
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
+    state: directory
+
+- name: Copy Self-Reg app variables file
+  template:
+    src: vars.j2
+    dest: "{{ user_register_app_path }}/vars.py"
 
 - name: Install requirements in virtualenv
   pip:
@@ -41,26 +61,37 @@
 
 - name: Create log directory
   file:
-    path: "{{ user_register_app_path }}/log"
-    owner: apache
-    group: apache
+    path: "/var/log/{{ user_register_app }}"
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
     state: directory
+
+- name: Set up log rotate for module usage
+  template:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/{{ user_register_app }}"
 
 - name: Copy Celery service template
   template:
     src: celery.service.j2
-    dest: "/etc/systemd/system/celery.service"
+    dest: "/etc/systemd/system/celery-{{ user_register_app }}.service"
 
-- name: Start celery.service
-  service:
-    name: celery.service
-    state: started
+- name: Enable celery.service
+  systemd:
+    name: celery-{{ user_register_app }}.service
     enabled: yes
 
-- name: Put apache config file in place
+- name: Put apache config file in place (user-reg_conf_shib.j2 in case of shib)
+  template:
+    src: user-reg_conf_shib.j2
+    dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg-{{ user_register_app }}.conf"
+  when: configure_shib
+
+- name: Put apache config file in place (user-reg_conf.j2 in case of basicauth)
   template:
     src: user-reg_conf.j2
     dest: "/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf"
+  when: not configure_shib
 
 - name: Put wsgi file in place
   template:
@@ -84,14 +115,14 @@
     replace: '{{ item.replace }}'
     backup: yes
   with_items:
-      - { regexp: "^#?(user_map_cmd:).*", replace: "\\1 '/opt/ood/ood_auth_map/bin/uab_ood_auth.regex'" }
-      - { regexp: "^#?(map_fail_uri:).*", replace: "\\1 '/register'" }
-      - { regexp: "^#?(register_uri:).*", replace: "\\1 '/register'" }
+      - { regexp: "^#?(user_map_cmd:).*", replace: "\\1 '/opt/ood/ood_auth_map/bin/user_auth.py'" }
+      - { regexp: "^#?(map_fail_uri:).*", replace: "\\1 '/{{ user_register_app }}'" }
+      - { regexp: "^#?(register_uri:).*", replace: "\\1 '/{{ user_register_app }}'" }
 
 - name: Stage regex file for ood
-  copy:
-    src: uab_ood_auth.regex
-    dest: /opt/ood/ood_auth_map/bin/uab_ood_auth.regex
+  template:
+    src: user_auth_py.j2
+    dest: /opt/ood/ood_auth_map/bin/user_auth.py
     owner: root
     group: root
     mode: 0755
@@ -100,14 +131,12 @@
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
   ignore_errors: yes
 
-- name: Restart apache
-  service:
+- name: Enable apache service
+  systemd:
     name: httpd24-httpd
-    state: restarted
     enabled: yes
 
-- name: Start and enable flask app uwsgi service
+- name: Start and enable flask app gunicorn service
   service:
     name: "{{ user_register_app }}"
-    state: restarted
     enabled: yes

@@ -1,0 +1,21 @@
+ProxyPass /socket.io/ http://127.0.0.1:{{ user_register_app_port }}/socket.io/
+ProxyPassReverse /socket.io/ http://127.0.0.1:{{ user_register_app_port }}/socket.io/
+
+ProxyPass /{{ user_register_app }} http://127.0.0.1:{{ user_register_app_port }}/
+ProxyPassReverse /{{ user_register_app }} http://127.0.0.1:{{ user_register_app_port }}/
+
+ProxyPass /static http://127.0.0.1:{{ user_register_app_port }}/static
+ProxyPassReverse /static http://127.0.0.1:{{ user_register_app_port }}/static
+
+<Location /{{ user_register_app }}>
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
+    ShibUseHeaders On
+</Location>
+
+<Location "/static/">
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
+</Location>

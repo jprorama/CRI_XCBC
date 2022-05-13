@@ -1,13 +1,13 @@
 [Unit]
 Description=Service to start celery process.
 After=network.target
-StartLimitIntervalSec=0
 
 [Service]
 Type=simple
+StartLimitInterval=0
 Restart=always
 RestartSec=5
-User=centos
+User={{ celery_user }}
 WorkingDirectory={{ user_register_app_path }} 
 Environment="PATH={{ user_register_app_path }}/venv/bin"
 ExecStart={{ user_register_app_path }}/venv/bin/celery -A tasks worker --loglevel=info --concurrency=4

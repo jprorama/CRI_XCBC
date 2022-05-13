@@ -1,12 +1,14 @@
 ---
 v2:
   metadata:
-    title: "{{ cluster_name }}"
+    title: "{{ cluster_title }}"
   login:
-    host: "{{ cluster_name }}"
+    host: "{{ cluster_host }}"
+    default: true
   job:
     adapter: "slurm"
-    bin: "/bin"
+    bin: "{{ slurm_bin_path }}"
+    conf: "{{ slurm_conf_path }}"
   batch_connect:
     basic:
       script_wrapper: |
