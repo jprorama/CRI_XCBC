@@ -219,6 +219,7 @@
   user_register_app_repo: "https://gitlab.rc.uab.edu/rc/self-reg-form.git"
   user_register_app_refspec: "{{ gitlab_refspec }}"
   user_register_app_port: 8000
+  user_register_app_host: "login005"
   cors_allowed_origins: "*"
   mod_wsgi_pkg_name: "uab-httpd24-mod_wsgi"
   RegUser_app_user: "reggie"
@@ -258,7 +259,7 @@
   user_dirs: ['/home', '/data/user', '/data/scratch']
   rc_users_ldap_repo: "git@gitlab.rc.uab.edu:atlurie/rc-user-add-test.git"
   rc_users_ldap_repo_loc: "~/git/rc-users"
-  valid_user_state: ['ok', 'blocked', 'certification']
+  valid_user_state: ['ok', 'hold', 'certification']
 
 # Celery
   celery_user: "reggie"
