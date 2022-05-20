@@ -1,0 +1,10 @@
+---
+- name: Create locales folder if not existing
+  file:
+    path: /etc/ood/config/locales
+    state: directory
+
+- name: Put file in place
+  copy:
+    src: en.yml
+    dest: /etc/ood/config/locales/en.yml

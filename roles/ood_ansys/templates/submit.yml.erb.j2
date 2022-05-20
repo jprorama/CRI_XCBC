@@ -9,3 +9,6 @@ script:
     - "--partition=<%= bc_partition %>"
     - "--time=<%= bc_num_hours.blank? ? 1 : bc_num_hours.to_i %>:00:00"
     - "--job-name=ood-{{ ansys_module_name|lower }}"
+<%- if bc_partition.include? "pascalnodes" -%>
+    - "--gres=gpu:1"
+<%- end -%>

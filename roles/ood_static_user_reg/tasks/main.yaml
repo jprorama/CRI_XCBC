@@ -1,0 +1,58 @@
+---
+- shell: ls /var/www/ood/apps/sys/dashboard/public/assets/application*.css
+  ignore_errors: yes
+  register: css_file_name
+
+- shell: ls /var/www/ood/apps/sys/dashboard/public/assets/OpenOnDemand_powered_by_RGB*.svg
+  ignore_errors: yes
+  register: powered_by_img
+
+- name: Copy CSS file from Dashboard App
+  copy:
+    src: "{{ css_file_name.stdout }}"
+    dest: /var/www/ood/public/application.css
+    remote_src: yes
+
+- name: Copy powered by image from Dashboard App
+  copy:
+    src: "{{ powered_by_img.stdout }}"
+    dest: /var/www/ood/public/OpenOnDemand_powered_by_RGB.svg
+    remote_src: yes
+
+- name: Copy font awesome from Dashboard App
+  file:
+    src: /var/www/ood/apps/sys/dashboard/public/assets/font-awesome
+    dest: /var/www/ood/public/font-awesome
+    state: link
+
+- name: Update path to font file in CSS file
+  replace:
+    path: /var/www/ood/public/application.css
+    regexp: pun/sys/dashboard/assets/font-awesome
+    replace: public/font-awesome
+
+- name: Put Cheaha logo in place
+  copy:
+    src: cheaha-logo.png
+    dest: /var/www/ood/public/logo.png
+
+- name: Put static HTML file in place
+  copy:
+    src: index.html
+    dest: /var/www/ood/register
+
+- name: Update ood portal to serve static HTML
+  replace:
+    path: /etc/ood/config/ood_portal.yml
+    regexp: '{{ item.regexp }}'
+    replace: '{{ item.replace }}'
+    backup: yes
+  with_items:
+      - { regexp: "^#?(map_fail_uri:).*", replace: "\\1 '/register'" }
+      - { regexp: "^#?(register_uri:).*", replace: "\\1 '/register'" }
+      - { regexp: "^#?(register_root:).*", replace: "\\1 '/var/www/ood/register'" }
+
+- name: Build the updated Apache config
+  command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
+  ignore_errors: yes
+

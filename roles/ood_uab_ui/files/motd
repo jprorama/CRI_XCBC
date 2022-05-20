@@ -1,0 +1,18 @@
+Cheaha is an analysis and computing  resource available to the UAB research community and operated by the UAB IT Research Computing group.  
+
+If you encounter any issues, please contact support@listserv.uab.edu with **OOD** included in the subject line.
+
+Use of this resource is governed by the [UAB Acceptable Use Policy for Computer and Network Resources](https://www.uab.edu/policies/content/Pages/UAB-IT-POL-0000004.aspx)
+  
+For more information on Cheaha and the tools available to support research please review the documentation: http://docs.uabgrid.uab.edu/wiki/Cheaha  
+
+-------------------    Available Slurm Partitions    --------------------------
+
+| Partition    | Max Runtime     | Max Compute Nodes  | Priority  |
+| :----------- | --------------: | -----------------: | --------: |
+| express      |      2 hours    |      No Limit      | 2         |
+| short        |     12 hours    |            44      | 4         |
+| medium       | 2 days 2 hours  |            44      | 6         |
+| long         | 6 days 6 hours  |            22      | 8         |
+| pascalnodes  |    12 hours     |      No Limit      | 8         |
+| interactive  |     2 hours     |             1      | 10        |

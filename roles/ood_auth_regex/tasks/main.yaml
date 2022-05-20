@@ -1,0 +1,32 @@
+---
+- name: Enable user registration redirect
+  replace:
+    path: /etc/ood/config/ood_portal.yml
+    regexp: "^#?(user_map_cmd:).*"
+    replace: "\\1 \"/opt/ood/ood_auth_map/bin/uab_ood_auth.regex\""
+    backup: yes
+
+- name: Stage regex file for ood
+  copy:
+    src: uab_ood_auth.regex
+    dest: /opt/ood/ood_auth_map/bin/uab_ood_auth.regex
+    owner: root
+    group: root
+    mode: 0755
+    backup: yes
+
+- name: Build the updated Apache config
+  command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
+  ignore_errors: yes
+
+- name: Regex test cases
+  include_tasks: testing.yaml
+  vars:
+    test_str: "{{ item.test_str }}"
+    expected: "{{ item.expected }}"
+  with_items:
+    - { test_str: "louistw@uab.edu", expected: "louistw" }
+    - { test_str: "LoUiStW@uab.edu", expected: "louistw" }
+    - { test_str: "FaKeAcCoUnT@uab.edu", expected: "" }
+    - { test_str: "urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!rtripath89@gmail.com", expected: "rtripath89@gmail.com" }
+    - { test_str: "urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!RtRiPaTh89@gmail.com", expected: "rtripath89@gmail.com" }

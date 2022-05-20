@@ -3,16 +3,24 @@
   roles:
     - { name: 'prep_ood', tags: 'prep_ood' }
     - { name: 'ood', tags: 'ood' }
+    - { name: 'ood_auth_regex', tags: 'ood_auth_regex' }
+    - { name: 'ood_user_reg', tags: 'ood_user_reg', when: enable_user_reg }
     - { name: 'warewulf_sync', tags: 'warewulf_sync' }
     - { name: 'ood_jupyter', tags: 'ood_jupyter', when: jupyter_provision}
     - { name: 'ood_vnc_form', tags: 'ood_vnc_form' }
-    - { name: 'ood_add_rstudio', tags: 'ood_add_rstudio', when: rstudio_provision }
+    - { name: 'ood_updated_rstudio', tags: 'ood_updated_rstudio', when: rstudio_provision }
+    - { name: 'ood_deprecated_rstudio', tags: 'ood_deprecated_rstudio', when: rstudio_provision_deprecated }
     - { name: 'ood_matlab', tags: 'ood_matlab', when: matlab_provision }
     - { name: 'ood_sas', tags: 'ood_sas', when: sas_provision }
     - { name: 'ood_ansys', tags: 'ood_ansys', when: ansys_provision }
     - { name: 'ood_igv', tags: 'ood_igv', when: igv_provision }
     - { name: 'ood_firewall_and_services', tags: 'ood_firewall_and_services' }
     - { name: 'ohpc_firewall_and_services', tags: 'ohpc_firewall_and_services' }
+    - { name: 'ood_uab_ui', tags: 'ood_uab_ui' }
+    - { name: 'ood_easter_egg', tags: 'ood_easter_egg' }
+    - { name: 'ood_static_user_reg', tags: 'ood_static_user_reg', when: enable_user_reg == false }
     - { name: 'ood_shib_sso', tags: 'ood_shib_sso', when: enable_shib }
     - { name: 'ood_user_reg', tags: 'ood_user_reg', when: enable_user_reg }
     - { name: 'warewulf_sync', tags: 'warewulf_sync' }
+    - { name: 'ood_enable_sandbox', tags: 'ood_enable_sandbox', when: enable_sandbox }
+    - { name: 'ood_jupyter_lab', tags: 'ood_jupyter_lab', when: jupyter_provision}

@@ -23,7 +23,16 @@ attributes:
     widget: select
     label: Partition
     options:
-      - [ "low", "low" ]
+      - [ "express", "express" ]
+      - [ "short", "short" ]
+      - [ "medium", "medium" ]
+      - [ "long", "long" ]
+      - [ "interactive", "interactive" ]
+      - [ "pascalnodes", "pascalnodes" ]
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
 
   version:
     widget: select
@@ -31,8 +40,8 @@ attributes:
     help: "This defines the version of R you want to load."
     options:
       # Define functioning R version overloads using a colon after the module load statement
-{% for ver in r_versions %}
-      - [ "{{ ver.full }}", "rstudio_singularity/{{ ver.full }}"]
+{% for ver in r_deprecated_versions %}
+      - [ "{{ ver.full }}", "rc/ood_rstudio/{{ ver.full }}"]
 {% endfor %}
 form:
   - version

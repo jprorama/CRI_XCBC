@@ -20,6 +20,11 @@
     src: form.yml
     dest: /var/www/ood/apps/sys/sas/form.yml
 
+- name: Replace submit.yml.erb
+  template:
+    src: submit.yml.erb
+    dest: /var/www/ood/apps/sys/sas/submit.yml.erb
+
 - name: Remove form.js
   file:
     path: /var/www/ood/apps/sys/sas/form.js

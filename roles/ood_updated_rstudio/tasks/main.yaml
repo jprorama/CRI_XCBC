@@ -22,3 +22,7 @@
     src: manifest.yml
     dest: /var/www/ood/apps/sys/bc_rstudio_server/manifest.yml
 
+- name: Replace script.sh.erb file
+  copy:
+    src: script.sh.erb.j2
+    dest: /var/www/ood/apps/sys/bc_rstudio_server/template/script.sh.erb

@@ -1,0 +1,11 @@
+---
+- name: Create dashboard app config location
+  file:
+    path: "{{ env_file_loc }}"
+    state: directory
+    mode: '0755'
+
+- name: Replace form.yml
+  template:
+    src: env.j2
+    dest: "{{ env_file_loc }}/env"

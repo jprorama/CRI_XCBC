@@ -23,8 +23,16 @@ attributes:
     widget: select
     label: Partition
     options:
-      - [ "defq", "defq" ]
-      - [ "low", "low" ]
+      - [ "express", "express" ]
+      - [ "short", "short" ]
+      - [ "medium", "medium" ]
+      - [ "long", "long" ]
+      - [ "interactive", "interactive" ]
+      - [ "pascalnodes", "pascalnodes" ]
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
 
 form:
   - desktop

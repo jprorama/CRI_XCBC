@@ -1,0 +1,11 @@
+en:
+  dashboard:
+    welcome_html: |
+      <div style="position:relative;">
+        <img alt="logo" height="85" style="margin-bottom: 10px" src="/public/logo.png">
+        <a href="https://tinyurl.com/cheahaAL" target="_blank">
+          <div style="float:left;position:absolute;display:block;left:310px;top:-6px;padding:10px 20px;"> </div>
+        </a>
+      </div>
+      <p class="lead">OnDemand provides an integrated, single access point for all of your HPC resources.</p>
+    motd_title: "Message of the Day"

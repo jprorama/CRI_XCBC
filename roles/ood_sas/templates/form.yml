@@ -23,14 +23,24 @@ attributes:
     widget: select
     label: Partition
     options:
-      - [ "low", "low" ]
+      - [ "express", "express" ]
+      - [ "short", "short" ]
+      - [ "medium", "medium" ]
+      - [ "long", "long" ]
+      - [ "interactive", "interactive" ]
+      - [ "pascalnodes", "pascalnodes" ]
+      - [ "pascalnodes-medium", "pascalnodes-medium" ]
+      - [ "largemem", "largemem" ]
+      - [ "largemem-long", "largemem-long" ]
+      - [ "amd-hdr100", "amd-hdr100" ]
 
   version:
     widget: select
     label: "SAS version"
     help: "This defines the version of SAS you want to load."
     options:
-      - [ "v9.4", "sas/v9.4" ]
+      - [ "v9.4", "rc/SAS/v9.4" ]
+
 form:
   - version
   - bc_num_hours

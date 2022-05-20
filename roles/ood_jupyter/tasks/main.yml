@@ -30,3 +30,10 @@
   template:
     src: jupyter-script.sh.erb
     dest: /var/www/ood/apps/sys/jupyter/template/script.sh.erb
+
+- name: Modify the view.html.erb to show the 'eye' icon
+  replace:
+    path: /var/www/ood/apps/sys/jupyter/view.html.erb
+    regexp: '^.*fa fa-eye.*$'
+    replace: '<i class="fas fa-eye"></i> Connect to Jupyter'
+    backup: yes  

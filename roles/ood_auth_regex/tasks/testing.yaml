@@ -1,0 +1,10 @@
+---
+- name: Testing regex file
+  command: /opt/ood/ood_auth_map/bin/uab_ood_auth.regex "{{ test_str }}"
+  register: result
+  ignore_errors: yes
+
+- assert:
+    that:
+      - result.stdout == expected
+    fail_msg: "Failed! Expected: {{ expected }}, but got: {{ result.stdout }}"
