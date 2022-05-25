@@ -1,0 +1,5 @@
+---
+- name: Restart cmd
+  systemd:
+    state: restarted
+    name: cmd
