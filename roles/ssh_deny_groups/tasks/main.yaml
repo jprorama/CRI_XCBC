@@ -2,7 +2,7 @@
 - name: Create nossh group
   command: /cm/local/apps/cmd/bin/cmsh -c "group; add {{ item }}; commit"
   loop:
-    with_items: {{ ssh_deny_groups }}
+    with_items: "{{ ssh_deny_groups }}"
 
 - name: Add default banner for users in deny groups
   blockinfile:
@@ -17,12 +17,12 @@
         ForceCommand echo
         PasswordAuthentication no
       Match all
-  loop: {{ ssh_deny_groups }}
+  loop: "{{ ssh_deny_groups }}"
 
 - name: Copy banner msg file
   copy:
-    src: {{ item }}-msg
-    dest: /etc/ssh/{{ item }}-msg
+    src: "{{ item }}-msg"
+    dest: "/etc/ssh/{{ item }}-msg"
     owner: root
     group: root
-  loop: {{ ssh_deny_groups }}
+  loop: "{{ ssh_deny_groups }}"
