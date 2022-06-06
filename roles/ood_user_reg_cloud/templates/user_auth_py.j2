@@ -26,6 +26,15 @@ else:
     else:
         username = match.group(1)
 
+    # As a workaround for deleted user showing in user state db
+    # and being redirected to dashboard
+    rc = subprocess.run(
+        ["getent", "passwd", username], stdout=subprocess.DEVNULL
+    ).returncode
+    if rc != 0:
+        print()
+        sys.exit()
+
     # Check state from db
     result = rc_util.check_state(username)
 
