@@ -288,6 +288,12 @@
   lmod_db_allow_host: "localhost"
   lmod_db_host_machine: "ohpc"
 
+# ssh deny groups
+  ssh_deny_groups:
+    - hold
+    - certify
+    - precertify
+
 # refspec for merge/pull request
 # with refspec set up, you can specify version as:
 # gitlab: mr/MR_ID
