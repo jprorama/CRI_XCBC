@@ -288,6 +288,12 @@
   lmod_db_allow_host: "localhost"
   lmod_db_host_machine: "ohpc"
 
+# ssh groups
+  ssh_groups:
+    - {"name": "hold", "deny": true, "msg": "Your UAB Research Computing account is currently on hold. Accounts are put on hold if there are changes with UAB affiliation or if there is an issue on one of the platforms. Please reach out to support@listserv.uab.edu or attend the weekly office hours and we'll work with you to clear your account."}
+    - {"name": "certify", "deny": true, "msg": "Account certification required.  Please visit https://rc.uab.edu/account in order to continuing using this account."}
+    - {"name": "precertify", "deny": false, "msg": ""}
+
 # refspec for merge/pull request
 # with refspec set up, you can specify version as:
 # gitlab: mr/MR_ID
