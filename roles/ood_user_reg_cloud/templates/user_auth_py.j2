@@ -10,10 +10,6 @@ import rc_util
 default_state = "ok"
 regex = "{{ ood_user_regex }}"
 
-# Enable for migration phase
-# e.g. not all users has entry in user_state db
-migration = True
-
 # Print empty if no remote_user is passed
 if len(sys.argv) < 2:
     print()
@@ -36,12 +32,4 @@ else:
     if result == "ok" or result == "pre_certification":
         print(username)
     else:
-        if migration and result == "no-account":
-            rc = subprocess.run(
-                ["getent", "passwd", username], stdout=subprocess.DEVNULL
-            ).returncode
-            if rc == 0:
-                rc_util.update_state(username, default_state)
-                print(username)
-                sys.exit()
         print()
