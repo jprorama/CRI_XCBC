@@ -314,7 +314,6 @@
   user_dirs: ['/home', '/data/user', '/data/scratch']
   rc_users_ldap_repo: "git@gitlab.rc.uab.edu:atlurie/rc-user-add-test.git"
   rc_users_ldap_repo_loc: "~/git/rc-users"
-  valid_user_state: ['ok', 'hold', 'certification', 'pre_certification']
   cmsh_version: 9.0
 
 # Celery
@@ -343,8 +342,15 @@
   lmod_db_allow_host: "localhost"
   lmod_db_host_machine: "ohpc"
 
+# ssh groups
+  ssh_groups:
+    - {"name": "hold", "state":"hold", "deny": true, "msg": "Your account is currently on hold.\n Please reach out to administrator to clear your account.\n"}
+    - {"name": "certification", "state":"certification", "deny": true, "msg": "Account certification is required.\n Please reach out to administrator to clear your account.\n"}
+    - {"name": "pre_certification", "state":"pre_certification", "deny": false, "msg": ""}
+    - {"name": "", "state":"ok", "deny": false, "msg": ""}
+
 # Polling interval from dashboard to slurm in milliseconds
-  poll_interval: 120000 
+  poll_interval: 120000
   env_file_loc: "/etc/ood/config/apps/dashboard/"
 
 # refspec for merge/pull request
