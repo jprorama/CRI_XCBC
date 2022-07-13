@@ -34,8 +34,9 @@
 
 - name: Boostrap EasyBuild
   shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
-      python bootstrap_eb.py "{{ easybuild_prefix }}"
+      source /usr/share/lmod/lmod/init/bash 
+      source /tmp/eb_venv/bin/activate
+      /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
   become_user: build
   args:
     executable: /bin/bash
@@ -68,10 +69,11 @@
 
 - name: Update file in warewulf file database
   command: wwsh file sync
+  when: not cod_deploy
 
 - name: Verify EasyBuild installation
   shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
+      source /usr/share/lmod/lmod/init/bash 
       module use "{{ easybuild_prefix }}/modules/all"
       module load EasyBuild
       eb --version
