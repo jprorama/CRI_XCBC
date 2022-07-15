@@ -128,6 +128,8 @@
   easybuild_tmpdir: "/tmp"
   easybuild_buildpath: "/tmp/build"
   easybuild_sourcepath: "/tmp/source"
+  module_init_script: "/etc/profile.d/modules.sh"
+  modulepath_file: "/etc/sysconfig/modules/lmod/00-modulepath"
 
 #matlab install related
   matlab_provision: false

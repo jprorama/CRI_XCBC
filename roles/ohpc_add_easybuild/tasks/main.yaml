@@ -20,7 +20,7 @@
 
 - name: Install easybuild as module
   shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
+      source {{ module_init_script }}
       /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
   become_user: build
 
@@ -30,17 +30,17 @@
     path: /tmp/eb_venv
 
 - name: Check if EasyBuild installation path is in default MODULEPATH
-  shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.sh
+  shell: grep "{{ easybuild_prefix }}/modules/all" "{{ modulepath_file }}.sh"
   ignore_errors: yes
   register: default_modulepath_sh
 
-- shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.csh
+- shell: grep "{{ easybuild_prefix }}/modules/all" "{{ modulepath_file }}.csh"
   ignore_errors: yes
   register: default_modulepath_csh
 
 - name: Add EasyBuild installation path into default MODULEPATH
   replace:
-    path: /etc/profile.d/lmod.sh
+    path: "{{ modulepath_file }}.sh"
     regexp: '(MODULEPATH=.*)'
     replace: '\1:{{ easybuild_prefix }}/modules/all'
     backup: yes
@@ -48,7 +48,7 @@
 
 - name: Add EasyBuild installation path into default MODULEPATH
   replace:
-    path: /etc/profile.d/lmod.csh
+    path: "{{ modulepath_file }}.csh"
     regexp: '(MODULEPATH "[^"]*)'
     replace: '\1:{{ easybuild_prefix }}/modules/all'
     backup: yes
@@ -59,7 +59,7 @@
 
 - name: Verify EasyBuild installation
   shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
+      source {{ module_init_script }}
       module use "{{ easybuild_prefix }}/modules/all"
       module load EasyBuild
       eb --version
