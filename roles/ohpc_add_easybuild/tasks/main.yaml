@@ -31,11 +31,6 @@
       /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
   become_user: build
 
-- name: Remove temporary easybuild
-  file:
-    state: absent
-    path: /tmp/eb_venv
-
 - name: Check if EasyBuild installation path is in default MODULEPATH
   shell: grep "{{ easybuild_prefix }}/modules/all" "{{ modulepath_file }}.sh"
   ignore_errors: yes
@@ -71,3 +66,7 @@
       module load EasyBuild
       eb --version
 
+- name: Remove temporary easybuild
+  file:
+    state: absent
+    path: /tmp/eb_venv
