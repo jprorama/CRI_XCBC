@@ -11,6 +11,13 @@
   user:
     name: build
 
+- name: Create Easybuild modulefiles folder
+  file:
+    path: "{{ easybuild_prefix }}"
+    state: directory
+    owner: build
+    group: build
+
 - name: Install temporary easybuild via pip
   pip:
     name: easybuild
