@@ -59,6 +59,7 @@
 
 - name: Update file in warewulf file database
   command: wwsh file sync
+  when: not cod_deploy
 
 - name: Verify EasyBuild installation
   shell: |
