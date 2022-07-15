@@ -51,7 +51,7 @@
 - name: Add EasyBuild installation path into default MODULEPATH
   replace:
     path: "{{ modulepath_file }}.csh"
-    regexp: '(MODULEPATH "[^"]*)'
+    regexp: '(MODULEPATH "?[^"\s]*)'
     replace: '\1:{{ easybuild_prefix }}/modules/all'
     backup: yes
   when: default_modulepath_csh.stdout == ""
