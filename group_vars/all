@@ -123,7 +123,7 @@
   jupyter_ood_app_version: "custom_environment"
 
 #EasyBuild variables
-  cluster_shared_folder: "/export"
+  cluster_shared_folder: "/cm/shared"
   easybuild_prefix: "{{ cluster_shared_folder }}/eb"
   easybuild_tmpdir: "/tmp"
   easybuild_buildpath: "/tmp/build"
