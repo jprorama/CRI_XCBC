@@ -28,7 +28,8 @@
 - name: Install easybuild as module
   shell: |
       source {{ module_init_script }}
-      /tmp/eb_venv/bin/eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
+      source /tmp/eb_venv/bin/activate
+      eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
   become_user: build
 
 - name: Check if EasyBuild installation path is in default MODULEPATH
