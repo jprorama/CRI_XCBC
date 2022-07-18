@@ -149,6 +149,7 @@
   matlab_ver: "{{ matlab_module_file }}"
   matlab_module_name: "rc/matlab"
   matlab_vers:
+    - 'R2022a'
     - 'R2021b'
     - 'R2021a'
     - 'R2020a'
