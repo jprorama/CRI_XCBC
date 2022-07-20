@@ -49,6 +49,6 @@
     - myjobs
 
 - name: Put motd in place
-  copy:
-    src: motd
+  template:
+    src: motd.j2
     dest: /etc/ood/motd
