@@ -17,21 +17,8 @@
 
 - name: Add cheaha logo image
   copy:
-    src: cheaha-logo.png
-    dest: /var/www/ood/apps/sys/dashboard/app/assets/images/cheaha-logo.png
-
-- name: Check if cheaha logo has been set
-  shell: grep cheaha-logo.png /var/www/ood/apps/sys/dashboard/app/helpers/dashboard_helper.rb
-  ignore_errors: yes
-  register: cheaha_logo
-
-- name: Add cheaha logo to Dashboard
-  replace:
-    path: /var/www/ood/apps/sys/dashboard/app/helpers/dashboard_helper.rb
-    regexp: '(image_tag\("[^"]*)OpenOnDemand_stack_RGB.svg(.*)$'
-    replace: '\1cheaha-logo.png\2'
-    backup: yes
-  when: cheaha_logo.stdout == ""
+    src: "{{ ood_dashboard_logo_filename }}"
+    dest: "/var/www/ood/public"
 
 - name: Rebuild assets for apps and force apps to restart
   shell: |
