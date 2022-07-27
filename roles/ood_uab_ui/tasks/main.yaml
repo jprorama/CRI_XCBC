@@ -25,15 +25,9 @@
     src: "{{ ood_dashboard_logo_filename }}"
     dest: "/var/www/ood/public"
 
-- name: Rebuild assets for apps and force apps to restart
+- name: Restart apps to pickup new settings
   shell: |
-    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
-    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
-    touch tmp/restart.txt
-  args:
-    chdir: "/var/www/ood/apps/sys/{{ app_name }}"
-  vars:
-    app_name: "{{ item }}"
+    touch /var/www/ood/apps/sys/{{ app_name }}/tmp/restart.txt
   with_items:
     - dashboard
     - myjobs
