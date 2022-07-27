@@ -260,6 +260,9 @@
   s3_shibboleth_object_name: UAB_SHIB_OBJECT
 
 #UAB UI customize
+  ood_dashboard_title: "UAB Research Computing"
+  ood_dashboard_logo_filename: "cheaha-logo.svg"
+  ood_dashboard_logo_height: 157
   brand_bg_color: "rgb(0,99,65)"
   project_path: "/data/project"
   scratch_path: "/data/scratch"
