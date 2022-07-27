@@ -7,7 +7,6 @@
     app_name: "{{ item }}"
   with_items:
     - dashboard
-    - activejobs
     - myjobs
     - shell
 
@@ -45,7 +44,6 @@
     app_name: "{{ item }}"
   with_items:
     - dashboard
-    - activejobs
     - myjobs
 
 - name: Put motd in place
