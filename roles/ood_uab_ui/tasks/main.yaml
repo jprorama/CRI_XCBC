@@ -10,10 +10,15 @@
     - myjobs
     - shell
 
+- name: Add initializers folder
+  file:
+    path: /etc/ood/config/apps/dashboard/initializers
+    state: directory
+
 - name: Add shared directories into files menu
   template:
     src: dashboard/ood_rb.j2
-    dest: /var/www/ood/apps/sys/dashboard/config/initializers/ood.rb
+    dest: /etc/ood/config/apps/dashboard/initializers/ood.rb
 
 - name: Add cheaha logo image
   copy:
