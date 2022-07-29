@@ -260,11 +260,15 @@
   s3_shibboleth_object_name: UAB_SHIB_OBJECT
 
 #UAB UI customize
-  navbar_inverse_bg: "rgb(0,99,65)"
+  ood_dashboard_title: "UAB Research Computing"
+  ood_dashboard_logo_filename: "cheaha-logo.svg"
+  ood_dashboard_logo_height: 157
+  brand_bg_color: "rgb(0,99,65)"
   project_path: "/data/project"
   scratch_path: "/data/scratch"
   user_data_path: "/data/user"
   local_scratch_path: "/scratch"
+  docs_url: "https://uabrc.github.io"
 
 # User Registration
   enable_user_reg: true

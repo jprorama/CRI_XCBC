@@ -44,4 +44,4 @@
     backup: yes
   with_items:
       - { regexp: '^.*This app will launch a .*[Owens Cluster].*$', replace: '  This app will launch a [MATLAB] GUI on the [Cheaha cluster]. You will be able' }
-      - { regexp: '^.*\[Owens cluster\]:.*supercomputers\/owens$', replace: '  [Cheaha cluster]: https://docs.uabgrid.uab.edu/wiki/cheaha' }
+      - { regexp: '^.*\[Owens cluster\]:.*supercomputers\/owens$', replace: '  [Cheaha cluster]: {{ docs_url }}' }

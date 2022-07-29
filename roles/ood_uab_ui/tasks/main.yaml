@@ -7,48 +7,32 @@
     app_name: "{{ item }}"
   with_items:
     - dashboard
-    - activejobs
     - myjobs
     - shell
+
+- name: Add initializers folder
+  file:
+    path: /etc/ood/config/apps/dashboard/initializers
+    state: directory
 
 - name: Add shared directories into files menu
   template:
     src: dashboard/ood_rb.j2
-    dest: /var/www/ood/apps/sys/dashboard/config/initializers/ood.rb
+    dest: /etc/ood/config/apps/dashboard/initializers/ood.rb
 
 - name: Add cheaha logo image
   copy:
-    src: cheaha-logo.png
-    dest: /var/www/ood/apps/sys/dashboard/app/assets/images/cheaha-logo.png
+    src: "{{ ood_dashboard_logo_filename }}"
+    dest: "/var/www/ood/public"
 
-- name: Check if cheaha logo has been set
-  shell: grep cheaha-logo.png /var/www/ood/apps/sys/dashboard/app/helpers/dashboard_helper.rb
-  ignore_errors: yes
-  register: cheaha_logo
-
-- name: Add cheaha logo to Dashboard
-  replace:
-    path: /var/www/ood/apps/sys/dashboard/app/helpers/dashboard_helper.rb
-    regexp: '(image_tag\("[^"]*)OpenOnDemand_stack_RGB.svg(.*)$'
-    replace: '\1cheaha-logo.png\2'
-    backup: yes
-  when: cheaha_logo.stdout == ""
-
-- name: Rebuild assets for apps and force apps to restart
+- name: Restart apps to pickup new settings
   shell: |
-    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:clobber RAILS_ENV=production
-    scl enable git19 rh-ruby22 nodejs010 -- bin/rake assets:precompile RAILS_ENV=production
-    touch tmp/restart.txt
-  args:
-    chdir: "/var/www/ood/apps/sys/{{ app_name }}"
-  vars:
-    app_name: "{{ item }}"
+    touch /var/www/ood/apps/sys/{{ app_name }}/tmp/restart.txt
   with_items:
     - dashboard
-    - activejobs
     - myjobs
 
 - name: Put motd in place
-  copy:
-    src: motd
+  template:
+    src: motd.j2
     dest: /etc/ood/motd
