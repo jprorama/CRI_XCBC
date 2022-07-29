@@ -142,9 +142,9 @@
   matlab_module_appdir: "matlab"
   matlab_module_file: "r2018a"
   matlab_ver: "{{ matlab_module_file }}"
-  matlab_ood_app_repo: "https://github.com/OSC/bc_osc_matlab.git"
+  matlab_ood_app_repo: "https://github.com/krishmoodbidri/bc_osc_matlab.git"
   matlab_ood_app_refspec: "{{ github_refspec }}"
-  matlab_ood_app_version: "master"
+  matlab_ood_app_version: "084ad3751a5c449f8c10280cb610d3c6df20a751"
 
 #SAS install related
   sas_provision: false
