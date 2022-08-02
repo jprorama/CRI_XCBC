@@ -5,3 +5,4 @@
     shell: /bin/bash
     createhome: no
     state: present
+    system: yes
