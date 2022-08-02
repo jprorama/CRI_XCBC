@@ -1,4 +1,7 @@
-- name: Source venv and  create account for celery_user 
-  shell: |
-    source {{ rabbitmq_agents_loc }}/venv/bin/activate
-    {{ rabbitmq_agents_loc }}/create_account.py {{ celery_user }}
+- name: Create RegUser on OOD
+  user:
+    name: "{{ RegUser_app_user }}"
+    comment: "{{ RegUser_app_user_full_name }}"
+    shell: /bin/bash
+    createhome: no
+    state: present
