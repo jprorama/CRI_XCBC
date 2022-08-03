@@ -20,6 +20,11 @@
     src: dashboard/ood_rb.j2
     dest: /etc/ood/config/apps/dashboard/initializers/ood.rb
 
+- name: Add cheaha favicon image
+  copy:
+    src: favicon.ico
+    dest: "/var/www/ood/public"
+
 - name: Add cheaha logo image
   copy:
     src: "{{ ood_dashboard_logo_filename }}"
