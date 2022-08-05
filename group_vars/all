@@ -143,6 +143,7 @@
   matlab_module_file: "r2018a"
   matlab_ver: "{{ matlab_module_file }}"
   matlab_ood_app_repo: "https://github.com/OSC/bc_osc_matlab.git"
+  matlab_ood_repo_tag: "v0.0.1"
   matlab_ood_app_refspec: "{{ github_refspec }}"
   matlab_ood_app_version: "master"
 
@@ -154,6 +155,7 @@
   sas_module_file: "9.4"
   sas_ver: "{{ sas_module_file }}"
   sas_ood_app_repo: "https://github.com/uabrc/ood_sas.git"
+  sas_ood_repo_tag: "v0.0.1"
   sas_ood_app_refspec: "{{ github_refspec }}"
   sas_ood_app_version: "master"
 
@@ -164,6 +166,7 @@
   ansys_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ ansys_module_name }}"
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
   ansys_ood_repo: "http://github.com/uabrc/ood_ansys.git"
+  ansys_ood_repo_tag: "v0.0.1"
   ansys_versions:
     - "19.1"
 
@@ -174,6 +177,7 @@
   igv_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ igv_module_name }}"
   igv_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ igv_module_name }}"
   igv_ood_repo: "https://github.com/uabrc/ood_igv.git"
+  igv_ood_repo_tag: "v0.0.1" 
   igv_versions:
     - "2.5.0-Java-11"
 
