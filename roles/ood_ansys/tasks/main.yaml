@@ -13,6 +13,7 @@
     repo: "{{ ansys_ood_repo }}"
     dest: "{{ ansys_ood_app_dir }}"
     clone: yes
+    version: "{{ ansys_ood_app_version }}"
 
 - name: Replace form.yml
   template:
