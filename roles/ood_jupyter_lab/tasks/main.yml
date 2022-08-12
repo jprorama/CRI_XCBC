@@ -14,3 +14,28 @@
     repo: https://github.com/OSC/bc_example_jupyter.git
     version: "{{ jupyterlab_ood_app_version }}" 
     dest: /var/www/ood/apps/sys/jupyter_lab
+
+- name: Use custom form.yml from templates for jupyter lab app 
+  template:
+    src: custom-jupyter-form.yml
+    dest: /var/www/ood/apps/sys/jupyter_lab/form.yml
+
+- name: Use submit.yml.erb file tailored for slurm usage at UAB
+  copy:
+    src: jupyter-submit.yml.erb
+    dest: /var/www/ood/apps/sys/jupyter_lab/submit.yml.erb
+
+- name: Upload updated manifets.yml
+  copy:
+    src: manifest.yml
+    dest: /var/www/ood/apps/sys/jupyter_lab/manifest.yml
+
+- name: Upload icon for JupyterLab
+  copy:
+    src: icon.png
+    dest: /var/www/ood/apps/sys/jupyter_lab/icon.png
+
+- name: Use custom script.sh.erb provided to avoid Jupyter Lab Crash with user id!=1000
+  template:
+    src: jupyter-script.sh.erb
+    dest: /var/www/ood/apps/sys/jupyter_lab/template/script.sh.erb
