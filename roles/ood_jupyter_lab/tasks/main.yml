@@ -1,0 +1,16 @@
+---
+- name: Remove existing jupyter lab app install
+  file:
+    path: /var/www/ood/apps/sys/jupyter_lab/
+    state: absent
+
+- name: Creates directory to clone the jupyter lab app
+  file:
+    path: /var/www/ood/apps/sys/jupyter_lab/
+    state: directory
+
+- name: Clone the default jupyter app from OOD
+  git:
+    repo: https://github.com/OSC/bc_example_jupyter.git
+    version: "{{ jupyterlab_ood_app_version }}" 
+    dest: /var/www/ood/apps/sys/jupyter_lab
