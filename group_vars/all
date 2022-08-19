@@ -121,10 +121,16 @@
   enable_sandbox: true
 
 #Jupyter related
-  jupyter_provision: true
-  jupyter_ood_app_repo: "https://github.com/OSC/bc_example_jupyter.git"
+  jupyter_provision: false
+  jupyter_ood_app_repo: "https://github.com/uabrc/bc_example_jupyter.git"
   jupyter_ood_app_refspec: "{{ github_refspec }}"
-  jupyter_ood_app_version: "custom_environment"
+  jupyter_ood_app_version: "v1.1"
+
+#JupyterLab related
+  jupyterlab_provision: false
+  jupyterlab_ood_app_repo: "https://github.com/uabrc/ood_jupyterlab.git"
+  jupyterlab_ood_app_refspec: "{{ github_refspec }}"
+  jupyterlab_ood_app_version: "v1.0"
 
 #EasyBuild variables
   cluster_shared_folder: "/export"
@@ -147,26 +153,9 @@
   matlab_module_appdir: "matlab"
   matlab_module_file: "r2018a"
   matlab_ver: "{{ matlab_module_file }}"
-  matlab_module_name: "rc/matlab"
-  matlab_vers:
-    - 'R2022a'
-    - 'R2021b'
-    - 'R2021a'
-    - 'R2020a'
-    - 'R2019b'
-    - 'R2019a'
-    - 'R2018a'
-    - 'R2017b'
-    - 'R2017a'
-    - 'R2016b'
-    - 'R2016a'
-    - 'R2015b'
-    - 'R2015a'
-    - 'R2013a'
-    - 'R2012a'
-  matlab_ood_app_repo: "https://github.com/OSC/bc_osc_matlab.git"
+  matlab_ood_app_repo: "https://github.com/uabrc/bc_osc_matlab.git"
   matlab_ood_app_refspec: "{{ github_refspec }}"
-  matlab_ood_app_version: "master"
+  matlab_ood_app_version: "v1.1"
 
 #SAS install related
   sas_provision: false
@@ -177,7 +166,7 @@
   sas_ver: "{{ sas_module_file }}"
   sas_ood_app_repo: "https://github.com/uabrc/ood_sas.git"
   sas_ood_app_refspec: "{{ github_refspec }}"
-  sas_ood_app_version: "master"
+  sas_ood_app_version: "v1.1"
 
 #ANSYS install related
   ansys_provision: false
@@ -187,6 +176,7 @@
   ansys_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ ansys_module_name }}"
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
   ansys_ood_repo: "http://github.com/uabrc/ood_ansys.git"
+  ansys_ood_app_version: "v1.1"
   ansys_versions:
     - '2021R1'
     - "2020R2"
@@ -199,11 +189,18 @@
   igv_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ igv_module_name }}"
   igv_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ igv_module_name }}"
   igv_ood_repo: "https://github.com/uabrc/ood_igv.git"
+  igv_ood_app_version: "v1.1"
   igv_versions:
     - "2.12.2-Java-11"
 
 #Rstudio related (Deprecated)
   rstudio_provision_deprecated: true
+
+#Rstudio related
+  rstudio_ood_app_repo: "https://github.com/uabrc/bc_rcc_rstudio_server.git"
+  rstudio_ood_app_refspec: "{{ github_refspec }}"
+  rstudio_ood_app_version: "v1.0"
+  rstudio_provision: false
   singularity_ver: '2.4.2'
   r_deprecated_versions:
     - { full: '4.0.2', short: '4.0'}

@@ -7,6 +7,7 @@
     - { name: 'ood_user_reg', tags: 'ood_user_reg', when: enable_user_reg }
     - { name: 'warewulf_sync', tags: 'warewulf_sync' }
     - { name: 'ood_jupyter', tags: 'ood_jupyter', when: jupyter_provision}
+    - { name: 'ood_jupyterlab', tags: 'ood_jupyterlab', when: jupyterlab_provision }
     - { name: 'ood_vnc_form', tags: 'ood_vnc_form' }
     - { name: 'ood_updated_rstudio', tags: 'ood_updated_rstudio', when: rstudio_provision }
     - { name: 'ood_deprecated_rstudio', tags: 'ood_deprecated_rstudio', when: rstudio_provision_deprecated }
