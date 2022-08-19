@@ -71,7 +71,7 @@
     state: directory
 
 - name: Add interactive desktop job submit script
-  template:
+  copy:
     src: bc_desktop/submit.yml.erb
     dest: /etc/ood/config/apps/bc_desktop/submit/submit.yml.erb
 
