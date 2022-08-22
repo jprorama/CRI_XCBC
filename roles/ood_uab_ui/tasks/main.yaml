@@ -3,7 +3,7 @@
   template:
     src: "{{ item }}/env_local.j2"
     dest: "{{ ood_sys_apps_dir }}/{{ item }}/.env.local"
-  with_items:
+  loop:
     - dashboard
     - myjobs
     - shell
@@ -31,7 +31,7 @@
 - name: Restart apps to pickup new settings
   shell: |
     touch {{ ood_sys_apps_dir }}/{{ item }}/tmp/restart.txt
-  with_items:
+  loop:
     - dashboard
     - myjobs
 
