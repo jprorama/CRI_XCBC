@@ -1,3 +1,29 @@
+- name: Download ood SSL certs from S3
+  aws_s3:
+    mode: get
+    s3_url: "{{ s3_endpoint }}"
+    bucket: "{{ s3_ood_ssl_bucket_name }}"
+    object: "{{ item }}"
+    dest: "/tmp/{{ item }}"
+    aws_access_key: "{{ lts_access_key_ood_ssl }}"
+    aws_secret_key: "{{ lts_secret_key_ood_ssl }}"
+  loop:
+    - "{{ ood_sslcertificatefile }}"
+    - "{{ ood_sslcertificatechainfile }}"
+    - "{{ ood_sslcertificatekeyfile }}"
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+
+- name: Move the SSL files to their appropriate locations
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ item.dest }}"
+    remote_src: yes
+  loop:
+    - { path: "/tmp/{{ ood_sslcertificatefile }}", dest: "/etc/pki/tls/certs/" }
+    - { path: "/tmp/{{ ood_sslcertificatechainfile }}", dest: "/etc/pki/tls/certs/" }
+    - { path: "/tmp/{{ ood_sslcertificatekeyfile }}", dest: "/etc/pki/tls/private/" }
+
 - name: enable ssl
   blockinfile:
     path: /etc/ood/config/ood_portal.yml
@@ -6,8 +32,9 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK ssl"
     block: |
       ssl:
-        - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
-        - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+        - 'SSLCertificateFile "/etc/pki/tls/certs/{{ ood_sslcertificatefile }}"'
+        - 'SSLCertificateChainFile "/etc/pki/tls/certs/{{ ood_sslcertificatechainfile }}"'
+        - 'SSLCertificateKeyFile "/etc/pki/tls/private/{{ ood_sslcertificatekeyfile }}"'
 
 - name: Build the updated Apache config
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
