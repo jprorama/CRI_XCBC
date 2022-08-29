@@ -218,6 +218,15 @@
   s3_shibboleth_bucket_name: UAB_SHIB_BUCKET
   s3_shibboleth_object_name: UAB_SHIB_OBJECT
 
+#S3-ood_ssl_config
+  s3_ood_ssl_bucket_name: "OOD_SSL_CERTS_BUCKET_NAME"
+  s3_ood_ssl_object_name: "*"
+  lts_access_key_ood_ssl: ACCESS_KEY_ 
+  lts_secret_key_ood_ssl: SECRET_KEY_
+  ood_sslcertificatefile: "<domain>-2048-incommon-cert.crt"
+  ood_sslcertificatechainfile: "<domain>-2048-incommon-interm.crt"
+  ood_sslcertificatekeyfile: "<domain>-2048.key"
+
 # User Registration
   enable_user_reg: true
   user_register_app: "flask_user_reg"
