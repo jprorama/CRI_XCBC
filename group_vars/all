@@ -121,13 +121,13 @@
   enable_sandbox: true
 
 #Jupyter related
-  jupyter_provision: false
+  jupyter_provision: true 
   jupyter_ood_app_repo: "https://github.com/uabrc/bc_example_jupyter.git"
   jupyter_ood_app_refspec: "{{ github_refspec }}"
   jupyter_ood_app_version: "v1.1"
 
 #JupyterLab related
-  jupyterlab_provision: false
+  jupyterlab_provision: true
   jupyterlab_ood_app_repo: "https://github.com/uabrc/ood_jupyterlab.git"
   jupyterlab_ood_app_refspec: "{{ github_refspec }}"
   jupyterlab_ood_app_version: "v1.0"
@@ -158,7 +158,7 @@
   matlab_ood_app_version: "v1.1"
 
 #SAS install related
-  sas_provision: false
+  sas_provision: true
   sas_clustershare: "/export/apps/sas/"
   sas_module_path: "{{ easybuild_prefix }}/modules/all"
   sas_module_appdir: "sas"
@@ -169,7 +169,7 @@
   sas_ood_app_version: "v1.1"
 
 #ANSYS install related
-  ansys_provision: false
+  ansys_provision: true
   ansys_group_name: "ANSYS_GROUP"
   ansys_module_name: "ANSYS"
   ansys_install_root: "{{ cluster_shared_folder }}/apps/{{ ansys_module_name }}"
@@ -183,7 +183,7 @@
     - "2020R1"
 
 #IGV install related
-  igv_provision: false
+  igv_provision: true
   igv_module_name: "IGV"
   igv_install_root: "{{ cluster_shared_folder }}/apps/{{ igv_module_name }}"
   igv_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ igv_module_name }}"
