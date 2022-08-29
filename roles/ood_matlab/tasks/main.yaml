@@ -15,33 +15,3 @@
     dest: /var/www/ood/apps/sys/matlab/
     refspec: "{{ matlab_ood_app_refspec }}"
     version: "{{ matlab_ood_app_version }}"
-
-- name: Replace form.yml
-  template:
-    src: form.yml
-    dest: /var/www/ood/apps/sys/matlab/form.yml
-
-- name: Remove form.js
-  file:
-    path: /var/www/ood/apps/sys/matlab/form.js
-    state: absent
-
-- name: Replace form submission template
-  copy:
-    src: submit.yml
-    dest: /var/www/ood/apps/sys/matlab/submit.yml.erb
-
-- name: Replace form script template
-  copy:
-    src: script.sh.erb 
-    dest: /var/www/ood/apps/sys/matlab/template/script.sh.erb
-
-- name: Modify the manifest.yml file to add Cheaha reference
-  replace:
-    path: /var/www/ood/apps/sys/matlab/manifest.yml
-    regexp: '{{ item.regexp }}'
-    replace: '{{ item.replace }}'
-    backup: yes
-  with_items:
-      - { regexp: '^.*This app will launch a .*[Owens Cluster].*$', replace: '  This app will launch a [MATLAB] GUI on the [Cheaha cluster]. You will be able' }
-      - { regexp: '^.*\[Owens cluster\]:.*supercomputers\/owens$', replace: '  [Cheaha cluster]: {{ docs_url }}' }
