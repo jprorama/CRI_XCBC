@@ -1,5 +1,5 @@
 ---
-- hosts: ood 
+- hosts: default
   become: true
   roles:
     - { name: 'ood', tags: 'ood' }
