@@ -1,11 +1,9 @@
 ---
 - name: Copy the configure file for apps
   template:
-    src: "{{ app_name }}/env_local.j2"
-    dest: "/var/www/ood/apps/sys/{{ app_name }}/.env.local"
-  vars:
-    app_name: "{{ item }}"
-  with_items:
+    src: "{{ item }}/env_local.j2"
+    dest: "{{ ood_sys_apps_dir }}/{{ item }}/.env.local"
+  loop:
     - dashboard
     - myjobs
     - shell
@@ -32,8 +30,8 @@
 
 - name: Restart apps to pickup new settings
   shell: |
-    touch /var/www/ood/apps/sys/{{ app_name }}/tmp/restart.txt
-  with_items:
+    touch {{ ood_sys_apps_dir }}/{{ item }}/tmp/restart.txt
+  loop:
     - dashboard
     - myjobs
 
