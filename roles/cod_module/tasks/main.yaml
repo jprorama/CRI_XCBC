@@ -24,3 +24,9 @@
   loop:
     - "/usr/share/modulefiles"
     - "/cm/images/default-image/usr/share/modulefiles"
+
+- name: Update bashrc that load default modules for root
+  replace:
+    path: '/root/.bashrc'
+    regexp: '^#?\s?(module .*)$'
+    replace: '# \1'
