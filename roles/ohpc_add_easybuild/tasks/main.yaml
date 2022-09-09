@@ -2,57 +2,48 @@
 - name: Install pip for system python and build tools
   yum:
     state: present
-    name: 
+    name:
       - '@Development Tools'
       - python3
       - python3-pip
-
 
 - name: Create user build
   user:
     name: build
 
-- name: Change owner and permission of easybuild installation directory
+- name: Create Easybuild modulefiles folder
   file:
     path: "{{ easybuild_prefix }}"
-    owner: root
+    state: directory
+    owner: build
     group: build
-    mode: "g+w"
-    recurse: yes
 
-# EasyBuild bootstrap will fail with outdated setuptools on CentOS
-# This is a work-around that updates the sytem installed setuptools
-# Ideal solution is to provide a python specific to EasyBuild
-# likely via software collections
-- name: Fix EasyBuild setuptools dependency on version > 17.1
-  shell: pip3 install -U pip setuptools wheel
-
-- name: Download EasyBuild bootstrap script
-  get_url:
-    url: https://raw.githubusercontent.com/easybuilders/easybuild-framework/develop/easybuild/scripts/bootstrap_eb.py
-    dest: /tmp/bootstrap_eb.py
-
-- name: Boostrap EasyBuild
-  shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
-      python bootstrap_eb.py "{{ easybuild_prefix }}"
-  become_user: build
-  args:
-    executable: /bin/bash
+- name: Install temporary easybuild via pip
+  pip:
+    name: easybuild
+    virtualenv: eb_venv
+    virtualenv_command: /usr/bin/python3 -m venv
     chdir: /tmp
 
+- name: Install easybuild as module
+  shell: |
+      source {{ module_init_script }}
+      source /tmp/eb_venv/bin/activate
+      eb --install-latest-eb-release --prefix {{ easybuild_prefix }}
+  become_user: build
+
 - name: Check if EasyBuild installation path is in default MODULEPATH
-  shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.sh
+  shell: grep "{{ easybuild_prefix }}/modules/all" "{{ modulepath_file }}.sh"
   ignore_errors: yes
   register: default_modulepath_sh
 
-- shell: grep "{{ easybuild_prefix }}/modules/all" /etc/profile.d/lmod.csh
+- shell: grep "{{ easybuild_prefix }}/modules/all" "{{ modulepath_file }}.csh"
   ignore_errors: yes
   register: default_modulepath_csh
 
 - name: Add EasyBuild installation path into default MODULEPATH
   replace:
-    path: /etc/profile.d/lmod.sh
+    path: "{{ modulepath_file }}.sh"
     regexp: '(MODULEPATH=.*)'
     replace: '\1:{{ easybuild_prefix }}/modules/all'
     backup: yes
@@ -60,19 +51,24 @@
 
 - name: Add EasyBuild installation path into default MODULEPATH
   replace:
-    path: /etc/profile.d/lmod.csh
-    regexp: '(MODULEPATH "[^"]*)'
+    path: "{{ modulepath_file }}.csh"
+    regexp: '(MODULEPATH "?[^"\s]*)'
     replace: '\1:{{ easybuild_prefix }}/modules/all'
     backup: yes
   when: default_modulepath_csh.stdout == ""
 
 - name: Update file in warewulf file database
   command: wwsh file sync
+  when: not cod_deploy
 
 - name: Verify EasyBuild installation
   shell: |
-      source /opt/ohpc/admin/lmod/lmod/init/bash
+      source {{ module_init_script }}
       module use "{{ easybuild_prefix }}/modules/all"
       module load EasyBuild
       eb --version
 
+- name: Remove temporary easybuild
+  file:
+    state: absent
+    path: /tmp/eb_venv
