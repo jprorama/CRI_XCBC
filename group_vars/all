@@ -19,11 +19,11 @@
   gpu_ip_minimum: "10.1.1.128" #This could be more clever, like compute_ip_minimum + num_nodes...
 
 #slurm.conf variables
-  cluster_name: "SLURM_CLUSTER"
-  cluster_title: "CHEAHA"
-  cluster_host: "login005"
-  slurm_bin_path: "/bin"
-  slurm_conf_path: "/etc/slurm/slurm.conf"
+  cluster_name: "CoD"
+  cluster_title: "CoD Cluster"
+  cluster_host: "login001"
+  slurm_bin_path: "/cm/shared/apps/slurm/current/bin"
+  slurm_conf_path: "/cm/shared/apps/slurm/var/etc/slurm/slurm.conf"
 #  gres_types: "gpu"
 
 # sacct user list
@@ -43,7 +43,7 @@
   nvidia_driver_installer: "NVIDIA-Linux-x86_64-387.26.run"
   cuda_toolkit_installer: "cuda-linux.9.1.85-23083092.run"
   cuda_samples_installer: "cuda-samples.9.1.85-23083092-linux.run"
-  cuda_toolkit_module: "cuda10.0/toolkit"
+
 
 # WW Template Names for wwmkchroot
   template_path: "/usr/libexec/warewulf/wwmkchroot/"
@@ -79,8 +79,7 @@
 #OpenOnDemand
   ood_nodename: "ood"
   ood_version: 2.0
-  ood_ip_addr: 10.1.1.254
-  ood_shell_default_host: "cheaha.rc.uab.edu"
+  ood_private_ip: "10.1.1.11"
   ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.noarch.rpm"
   ood_sys_apps_dir: "/var/www/ood/apps/sys"
   # a regex to extract username from remote_user in user_auth script"
@@ -117,18 +116,15 @@
   node_glob_bash: "{{ compute_node_prefix }}{0..{{ num_compute_nodes|int - 1 }}}"
   gpu_node_glob_bash: "{{ compute_node_prefix }}{0..{{ num_compute_nodes|int - 1 }}}"
 
-#Enable Sandbox on ood
-  enable_sandbox: true
-
 #Jupyter related
-  jupyter_provision: true 
-  jupyter_ood_app_repo: "https://github.com/uabrc/bc_example_jupyter.git"
+  jupyter_provision: false
+  jupyter_ood_app_repo: "https://github.com/uabrc/bc_uab_jupyter.git"
   jupyter_ood_app_refspec: "{{ github_refspec }}"
   jupyter_ood_app_version: "v1.1"
 
 #JupyterLab related
-  jupyterlab_provision: true
-  jupyterlab_ood_app_repo: "https://github.com/uabrc/ood_jupyterlab.git"
+  jupyterlab_provision: false
+  jupyterlab_ood_app_repo: "https://github.com/uabrc/bc_uab_jupyterlab.git"
   jupyterlab_ood_app_refspec: "{{ github_refspec }}"
   jupyterlab_ood_app_version: "v1.0"
 
@@ -140,95 +136,67 @@
   easybuild_sourcepath: "/tmp/source"
 
 #matlab install related
-  matlab_provision: true
+  matlab_provision: false
   matlab_download_url: "https://uab.box.com/shared/static/y01qu7oo1gpne6j2s6nqwcuee63epivo.gz"
   matlab_clustershare: "/opt/ohpc/pub/apps/matlab/"
   matlab_destination: "/tmp/matlab.tar.gz"
   # module file vars
   matlab_install_root: "/opt/ohpc/pub-master/apps/matlab/M2/"
-  matlab_git_version: 0.7.0
   matlab_docs_url: "http://{{ ood_nodename }}"
   matlab_license_file: "{{ matlab_install_root }}/licenses/licenses.lic"
   matlab_module_path: "{{ easybuild_prefix }}/modules/all"
   matlab_module_appdir: "matlab"
   matlab_module_file: "r2018a"
   matlab_ver: "{{ matlab_module_file }}"
-  matlab_ood_app_repo: "https://github.com/uabrc/bc_osc_matlab.git"
+  matlab_ood_app_repo: "https://github.com/uabrc/bc_uab_matlab.git"
   matlab_ood_app_refspec: "{{ github_refspec }}"
   matlab_ood_app_version: "v1.1"
 
 #SAS install related
-  sas_provision: true
+  sas_provision: false
   sas_clustershare: "/export/apps/sas/"
   sas_module_path: "{{ easybuild_prefix }}/modules/all"
   sas_module_appdir: "sas"
   sas_module_file: "9.4"
   sas_ver: "{{ sas_module_file }}"
-  sas_ood_app_repo: "https://github.com/uabrc/ood_sas.git"
+  sas_ood_app_repo: "https://github.com/uabrc/bc_uab_sas.git"
   sas_ood_app_refspec: "{{ github_refspec }}"
   sas_ood_app_version: "v1.1"
 
 #ANSYS install related
-  ansys_provision: true
-  ansys_group_name: "ANSYS_GROUP"
+  ansys_provision: false
   ansys_module_name: "ANSYS"
   ansys_install_root: "{{ cluster_shared_folder }}/apps/{{ ansys_module_name }}"
   ansys_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ ansys_module_name }}"
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
-  ansys_ood_repo: "http://github.com/uabrc/ood_ansys.git"
+  ansys_ood_repo: "http://github.com/uabrc/bc_uab_ansys.git"
   ansys_ood_app_version: "v1.1"
   ansys_versions:
-    - '2021R1'
-    - "2020R2"
-    - "2020R1"
+    - "19.1"
 
 #IGV install related
-  igv_provision: true
+  igv_provision: false
   igv_module_name: "IGV"
   igv_install_root: "{{ cluster_shared_folder }}/apps/{{ igv_module_name }}"
   igv_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ igv_module_name }}"
   igv_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ igv_module_name }}"
-  igv_ood_repo: "https://github.com/uabrc/ood_igv.git"
+  igv_ood_repo: "https://github.com/uabrc/bc_uab_igv.git"
   igv_ood_app_version: "v1.1"
   igv_versions:
-    - "2.12.2-Java-11"
+    - "2.5.0-Java-11"
 
-#Rstudio related (Deprecated)
-  rstudio_provision_deprecated: true
-  singularity_ver: '2.4.2'
-  r_deprecated_versions:
-    - { full: '4.0.2', short: '4.0'}
-    - { full: '3.6.2', short: '3.6' }
-    - { full: '3.6.0', short: '3.6' }
-    - { full: '3.5.3', short: '3.5' }
-    - { full: '3.5.2', short: '3.5' }
-    - { full: '3.4.3', short: '3.4' }
-
-#Rstudio updated
-  rstudio_provision: true
-  rstudio_ood_app_repo: "https://github.com/uabrc/bc_rcc_rstudio_server.git"
-  rstudio_versions:
-    - "1.3.959"
-  default_r_ver: "4.0.3-foss-2018a-X11-20180131-bare"
+#Rstudio related
+  rstudio_ood_app_repo: "https://github.com/uabrc/bc_uab_rstudio_server.git"
   rstudio_ood_app_refspec: "{{ github_refspec }}"
   rstudio_ood_app_version: "v1.0"
+  rstudio_provision: false
+  singularity_ver: '2.4.2'
+  singularity_rstudio_app_repo: "https://github.com/nickjer/singularity-rstudio.git"
+  singularity_rstudio_app_refspec: "{{ github_refspec }}"
+  singularity_rstudio_app_version: "{{ master }}"
   r_versions:
-    - "4.1.0-foss-2018a-X11-20180131-bare"
-    - "4.0.3-foss-2018a-X11-20180131-bare"
-    - "4.0.2-foss-2018a-X11-20180131-bare"
-    - "3.6.3-intel-2016a-bare"
-    - "3.6.2-foss-2018a-X11-20180131-bare"
-    - "3.6.0-foss-2018a-X11-20180131-bare"
-    - "3.5.3-foss-2018a-X11-20180131-bare"
-    - "3.5.2-foss-2018a-X11-20180131-bare"
-    - "3.5.1-foss-2018a-X11-20180131-bare"
-    - "3.5.0-intel-2017a-X11-20170314-bare"
-    - "3.5.0-foss-2018a-X11-20180131-bare"
-    - "3.4.3-intel-2017a-X11-20170314"
-    - "3.4.3-foss-2017b-X11-20171023"
-    - "3.4.3-foss-2016b-X11-20160819"
-    - "3.4.1-intel-2017a-X11-20170314"
-    - "3.3.3-intel-2017a-X11-20170314"
+    - { full: '3.5.1', short: '3.5' }
+    - { full: '3.4.4', short: '3.4' }
 
 #Copr Repos
   enable_copr: true
@@ -249,17 +217,6 @@
 #S3-shib_config
   s3_shibboleth_bucket_name: UAB_SHIB_BUCKET
   s3_shibboleth_object_name: UAB_SHIB_OBJECT
-
-#UAB UI customize
-  ood_dashboard_title: "UAB Research Computing"
-  ood_dashboard_logo_filename: "cheaha-logo.svg"
-  ood_dashboard_logo_height: 157
-  brand_bg_color: "rgb(0,99,65)"
-  project_path: "/data/project"
-  scratch_path: "/data/scratch"
-  user_data_path: "/data/user"
-  local_scratch_path: "/scratch"
-  docs_url: "https://uabrc.github.io"
 
 # User Registration
   enable_user_reg: true
@@ -344,10 +301,6 @@
     - {"name": "certification", "state":"certification", "deny": true, "msg": "Account certification is required.\n Please reach out to administrator to clear your account.\n"}
     - {"name": "pre_certification", "state":"pre_certification", "deny": false, "msg": ""}
     - {"name": "", "state":"ok", "deny": false, "msg": ""}
-
-# Polling interval from dashboard to slurm in milliseconds
-  poll_interval: 120000
-  env_file_loc: "/etc/ood/config/apps/dashboard/"
 
 # refspec for merge/pull request
 # with refspec set up, you can specify version as:
