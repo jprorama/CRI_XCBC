@@ -20,6 +20,6 @@
     path: "{{ ansys_ood_app_dir }}"
     state: directory
     owner: root
-    group: "{{ ansys_group_name }}"
+    group: "{{ ansys_group_id }}"
     mode: '0750'
     recurse: yes
