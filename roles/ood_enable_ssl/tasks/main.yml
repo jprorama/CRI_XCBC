@@ -8,6 +8,11 @@
       ssl:
         - 'SSLCertificateFile "/etc/pki/tls/certs/localhost.crt"'
         - 'SSLCertificateKeyFile "/etc/pki/tls/private/localhost.key"'
+        - 'SSLProtocol -all +TLSv1.2'
+        - 'SSLHonorCipherOrder On'
+        - 'SSLCipherSuite  DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256'
+        - 'ServerSignature Off'
+        - 'TraceEnable Off'
 
 - name: Build the updated Apache config
   command: /opt/ood/ood-portal-generator/sbin/update_ood_portal
