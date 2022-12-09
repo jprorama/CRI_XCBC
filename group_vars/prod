@@ -30,7 +30,6 @@
 #matlab install related
   matlab_provision: true
   matlab_ood_app_version: "v1.2"
-  matlab_git_version: 0.7.0
 
 #SAS install related
   sas_provision: true
@@ -39,7 +38,7 @@
 #ANSYS install related
   ansys_provision: true
   ansys_ood_app_version: "v1.2"
-  ansys_group_name: "ANSYS_GROUP"
+  ansys_group_id: "40078"
   ansys_versions:
     - '2021R1'
     - "2020R2"
@@ -64,7 +63,7 @@
 
 #Rstudio updated
   rstudio_provision: true
-  rstudio_ood_app_version: "v1.4.0"
+  rstudio_ood_app_version: "v1.5.0"
   rstudio_versions:
     - "1.3.959"
   default_r_ver: "4.0.3-foss-2018a-X11-20180131-bare"
