@@ -8,8 +8,13 @@
   cuda_toolkit_module: "cuda10.0/toolkit"
 
 #OpenOnDemand
+  ood_servername: "rc.uab.edu"
   ood_ip_addr: 10.1.1.254
   ood_shell_default_host: "cheaha.rc.uab.edu"
+  ood_ssl_cert_file: "rc.uab.edu-2048-incommon-cert.crt"
+  ood_ssl_cert_key: "rc.uab.edu-2048.key"
+  ood_ssl_cert_chain_file: "rc.uab.edu-2048-incommon-interm.crt"
+  ood_ssl_s3_bucket: ""
 
 #Enable Sandbox on ood
   enable_sandbox: true
@@ -92,7 +97,10 @@
   local_scratch_path: "/scratch"
   docs_url: "https://uabrc.github.io"
 
+# Lmod
+  lmod_root_default_modules: ["shared", "slurm"]
+  lmod_default_modules: ["shared", "slurm", "rc-base"]
+
 # Polling interval from dashboard to slurm in milliseconds
   poll_interval: 120000
   env_file_loc: "/etc/ood/config/apps/dashboard/"
-
