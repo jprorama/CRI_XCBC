@@ -1,0 +1,14 @@
+---
+- name: Enable Lmod
+  replace:
+    path: "{{ enable_lmod_prefix }}/etc/sysconfig/modules/lmod/{{ item.path }}"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { path: 'cm-lmod-init.sh', regexp: 'LMOD=.*$', replace: 'LMOD=1'}
+    - { path: 'cm-lmod-init.csh', regexp: 'LMOD.*$', replace: 'LMOD "1"'}
+
+- name: Put DefaultModules in place
+  template:
+    src: DefaultModules.lua.j2
+    dest: "{{ enable_lmod_prefix }}/usr/share/modulefiles/DefaultModules.lua"
