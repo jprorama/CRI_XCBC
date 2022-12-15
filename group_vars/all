@@ -78,12 +78,17 @@
 
 #OpenOnDemand
   ood_nodename: "ood"
+  ood_servername: "rc.uab.edu"
   ood_version: 2.0
   ood_private_ip: "10.1.1.11"
   ood_rpm_repo: "https://yum.osc.edu/ondemand/{{ ood_version }}/ondemand-release-web-{{ ood_version }}-1.noarch.rpm"
   ood_sys_apps_dir: "/var/www/ood/apps/sys"
   # a regex to extract username from remote_user in user_auth script"
   ood_user_regex: "^(.+)$"
+  ood_ssl_cert_file: "localhost.crt"
+  ood_ssl_cert_key: "localhost.key"
+  ood_ssl_cert_chain_file: ""
+  ood_ssl_s3_bucket: ""
 
 #Node Inventory - not in the Ansible inventory sense! Just for WW and Slurm config.
 # Someday I will need a role that can run wwnodescan, and add nodes to this file! Probably horrifying practice.
@@ -120,13 +125,13 @@
   jupyter_provision: false
   jupyter_ood_app_repo: "https://github.com/uabrc/bc_uab_jupyter.git"
   jupyter_ood_app_refspec: "{{ github_refspec }}"
-  jupyter_ood_app_version: "v1.1"
+  jupyter_ood_app_version: "master"
 
 #JupyterLab related
   jupyterlab_provision: false
   jupyterlab_ood_app_repo: "https://github.com/uabrc/bc_uab_jupyterlab.git"
   jupyterlab_ood_app_refspec: "{{ github_refspec }}"
-  jupyterlab_ood_app_version: "v1.0"
+  jupyterlab_ood_app_version: "master"
 
 #EasyBuild variables
   cluster_shared_folder: "/export"
@@ -150,7 +155,7 @@
   matlab_ver: "{{ matlab_module_file }}"
   matlab_ood_app_repo: "https://github.com/uabrc/bc_uab_matlab.git"
   matlab_ood_app_refspec: "{{ github_refspec }}"
-  matlab_ood_app_version: "v1.1"
+  matlab_ood_app_version: "master"
 
 #SAS install related
   sas_provision: false
@@ -161,7 +166,7 @@
   sas_ver: "{{ sas_module_file }}"
   sas_ood_app_repo: "https://github.com/uabrc/bc_uab_sas.git"
   sas_ood_app_refspec: "{{ github_refspec }}"
-  sas_ood_app_version: "v1.1"
+  sas_ood_app_version: "master"
 
 #ANSYS install related
   ansys_provision: false
@@ -171,7 +176,7 @@
   ansys_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ ansys_module_name }}"
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
   ansys_ood_repo: "http://github.com/uabrc/bc_uab_ansys.git"
-  ansys_ood_app_version: "v1.1"
+  ansys_ood_app_version: "master"
   ansys_versions:
     - "19.1"
 
@@ -182,14 +187,14 @@
   igv_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ igv_module_name }}"
   igv_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ igv_module_name }}"
   igv_ood_repo: "https://github.com/uabrc/bc_uab_igv.git"
-  igv_ood_app_version: "v1.1"
+  igv_ood_app_version: "master"
   igv_versions:
     - "2.5.0-Java-11"
 
 #Rstudio related
   rstudio_ood_app_repo: "https://github.com/uabrc/bc_uab_rstudio_server.git"
   rstudio_ood_app_refspec: "{{ github_refspec }}"
-  rstudio_ood_app_version: "v1.0"
+  rstudio_ood_app_version: "master"
   rstudio_provision: false
   singularity_ver: '2.4.2'
   singularity_rstudio_app_repo: "https://github.com/nickjer/singularity-rstudio.git"
@@ -222,7 +227,7 @@
 # User Registration
   enable_user_reg: true
   user_register_app: "flask_user_reg"
-  user_register_app_tag: "5c06809cf494db0f268c325fbc309a40eb5a6eea"
+  user_register_app_tag: "master"
   user_register_app_path: "/var/www/ood/register/{{ user_register_app }}"
   user_register_app_key: "1234"
   user_register_app_repo: "https://gitlab.rc.uab.edu/rc/self-reg-form.git"
@@ -236,7 +241,7 @@
   RegUser_app_user_passwd: "qweasd"
 # Authorized user group
   valid_eppa:  ["faculty", "staff", "student", "affiliate"]
-  activate_namespace: false
+  activate_namespace: true
 
 # RabbitMQ
   rabbitmq_provision: true
@@ -278,6 +283,7 @@
 #ClusteronDemand CoD
   cod_deploy: true
   post_create_script: PostAddUserScript.sh
+  cm_def_img_path: "/cm/images/default-image"
 
 # Lmod
   lmod_loc: "/opt/ohpc/admin/lmod/lmod"
@@ -295,6 +301,9 @@
   lmod_db_passwd: "password"
   lmod_db_allow_host: "localhost"
   lmod_db_host_machine: "ohpc"
+  lmod_root_default_modules: ["shared", "cmd", "cluster-tools", "slurm/slurm"]
+  lmod_default_modules: ["shared", "slurm/slurm"]
+  enable_lmod_prefix: ""
 
 # ssh groups
   ssh_groups:
