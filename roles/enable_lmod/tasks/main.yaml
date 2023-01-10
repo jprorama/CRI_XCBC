@@ -3,6 +3,12 @@
   shell: yum list installed | grep Lmod
   register: yum_lmod_pkg
 
+- name: Make sure lmod config is installed with cm version
+  ansible.builtin.yum:
+    name: cm-modules-init-client
+    state: present
+  when: '"_cm" in yum_lmod_pkg.stdout'
+
 - name: Enable Lmod
   replace:
     path: "{{ enable_lmod_prefix }}/etc/sysconfig/modules/lmod/{{ item.path }}"
