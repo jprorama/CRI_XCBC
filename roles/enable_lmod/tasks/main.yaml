@@ -1,4 +1,8 @@
 ---
+- name: Check if it's cm provided Lmod
+  shell: yum list installed | grep Lmod
+  register: yum_lmod_pkg
+
 - name: Enable Lmod
   replace:
     path: "{{ enable_lmod_prefix }}/etc/sysconfig/modules/lmod/{{ item.path }}"
@@ -7,6 +11,7 @@
   loop:
     - { path: 'cm-lmod-init.sh', regexp: 'LMOD=.*$', replace: 'LMOD=1'}
     - { path: 'cm-lmod-init.csh', regexp: 'LMOD.*$', replace: 'LMOD "1"'}
+  when: '"_cm" in yum_lmod_pkg.stdout'
 
 - name: Put DefaultModules in place
   template:
