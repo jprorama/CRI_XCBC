@@ -1,13 +1,13 @@
 ---
-- name: Check if it's cm provided Lmod
-  shell: yum list installed | grep Lmod
-  register: yum_lmod_pkg
+- name: Get package facts
+  ansible.builtin.package_facts:
+    manager: "auto"
 
 - name: Make sure lmod config is installed with cm version
   ansible.builtin.yum:
     name: cm-modules-init-client
     state: present
-  when: '"_cm" in yum_lmod_pkg.stdout'
+  when: '"cm" in ansible_facts.packages.Lmod[0].release'
 
 - name: Enable Lmod
   replace:
@@ -17,7 +17,7 @@
   loop:
     - { path: 'cm-lmod-init.sh', regexp: 'LMOD=.*$', replace: 'LMOD=1'}
     - { path: 'cm-lmod-init.csh', regexp: 'LMOD.*$', replace: 'LMOD "1"'}
-  when: '"_cm" in yum_lmod_pkg.stdout'
+  when: '"cm" in ansible_facts.packages.Lmod[0].release'
 
 - name: Put DefaultModules in place
   template:
