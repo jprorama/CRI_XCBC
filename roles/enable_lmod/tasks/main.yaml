@@ -21,7 +21,7 @@
 
     - name: Update Lmod Spider Cache setting
       ansible.builtin.replace:
-        path: "{{ lmod_loc }}/init/lmodrc.lua"
+        path: "{{ enable_lmod_prefix }}/{{ lmod_loc }}/init/lmodrc.lua"
         regexp: '(\["{{ item.key }}"\] = ).*$'
         replace: \1 "{{ item.value }}",
       loop:
@@ -32,7 +32,7 @@
 - name: Add Lmod Spider Cache setting
   ansible.builtin.blockinfile:
     marker: "-- {mark} ANSIBLE MANAGED BLOCK"
-    path: "{{ lmod_loc }}/init/lmodrc.lua"
+    path: "{{ enable_lmod_prefix }}/{{ lmod_loc }}/init/lmodrc.lua"
     block: |
       scDescriptT = {
         {
