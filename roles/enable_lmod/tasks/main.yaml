@@ -19,6 +19,29 @@
     - { path: 'cm-lmod-init.csh', regexp: 'LMOD.*$', replace: 'LMOD "1"'}
   when: '"cm" in ansible_facts.packages.Lmod[0].release'
 
+- name: Update Lmod Spider Cache setting
+  ansible.builtin.replace:
+    path: "{{ lmod_loc }}/init/lmodrc.lua"
+    regexp: '(\["{{ item.key }}"\] = ).*$'
+    replace: \1 "{{ item.value }}",
+  loop:
+    - {"key": "dir", "value": "{{ lmod_cache_loc }}/sysCacheDir"}
+    - {"key": "timestamp", "value": "{{ lmod_cache_loc }}/sysCacheTS.txt"}
+  when: '"cm" in ansible_facts.packages.Lmod[0].release'
+
+- name: Add Lmod Spider Cache setting
+  ansible.builtin.blockinfile:
+    marker: "-- {mark} ANSIBLE MANAGED BLOCK"
+    path: "{{ lmod_loc }}/init/lmodrc.lua"
+    block: |
+      scDescriptT = {
+        {
+          ["dir"] = "{{ lmod_cache_loc }}/sysCacheDir",
+          ["timestamp"] = "{{ lmod_cache_loc }}/sysCacheTS.txt",
+        },
+      }
+  when: '"cm" not in ansible_facts.packages.Lmod[0].release'
+
 - name: Put DefaultModules in place
   template:
     src: DefaultModules.lua.j2
