@@ -21,7 +21,7 @@
 
     - name: Update Lmod Spider Cache setting
       ansible.builtin.replace:
-        path: "{{ enable_lmod_prefix }}/{{ lmod_loc }}/init/lmodrc.lua"
+        path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
         regexp: '(\["{{ item.key }}"\] = ).*$'
         replace: \1 "{{ item.value }}",
       loop:
