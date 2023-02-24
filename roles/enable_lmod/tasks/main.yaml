@@ -46,7 +46,7 @@
     - name: Add shared module
       ansible.builtin.copy:
         src: shared
-        dest: "{{ enable_lmod_prefix }}/usr/share/modulefiles/shared"
+        dest: "{{ enable_lmod_prefix }}{{ lmod_default_modulepath }}/shared"
 
     - name: Setup default modules
       ansible.builtin.copy:
@@ -61,4 +61,4 @@
 - name: Put DefaultModules in place
   template:
     src: DefaultModules.lua.j2
-    dest: "{{ enable_lmod_prefix }}/usr/share/modulefiles/DefaultModules.lua"
+    dest: "{{ enable_lmod_prefix }}{{ lmod_default_modulepath }}/DefaultModules.lua"
