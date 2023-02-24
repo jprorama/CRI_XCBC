@@ -42,6 +42,15 @@
               ["timestamp"] = "{{ lmod_cache_loc }}/sysCacheTS.txt",
             },
           }
+
+    - name: Setup default modules
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "/etc/profile.d/z01-{{ item }}"
+      loop:
+        - default_module.sh
+        - default_module.csh
+
   when: '"cm" not in ansible_facts.packages.Lmod[0].release'
 
 - name: Put DefaultModules in place
