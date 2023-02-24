@@ -43,6 +43,11 @@
             },
           }
 
+    - name: Add shared module
+      ansible.builtin.copy:
+        src: shared
+        dest: "{{ enable_lmod_prefix }}/usr/share/modulefiles/shared"
+
     - name: Setup default modules
       ansible.builtin.copy:
         src: "{{ item }}"
