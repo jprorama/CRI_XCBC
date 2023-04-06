@@ -50,18 +50,7 @@
   igv_versions:
     - "2.12.2-Java-11"
 
-#Rstudio related (Deprecated)
-  rstudio_provision_deprecated: true
-  singularity_ver: '2.4.2'
-  r_deprecated_versions:
-    - { full: '4.0.2', short: '4.0'}
-    - { full: '3.6.2', short: '3.6' }
-    - { full: '3.6.0', short: '3.6' }
-    - { full: '3.5.3', short: '3.5' }
-    - { full: '3.5.2', short: '3.5' }
-    - { full: '3.4.3', short: '3.4' }
-
-#Rstudio updated
+#Rstudio
   rstudio_provision: true
   rstudio_ood_app_version: "v1.5.0"
   rstudio_versions:
