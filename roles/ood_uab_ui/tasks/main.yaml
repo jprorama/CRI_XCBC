@@ -36,6 +36,6 @@
     - myjobs
 
 - name: Put motd in place
-  template:
-    src: motd.j2
+  ansible.builtin.get_url:
+    url: "{{ motd_url }}"
     dest: /etc/ood/motd
