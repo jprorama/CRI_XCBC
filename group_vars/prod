@@ -84,7 +84,7 @@
   user_data_path: "/data/user"
   local_scratch_path: "/scratch"
   docs_url: "https://docs.rc.uab.edu"
-  motd_url: "https://gitlab.rc.uab.edu/rc/rc-ood-message/-/raw/main/motd"
+  rc_msg_repo: "https://gitlab.rc.uab.edu/rc/rc-ood-message.git"
   ood_announcement_path: "/etc/ood/config/announcements.d"
   motd: { path: "{{ ood_announcement_path }}/motd", type: "markdown" }
 

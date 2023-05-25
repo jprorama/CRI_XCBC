@@ -35,7 +35,7 @@
     - dashboard
     - myjobs
 
-- name: Put motd in place
-  ansible.builtin.get_url:
-    url: "{{ motd_url }}"
-    dest: /etc/ood/motd
+- name: Clone rc message in place
+  git:
+    repo: "{{ rc_msg_repo }}"
+    dest: "{{ ood_announcement_path }}"
