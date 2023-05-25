@@ -85,6 +85,8 @@
   local_scratch_path: "/scratch"
   docs_url: "https://docs.rc.uab.edu"
   motd_url: "https://gitlab.rc.uab.edu/rc/rc-ood-message/-/raw/main/motd"
+  ood_announcement_path: "/etc/ood/config/announcements.d"
+  motd: { path: "{{ ood_announcement_path }}/motd", type: "markdown" }
 
 # Lmod
   lmod_root_default_modules: ["shared", "slurm"]
