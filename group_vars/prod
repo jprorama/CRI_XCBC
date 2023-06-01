@@ -83,7 +83,7 @@
   scratch_path: "/data/scratch"
   user_data_path: "/data/user"
   local_scratch_path: "/scratch"
-  docs_url: "https://uabrc.github.io"
+  docs_url: "https://docs.rc.uab.edu"
 
 # Lmod
   lmod_root_default_modules: ["shared", "slurm"]
