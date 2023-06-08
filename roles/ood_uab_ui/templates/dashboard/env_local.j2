@@ -7,5 +7,5 @@ OOD_PORTAL="ondemand"
 OOD_DATAROOT="{{ user_data_path }}/$USER/$OOD_PORTAL"
 DISABLE_SAFARI_BASIC_AUTH_WARNING=1
 
-MOTD_PATH="/etc/ood/motd"
-MOTD_FORMAT="markdown"
+MOTD_PATH="{{ motd.path }}"
+MOTD_FORMAT="{{ motd.type }}"
