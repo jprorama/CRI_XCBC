@@ -42,5 +42,5 @@
 
 - name: Create cronjob to pull latest message from git
   ansible.builtin.cron:
-    minute: */15
+    minute: "*/15"
     job: "/usr/bin/git --git-dir={{ ood_announcement_path }}/.git --work-tree={{ ood_announcement_path }} pull"
