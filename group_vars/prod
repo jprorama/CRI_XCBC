@@ -74,6 +74,13 @@
     - "3.4.1-intel-2017a-X11-20170314"
     - "3.3.3-intel-2017a-X11-20170314"
 
+# Relion
+  relion_provision: true
+  relion_ood_app_dir: "{{ ood_sys_apps_dir }}/relion"
+  relion_ood_app_repo: "https://github.com/uabrc/bc_uab_relion.git"
+  relion_ood_app_refspec: "{{ github_refspec }}"
+  relion_ood_app_version: "master"
+
 #UAB UI customize
   ood_dashboard_title: "UAB Research Computing"
   ood_dashboard_logo_filename: "cheaha-logo.svg"

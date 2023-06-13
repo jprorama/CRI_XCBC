@@ -1,0 +1,17 @@
+---
+- name: Remove existing Relion app install
+  file:
+    path: "{{ relion_ood_app_dir }}"
+    state: absent
+
+- name: Create Relion app directory
+  file:
+    path: "{{ relion_ood_app_dir }}"
+    state: directory
+
+- name: Clone the default Relion app
+  git:
+    repo: "{{ relion_ood_app_repo }}"
+    dest: "{{ relion_ood_app_dir }}"
+    refspec: "{{ relion_ood_app_refspec }}"
+    version: "{{ relion_ood_app_version }}"
