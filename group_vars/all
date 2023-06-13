@@ -89,6 +89,7 @@
   ood_ssl_cert_key: "localhost.key"
   ood_ssl_cert_chain_file: ""
   ood_ssl_s3_bucket: ""
+  docs_url: "https://www.google.com"
 
 #Node Inventory - not in the Ansible inventory sense! Just for WW and Slurm config.
 # Someday I will need a role that can run wwnodescan, and add nodes to this file! Probably horrifying practice.
@@ -134,6 +135,7 @@
   jupyterlab_ood_app_version: "master"
 
 #EasyBuild variables
+  easybuild_provision: false
   cluster_shared_folder: "/export"
   easybuild_prefix: "{{ cluster_shared_folder }}/eb"
   easybuild_tmpdir: "/tmp"
@@ -263,6 +265,7 @@
   admin_email: "root@localhost"
   sender: "ROOT@LOCALHOST"
   Sender_subscription: "SUBSCRIBE_EMAIL@LOCALHOST"
+  Sender_notification: "NOTIFICATION@LOCALHOST"
   sender_alias: "Services"
   subject: "New User Account"
   info_url: "https://www.google.com"
