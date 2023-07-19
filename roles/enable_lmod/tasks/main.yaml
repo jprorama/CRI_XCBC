@@ -53,15 +53,20 @@
 - name: Check Lmod Spider Cache setting
   ansible.builtin.lineinfile:
     path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
-    search_string: 'scDescriptT ='
-    line: ''
-    check_mode: yes
+    regex: 'scDescriptT ='
+    state: absent
+  check_mode: yes
   register: result
 
-- name: Print return information from the previous task
-  ansible.builtin.debug:
-    var: result
-    verbosity: 2
+- name: Update Lmod Spider Cache setting if already present
+  ansible.builtin.replace:
+    path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
+    regexp: '(\["{{ item.key }}"\] = ).*$'
+    replace: \1 "{{ item.value }}",
+  loop:
+    - {"key": "dir", "value": "{{ lmod_cache_loc }}/sysCacheDir"}
+    - {"key": "timestamp", "value": "{{ lmod_cache_loc }}/sysCacheTS.txt"}
+  when: result.changed
 
 - name: Add Lmod Spider Cache setting if not present
   ansible.builtin.blockinfile:
@@ -74,15 +79,5 @@
           ["timestamp"] = "{{ lmod_cache_loc }}/sysCacheTS.txt",
         },
       }
-  when: result is succeeded
-
-- name: Update Lmod Spider Cache setting if already present
-  ansible.builtin.replace:
-    path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
-    regexp: '(\["{{ item.key }}"\] = ).*$'
-    replace: \1 "{{ item.value }}",
-  loop:
-    - {"key": "dir", "value": "{{ lmod_cache_loc }}/sysCacheDir"}
-    - {"key": "timestamp", "value": "{{ lmod_cache_loc }}/sysCacheTS.txt"}
-  when: result is failed
+  when: not result.changed
 
