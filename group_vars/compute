@@ -1,0 +1,4 @@
+---
+  lmod_root_default_modules: ["shared", "cmd", "cmsh", "cluster-tools", "slurm"]
+  lmod_default_modules: ["shared", "slurm", "rc-base"]
+  lmod_cache_loc: "/share/apps"
