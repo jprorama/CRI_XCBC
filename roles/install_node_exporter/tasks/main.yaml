@@ -5,7 +5,7 @@
     dest: "/tmp/{{ sha256 }}"
 
 - set_fact:
-    md5_value: "{{ lookup('file', '/tmp/{{ sha256 }}') }}"
+    md5_value: "{{ lookup('{{ file }}', '/tmp/{{ sha256 }}') }}"
 
 - name: Download node_exporter binary
   get_url:
