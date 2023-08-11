@@ -1,27 +1,12 @@
 ---
-#- name: Download checksum file
-#  get_url:
-#    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ ver }}/{{ sha256 }}"
-#    dest: "/tmp/{{ sha256 }}"
-
-#- name: Set sha256_value variable to the downladed sha256sum value
-#  set_fact:
-#    sha256_value: "{{ lookup('file', '/tmp/sha256sums.txt') }}"
-
-#- name: Print sha256sum_value variable
-#  debug:
-#    msg: "sha256sum_value: {{ sha256_value }}"
-
 - name: Download node_exporter binary
   get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ ver }}/{{ file }}"
-    dest: "/tmp/{{ file }}"
-#    checksum: "sha256:{{ sha256_value }}"
-#    force: true
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_ver }}/{{ node_exporter_file }}"
+    dest: "/tmp/{{ node_exporter_file }}"
 
 - name: Extract node_exporter
   unarchive:
-    src: "/tmp/{{ file }}"
+    src: "/tmp/{{ node_exporter_file }}"
     dest: "/tmp"
     remote_src: yes
     extra_opts: "--strip-components=1"
@@ -42,14 +27,14 @@
     mode: 0755
 
 - name: Copy systemd service file
-  template:
-    src: node_exporter.service.j2
+  copy:
+    src: node_exporter.service
     dest: /etc/systemd/system/node_exporter.service
 
 - name: Reload systemd daemons
   systemd:
     daemon_reload: yes
-    
+
 - name: Restart node_exporter service
   systemd:
     name: node_exporter
