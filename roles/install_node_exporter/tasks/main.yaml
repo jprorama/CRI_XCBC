@@ -1,12 +1,12 @@
 ---
 - name: Download node_exporter binary
   get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ ver }}/{{ file }}"
-    dest: "/tmp/{{ file }}"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_ver }}/{{ node_exporter_file }}"
+    dest: "/tmp/{{ node_exporter_file }}"
 
 - name: Extract node_exporter
   unarchive:
-    src: "/tmp/{{ file }}"
+    src: "/tmp/{{ node_exporter_file }}"
     dest: "/tmp"
     remote_src: yes
     extra_opts: "--strip-components=1"
