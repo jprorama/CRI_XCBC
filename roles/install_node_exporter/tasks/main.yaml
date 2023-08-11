@@ -1,23 +1,8 @@
 ---
-#- name: Download checksum file
-#  get_url:
-#    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ ver }}/{{ sha256 }}"
-#    dest: "/tmp/{{ sha256 }}"
-
-#- name: Set sha256_value variable to the downladed sha256sum value
-#  set_fact:
-#    sha256_value: "{{ lookup('file', '/tmp/sha256sums.txt') }}"
-
-#- name: Print sha256sum_value variable
-#  debug:
-#    msg: "sha256sum_value: {{ sha256_value }}"
-
 - name: Download node_exporter binary
   get_url:
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ ver }}/{{ file }}"
     dest: "/tmp/{{ file }}"
-#    checksum: "sha256:{{ sha256_value }}"
-#    force: true
 
 - name: Extract node_exporter
   unarchive:
@@ -49,7 +34,7 @@
 - name: Reload systemd daemons
   systemd:
     daemon_reload: yes
-    
+
 - name: Restart node_exporter service
   systemd:
     name: node_exporter
