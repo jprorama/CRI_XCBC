@@ -1,0 +1,3 @@
+---
+  lmod_root_default_modules: ["shared", "slurm"]
+  lmod_default_modules: ["shared", "slurm", "rc-base"]
