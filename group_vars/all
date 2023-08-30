@@ -177,7 +177,7 @@
   ansys_install_root: "{{ cluster_shared_folder }}/apps/{{ ansys_module_name }}"
   ansys_modulefiles_dir: "{{ cluster_shared_folder }}/modulefiles/{{ ansys_module_name }}"
   ansys_ood_app_dir: "{{ ood_sys_apps_dir }}/{{ ansys_module_name }}"
-  ansys_ood_repo: "http://gitlab.rc.uab.edu/rc/bc_uab_ansys.git"
+  ansys_ood_repo: "https://gitlab.rc.uab.edu/rc/bc_uab_ansys.git"
   ansys_ood_app_version: "master"
   ansys_versions:
     - "19.1"
