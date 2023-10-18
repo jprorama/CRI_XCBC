@@ -1,3 +1,6 @@
+<%-
+  partitions = OodAppkit.clusters[:{{ cluster_name }}].custom_config[:partitions]
+-%>
 ---
 title: "HPC Desktop"
 cluster: {{ cluster_name }}
@@ -23,8 +26,9 @@ attributes:
     widget: select
     label: Partition
     options:
-      - [ "defq", "defq" ]
-      - [ "low", "low" ]
+    <%- partitions.each do |p| -%>
+      - [ "<%= p %>", "<%= p %>" ]
+    <%- end -%>
 
 form:
   - desktop

@@ -22,4 +22,8 @@ v2:
         export WEBSOCKIFY_CMD="/bin/websockify"
         %s
       set_host: "host=$(hostname -s)"
-
+  custom:
+    partitions:
+{% for p in slurm_partitions %}
+      - "{{ p.name }}"
+{% endfor %}

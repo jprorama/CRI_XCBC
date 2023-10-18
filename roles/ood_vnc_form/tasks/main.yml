@@ -1,8 +1,8 @@
 ---
 - name: Put custom cluster.yml in place
   template:
-    src: cluster.yml
-    dest: /etc/ood/config/apps/bc_desktop/{{ cluster_name }}.yml
+    src: cluster.yml.erb.j2
+    dest: /etc/ood/config/apps/bc_desktop/{{ cluster_name }}.yml.erb
     backup: yes
 
 - name: Put submit.yml.erb in place
