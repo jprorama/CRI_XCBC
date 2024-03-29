@@ -112,8 +112,5 @@
     path: "/cm/local/apps/cmd/etc/cmd.conf"
     regexp: "^#? ?AdvancedConfig.*"
     replace: 'AdvancedConfig = { "AddUserScript=/root/bin/{{ post_create_script }}" }'
-
-- name: Restart cmd to pick up the change
-  systemd:
-    state: restarted
-    name: cmd
+  notify:
+    - Restart cmd
