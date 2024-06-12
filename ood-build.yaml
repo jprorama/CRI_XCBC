@@ -15,3 +15,4 @@
     - { name: 'ood_shib_config', tags: 'ood_shib_config', when: configure_shib }
     - { name: 'ood_user_reg_cloud', tags: 'ood_user_reg_cloud' }
     - { name: 'ood_add_rabbitmq_agents', tags: 'ood_add_rabbitmq_agents', when: enable_user_reg }
+    - { name: 'ood_enable_sandbox', tags: 'ood_enable_sandbox', when: enable_sandbox }

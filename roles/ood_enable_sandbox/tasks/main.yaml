@@ -1,0 +1,5 @@
+---
+- name: Enable sandboxing in OOD (for every user) by replacing nginx config file
+  copy:
+    src: nginx_stage.yml
+    dest: /etc/ood/config/nginx_stage.yml
