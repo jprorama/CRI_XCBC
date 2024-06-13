@@ -24,6 +24,14 @@
     src: mail_config.py
     dest: "{{ rabbitmq_agents_loc }}/mail_config.py"
 
+- name: Install pip
+  pip:
+    name: pip
+    extra_args: --upgrade
+    virtualenv: venv
+    virtualenv_command: /usr/bin/python3 -m venv
+    chdir: "{{ rabbitmq_agents_loc }}"
+
 - name: Setup the venv for rabbitmq agents
   pip:
     requirements: requirements.txt
