@@ -279,6 +279,10 @@
   cod_deploy: true
   post_create_script: PostAddUserScript.sh
 
+#Modulefiles path
+  module_script: "/etc/profile.d/modules.sh"
+  module_csh: "/etc/profile.d/modules.csh"
+
 # Lmod
   lmod_loc: "/opt/ohpc/admin/lmod/lmod"
   lmod_archive_loc: "{{ cluster_shared_folder }}/rc/lmod"
