@@ -141,3 +141,15 @@
   service:
     name: "{{ user_register_app }}"
     enabled: yes
+
+- name: Installing NVM (Node Version Manager) script
+  command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+
+- name: Installing Node.js and npm
+  command: nvm install node
+
+- name: npm install
+  command: npm install
+  args:
+    chdir: "{{ user_register_app_path }}/react/"
+
