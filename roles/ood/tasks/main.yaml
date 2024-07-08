@@ -22,7 +22,7 @@
     section: centos-sclo-rh
     option: baseurl
     #value: http://www.gtlib.gatech.edu/pub/centos/7/sclo/$basearch/rh/
-    value: http://mirror.centos.org/centos/7/sclo/x86_64/rh/
+    value: http://vault.centos.org/centos/7/sclo/$basearch/rh/
     backup: yes
 
 - name: Fix remove mirrorlist from SCL RH7
