@@ -21,7 +21,6 @@
     path: "/etc/yum.repos.d/{{ item.filename }}"
     section: "{{ item.section }}"
     option: baseurl
-    #value: http://www.gtlib.gatech.edu/pub/centos/7/sclo/$basearch/rh/
     value: http://vault.centos.org/centos/7/sclo/$basearch/rh/
     backup: yes
   loop:
