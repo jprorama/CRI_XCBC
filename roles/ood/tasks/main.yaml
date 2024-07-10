@@ -21,11 +21,11 @@
     path: "/etc/yum.repos.d/{{ item.filename }}"
     section: "{{ item.section }}"
     option: baseurl
-    value: http://vault.centos.org/centos/7/sclo/$basearch/rh/
+    value: "http://vault.centos.org/centos/7/sclo/$basearch/{{ item.subfolder }}/"
     backup: yes
   loop:
-    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh"}
-    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo"}
+    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh", "subfolder": "rh"}
+    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo", "subfolder": "sclo"}
 
 - name: Fix remove mirrorlist from SCL RH7
   ini_file:
