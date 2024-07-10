@@ -18,20 +18,25 @@
 
 - name: Fix failing SCL RH7 repo with static baseurl
   ini_file:
-    path: /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
-    section: centos-sclo-rh
+    path: "/etc/yum.repos.d/{{ item.filename }}"
+    section: "{{ item.section }}"
     option: baseurl
-    #value: http://www.gtlib.gatech.edu/pub/centos/7/sclo/$basearch/rh/
-    value: http://mirror.centos.org/centos/7/sclo/x86_64/rh/
+    value: http://vault.centos.org/centos/7/sclo/$basearch/rh/
     backup: yes
+  loop:
+    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh"}
+    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo"}
 
 - name: Fix remove mirrorlist from SCL RH7
   ini_file:
-    path: /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
-    section: centos-sclo-rh
+    path: "/etc/yum.repos.d/{{ item.filename }}"
+    section: "{{ item.section }}"
     state: absent
     option: mirrorlist
     backup: no
+  loop:
+    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh"}
+    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo"}
 
 - name: Add Open OnDemand’s repository hosted by the Ohio Supercomputer Center
   yum:
