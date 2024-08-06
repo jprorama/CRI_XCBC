@@ -18,11 +18,13 @@
   template:
     src: config.j2
     dest: "{{ rabbitmq_agents_loc }}/rabbit_config.py"
+    backup: yes
 
 - name: Install mail template as mail_config file
   copy:
     src: mail_config.py
     dest: "{{ rabbitmq_agents_loc }}/mail_config.py"
+    backup: yes
 
 - name: Setup the venv for rabbitmq agents
   pip:
