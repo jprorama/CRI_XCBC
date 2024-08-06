@@ -1,0 +1,12 @@
+[Unit]
+Description=SSHPiper Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart= {{ sshpiper_bin_dir }}/sshpiperd --log-level=trace {{ sshpiper_bin_dir }}/yaml --config {{ sshpiper_dest_dir }}/sshpiperd.yaml --no-check-perm
+Restart=on-failure
+User=root
+
+[Install]
+WantedBy=multi-user.target

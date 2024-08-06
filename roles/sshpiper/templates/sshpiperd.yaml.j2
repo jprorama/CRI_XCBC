@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/tg123/sshpiper/master/plugin/yaml/schema.json
+version: "1.0"
+pipes:
+{% for group in gpfs_groups %}
+- from:
+    - groupname: "{{group.name}}"
+      authorized_keys: {{ group.authorized_keys }} 
+  to:
+    host: {{ group.host }}
+    ignore_hostkey: true
+    private_key: {{ group.private_key }}
+- from:
+    - groupname: "{{group.name}}" 
+  to:
+    host: {{ group.host }}
+    ignore_hostkey: true
+{% endfor %}

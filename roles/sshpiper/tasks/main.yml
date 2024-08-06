@@ -1,0 +1,70 @@
+---
+
+- name: Download Go
+  get_url:
+    url: "{{ go_download_url }}" 
+    dest: "{{ go_download_path }}"
+
+- name: Extract Go
+  ansible.builtin.unarchive:
+    src: "{{ go_download_path }}" 
+    dest: "{{ go_binary_path }}"
+    remote_src: yes
+
+- name: Set Go path
+  ansible.builtin.lineinfile:
+    path: /etc/profile
+    line: "export PATH=$PATH:{{ go_binary_path }}/go/bin"
+    state: present
+
+- name: Clone sshpiper repository
+  ansible.builtin.git:
+    repo: "{{ sshpiper_git_repo }}"
+    version: "{{ sshpiper_version }}"
+    dest: "{{ sshpiper_dest_dir }}"
+    update: true
+    recursive: true
+
+- name: Create output directory for sshpiper
+  ansible.builtin.file:
+    path: "{{sshpiper_bin_dir}}"
+    state: directory
+
+- name: Build sshpiper
+  ansible.builtin.command: go build -tags full -o out ./...
+  args:
+    chdir: "{{sshpiper_dest_dir}}"
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{go_binary_path}}/go/bin"
+
+- name: Configure sshpiper yaml plugin
+  ansible.builtin.template:
+    src: sshpiperd.yaml.j2
+    dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
+    backup: true
+
+- name: Allow port 2222 traffic for sshpiper in Shorewall
+  ansible.builtin.blockinfile:
+    path: /etc/shorewall/rules
+    insertbefore: "^#LAST LINE"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+    backup: true
+    block: |
+      # -- Allow port 2222 traffic for sshpiper from internet to master
+      ACCEPT:info   net            fw              tcp     2222
+
+- name: Restart Shorewall service
+  ansible.builtin.systemd:
+    name: shorewall
+    state: restarted
+
+- name: Install systemd service file for sshpiper
+  ansible.builtin.template:
+    src: sshpiperd.service.j2
+    dest: /etc/systemd/system/sshpiperd.service
+    backup: true
+  
+- name: Enable sshpiperd service
+  ansible.builtin.service:
+    name: sshpiperd
+    enabled: yes
