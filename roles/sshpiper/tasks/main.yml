@@ -54,12 +54,6 @@
     dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
     backup: true
 
-- name: Update sshpiper configuration to use port 22
-  ansible.builtin.lineinfile:
-    path: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
-    regexp: '^(\s*)listen_addr:'
-    line: '\1listen_addr: 0.0.0.0:22'
-
 - name: Restart sshpiper
   ansible.builtin.systemd:
     name: sshpiperd
@@ -72,8 +66,6 @@
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     backup: true
     block: |
-      # -- Allow port 22 traffic for sshpiper from internet to master
-      ACCEPT:info   net            fw              tcp     22
       # -- Allow port 2222 traffic for SSH from internet to master
       ACCEPT:info   net            fw              tcp     2222
 
