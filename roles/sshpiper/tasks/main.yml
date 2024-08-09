@@ -54,11 +54,6 @@
     dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
     backup: true
 
-- name: Restart sshpiper
-  ansible.builtin.systemd:
-    name: sshpiperd
-    state: restarted
-
 - name: Update Shorewall rules for SSH and sshpiper
   ansible.builtin.blockinfile:
     path: /etc/shorewall/rules
@@ -70,7 +65,7 @@
       ACCEPT:info   net            fw              tcp     2222
 
 - name: Restart Shorewall
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: shorewall
     state: restarted
 
@@ -81,13 +76,18 @@
     backup: true
 
 - name: Enable and start sshpiper service
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: sshpiperd
     enabled: yes
     state: started
 
+- name: Restart sshpiper
+  ansible.builtin.service:
+    name: sshpiperd
+    state: restarted
+
 - name: Ensure SSH service is enabled and started
-  ansible.builtin.systemd:
+  ansible.builtin.service:
     name: sshd
     enabled: yes
     state: started
@@ -106,6 +106,3 @@
   register: ssh_check
   ignore_errors: yes
 
-- name: Reload systemd
-  ansible.builtin.systemd:
-    daemon_reload: yes
