@@ -81,11 +81,6 @@
     enabled: yes
     state: started
 
-- name: Restart sshpiper
-  ansible.builtin.service:
-    name: sshpiperd
-    state: restarted
-
 - name: Ensure SSH service is enabled and started
   ansible.builtin.service:
     name: sshd
