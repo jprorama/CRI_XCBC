@@ -81,9 +81,3 @@
     enabled: yes
     state: started
 
-- name: Ensure SSH service is enabled and started
-  ansible.builtin.service:
-    name: sshd
-    enabled: yes
-    state: started
-
