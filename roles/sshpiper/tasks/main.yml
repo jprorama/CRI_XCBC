@@ -1,7 +1,8 @@
 ---
+
 - name: Download Go
   get_url:
-    url: "{{ go_download_url }}" 
+    url: "{{ go_download_url }}"
     dest: "{{ go_download_path }}"
 
 - name: Extract Go
@@ -36,20 +37,33 @@
   environment:
     PATH: "{{ ansible_env.PATH }}:{{go_binary_path}}/go/bin"
 
-
 - name: Change SSH port to 2222
   ansible.builtin.lineinfile:
     path: /etc/ssh/sshd_config
     regexp: '^#?Port '
     line: 'Port 2222'
-  notify: Restart SSH
+
+- name: Restart SSH service
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+
+- name: Configure sshpiper yaml plugin
+  ansible.builtin.template:
+    src: sshpiperd.yaml.j2
+    dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
+    backup: true
 
 - name: Update sshpiper configuration to use port 22
   ansible.builtin.lineinfile:
     path: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
     regexp: '^(\s*)listen_addr:'
     line: '\1listen_addr: 0.0.0.0:22'
-  notify: Restart sshpiper
+
+- name: Restart sshpiper
+  ansible.builtin.systemd:
+    name: sshpiperd
+    state: restarted
 
 - name: Update Shorewall rules for SSH and sshpiper
   ansible.builtin.blockinfile:
@@ -62,14 +76,17 @@
       ACCEPT:info   net            fw              tcp     22
       # -- Allow port 2222 traffic for SSH from internet to master
       ACCEPT:info   net            fw              tcp     2222
-  notify: Restart Shorewall
+
+- name: Restart Shorewall
+  ansible.builtin.systemd:
+    name: shorewall
+    state: restarted
 
 - name: Install systemd service file for sshpiper
   ansible.builtin.template:
     src: sshpiperd.service.j2
     dest: /etc/systemd/system/sshpiperd.service
     backup: true
-  notify: Reload systemd
 
 - name: Enable and start sshpiper service
   ansible.builtin.systemd:
@@ -96,27 +113,6 @@
     timeout: 5
   register: ssh_check
   ignore_errors: yes
-
-- name: Display verification results
-  ansible.builtin.debug:
-    msg: 
-      - "sshpiper on port 22: {{ 'OK' if sshpiper_check.state == 'started' else 'FAILED' }}"
-      - "SSH on port 2222: {{ 'OK' if ssh_check.state == 'started' else 'FAILED' }}"
-
-- name: Restart SSH
-  ansible.builtin.systemd:
-    name: sshd
-    state: restarted
-
-- name: Restart sshpiper
-  ansible.builtin.systemd:
-    name: sshpiperd
-    state: restarted
-
-- name: Restart Shorewall
-  ansible.builtin.systemd:
-    name: shorewall
-    state: restarted
 
 - name: Reload systemd
   ansible.builtin.systemd:
