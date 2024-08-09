@@ -92,17 +92,3 @@
     enabled: yes
     state: started
 
-- name: Check if sshpiper is listening on port 22
-  ansible.builtin.wait_for:
-    port: 22
-    timeout: 5
-  register: sshpiper_check
-  ignore_errors: yes
-
-- name: Check if SSH is listening on port 2222
-  ansible.builtin.wait_for:
-    port: 2222
-    timeout: 5
-  register: ssh_check
-  ignore_errors: yes
-
