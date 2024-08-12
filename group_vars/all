@@ -258,7 +258,7 @@
   rabbitmq_port: "5672"
   rabbitmq_agents_loc: "/cm/shared/rabbitmq_agents"
   rabbitmq_agents_repo: "https://gitlab.rc.uab.edu/rc/rabbitmq_agents.git"
-  rabbitmq_agents_version: "feat-cod-rmq"
+  rabbitmq_agents_version: "main"
   rabbitmq_agents_refspec: "{{ gitlab_refspec }}"
   rabbitmq_agents_service_user: "root"
   rabbitmq_agents_db_path: ".agent_db"
