@@ -1,0 +1,22 @@
+ProxyPass /socket.io/ http://127.0.0.1:8000/socket.io/
+ProxyPassReverse /socket.io/ http://127.0.0.1:8000/socket.io/
+
+ProxyPass /account http://127.0.0.1:8000/
+ProxyPassReverse /account http://127.0.0.1:8000/
+
+ProxyPass /static http://127.0.0.1:8000/static
+ProxyPassReverse /static http://127.0.0.1:8000/static
+
+<Location /account>
+    RewriteCond %{IS_SUBREQ} ^false$
+    RewriteCond %{HTTP:Proxy-user} '{{ ood_user_regex }}'
+    RewriteRule . - [E=REMOTE_USER:%1]
+    RequestHeader set REMOTE_USER %{REMOTE_USER}e
+</Location>
+
+<Location "/static/">
+    RewriteCond %{IS_SUBREQ} ^false$
+    RewriteCond %{HTTP:Proxy-user} '{{ ood_user_regex }}'
+    RewriteRule . - [E=REMOTE_USER:%1]
+    RequestHeader set REMOTE_USER %{REMOTE_USER}e
+</Location>
