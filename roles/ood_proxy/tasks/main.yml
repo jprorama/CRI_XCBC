@@ -152,6 +152,11 @@
         - { regexp: "^#?proxy_server.*$", replace: "proxy_server: {{ ood_servername }}" }
         - { regexp: "^#?user_env.*$", replace: 'user_env: "REMOTE_USER"' }
 
+    - name: Remove account app conf with basic auth
+      ansible.builtin.file:
+        dest: /cm/images/login-image/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf
+        state: absent
+
     - name: Replace account app conf
       ansible.builtin.template:
         src: user-reg-account_conf.j2
