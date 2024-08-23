@@ -139,9 +139,9 @@
         marker: "# {mark} ANSIBLE MANAGED BLOCK auth"
         block: |
           auth:
-              - "RewriteCond %{IS_SUBREQ} ^false$"
-              - "RewriteCond %{HTTP:Proxy-user} '{{ ood_user_regex }}'"
-              - "RewriteRule . - [E=REMOTE_USER:%1]"
+              - 'RewriteCond %{IS_SUBREQ} ^false$'
+              - 'RewriteCond %{HTTP:Proxy-user} "{{ ood_user_regex }}"'
+              - 'RewriteRule . - [E=REMOTE_USER:%1]'
 
     - name: Update ood portal config
       ansible.builtin.replace:
