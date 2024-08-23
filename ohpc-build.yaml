@@ -13,4 +13,5 @@
     - { name: 'ohpc_user_reg', tags: 'ohpc_user_reg', when: enable_user_reg }
     - { name: 'ohpc_add_rabbitmq_agents', tags: 'ohpc_add_rabbitmq_agents', when: enable_user_reg }
     - { name: 'sshpiper', tags: 'sshpiper', when: enable_sshpiper }
+    - { name: 'ssh_host_keys', tags: 'ssh_host_keys', when: enable_ssh_host_keys }
 
