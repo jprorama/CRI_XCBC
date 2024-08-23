@@ -214,7 +214,7 @@
         - { 'src': 'compute', 'dest': 'compute-gpfs5' }
         - { 'src': 'login', 'dest': 'login-gpfs5' }
 
-    - name: Set gpfs4 fsmount
+    - name: Set gpfs fsmount
       ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "category; use {{ item.name }}; fsmounts; use /home; set device $localnfsserver:/{{ item.fs }}/data/user/home; commit --wait;"
       loop:
         - { 'name': 'compute', 'fs': 'gpfs4' }
