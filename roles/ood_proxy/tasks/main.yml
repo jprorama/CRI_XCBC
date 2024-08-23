@@ -106,6 +106,12 @@
         src: front-end_conf.j2
         dest: /etc/httpd/conf.d/front-end.conf
 
+    - name: Add apache rewritemap script config
+      ansible.builtin.copy:
+        src: rewritemap_config.py
+        mode: '755'
+        dest: /var/www/rewritemap_config.py
+
     - name: Add apache rewritemap script
       ansible.builtin.copy:
         src: rewrite_map.py
