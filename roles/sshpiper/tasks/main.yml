@@ -3,7 +3,6 @@
   ansible.posix.selinux:
     policy: targeted
     state: permissive
-  register: selinux_result
 
 - name: Download Go
   get_url:
