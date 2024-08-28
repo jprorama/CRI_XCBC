@@ -18,11 +18,13 @@
   template:
     src: config.j2
     dest: "{{ rabbitmq_agents_loc }}/rabbit_config.py"
+    backup: true
 
 - name: Install mail template as mail_config file
   copy:
     src: mail_config.py
     dest: "{{ rabbitmq_agents_loc }}/mail_config.py"
+    backup: true
 
 - name: Setup the venv for rabbitmq agents
   pip:
@@ -64,7 +66,7 @@
   service:
     name: "{{ item | basename | splitext | first }}_agent.service"
     state: started
-    enabled: yes
+    enabled: true
   loop: "{{ lookup('fileglob', '{{ rabbitmq_agents_loc }}/dev_rmq_agents/*.py', wantlist=True) }}"
   when: not cod_deploy
 
@@ -72,7 +74,7 @@
   service:
     name: "{{ item | basename | splitext | first }}_agent.service"
     state: started
-    enabled: yes
+    enabled: true
   loop: "{{ lookup('fileglob', '{{ rabbitmq_agents_loc }}/prod_rmq_agents/*.py', wantlist=True) }}"
   when: cod_deploy | bool
 

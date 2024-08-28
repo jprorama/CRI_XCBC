@@ -6,7 +6,7 @@
 
 - name: Download Go
   get_url:
-    url: "{{ go_download_url }}" 
+    url: "{{ go_download_url }}"
     dest: "{{ go_download_path }}"
 
 - name: Extract Go
@@ -41,24 +41,35 @@
   environment:
     PATH: "{{ ansible_env.PATH }}:{{go_binary_path}}/go/bin"
 
+- name: Change SSH port to 2222
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: '^#?Port '
+    line: 'Port 2222'
+
+- name: Restart SSH service
+  ansible.builtin.systemd:
+    name: sshd
+    state: restarted
+
 - name: Configure sshpiper yaml plugin
   ansible.builtin.template:
     src: sshpiperd.yaml.j2
     dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
     backup: true
 
-- name: Allow port 2222 traffic for sshpiper in Shorewall
+- name: Update Shorewall rules for SSH and sshpiper
   ansible.builtin.blockinfile:
     path: /etc/shorewall/rules
     insertbefore: "^#LAST LINE"
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
     backup: true
     block: |
-      # -- Allow port 2222 traffic for sshpiper from internet to master
+      # -- Allow port 2222 traffic for SSH from internet to master
       ACCEPT:info   net            fw              tcp     2222
 
-- name: Restart Shorewall service
-  ansible.builtin.systemd:
+- name: Restart Shorewall
+  ansible.builtin.service:
     name: shorewall
     state: restarted
 
@@ -67,8 +78,10 @@
     src: sshpiperd.service.j2
     dest: /etc/systemd/system/sshpiperd.service
     backup: true
-  
-- name: Enable sshpiperd service
+
+- name: Enable and start sshpiper service
   ansible.builtin.service:
     name: sshpiperd
     enabled: yes
+    state: started
+
