@@ -1,4 +1,8 @@
 ---
+- name: Set SELinux to permissive mode
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
 
 - name: Download Go
   get_url:
