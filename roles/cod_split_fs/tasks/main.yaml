@@ -1,0 +1,134 @@
+---
+- name: Config ood to run behind proxy
+  block:
+    - name: Remove ssl block from ood portal config
+      ansible.builtin.blockinfile:
+        path: /cm/images/login-image/etc/ood/config/ood_portal.yml
+        backup: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK ssl"
+        block: ""
+
+    - name: Update auth block in ood portal config
+      ansible.builtin.blockinfile:
+        path: /cm/images/login-image/etc/ood/config/ood_portal.yml
+        backup: yes
+        marker: "# {mark} ANSIBLE MANAGED BLOCK auth"
+        block: |
+          auth:
+              - 'RewriteCond %{IS_SUBREQ} ^false$'
+              - 'RewriteCond %{HTTP:Proxy-user} "{{ ood_user_regex }}"'
+              - 'RewriteRule . - [E=REMOTE_USER:%1]'
+
+    - name: Update ood portal config
+      ansible.builtin.replace:
+        path: /cm/images/login-image/etc/ood/config/ood_portal.yml
+        regexp: "{{ item.regexp }}"
+        replace: "{{ item.replace }}"
+      with_items:
+        - { regexp: "^#?proxy_server.*$", replace: "proxy_server: {{ ood_servername }}" }
+        - { regexp: "^#?user_env.*$", replace: 'user_env: "REMOTE_USER"' }
+
+    - name: Remove account app conf with basic auth
+      ansible.builtin.file:
+        dest: /cm/images/login-image/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg.conf
+        state: absent
+
+    - name: Replace account app conf
+      ansible.builtin.template:
+        src: user-reg-account_conf.j2
+        dest: /cm/images/login-image/opt/rh/httpd24/root/etc/httpd/conf.d/user-reg-account.conf
+
+    - name: Create ood app folders
+      ansible.builtin.file:
+        path: "/cm/images/login-image/etc/ood/config/apps/{{ item }}"
+        state: directory
+      loop:
+        - dashboard
+        - shell
+
+    - name: Place env file for shell app
+      ansible.builtin.lineinfile:
+        path: /cm/images/login-image/etc/ood/config/apps/shell/env
+        create: true
+        state: present
+        line: "OOD_SHELL_ORIGIN_CHECK='https://{{ ood_servername }}'"
+
+- name: Setup fake gpfs filesystems
+  block:
+    - name: Create gpfs folders
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - /gpfs4/data/user/home
+        - /gpfs4/scratch
+        - /gpfs5/data/user/home
+        - /gpfs5/scratch
+
+    - name: Add fsexport
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "device; use cluster-on-demand; fsexports; add {{ item }}; set network internalnet; set write yes; commit;"
+      loop:
+        - /gpfs4
+        - /gpfs5
+
+    - name: Clone softwareimage
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "softwareimage; clone {{ item.src }}-image {{ item.dest }}-image; commit --wait;"
+      loop:
+        - { 'src': 'compute', 'dest': 'compute-gpfs5' }
+        - { 'src': 'login', 'dest': 'login-gpfs5' }
+
+    - name: Clone compute category
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "category; clone {{ item.src }} {{ item.dest }}; set softwareimage {{ item.dest }}-image; commit --wait;"
+      loop:
+        - { 'src': 'compute', 'dest': 'compute-gpfs5' }
+        - { 'src': 'login', 'dest': 'login-gpfs5' }
+
+    - name: Set gpfs fsmount
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "category; use {{ item.name }}; fsmounts; use /home; set device $localnfsserver:/{{ item.fs }}/data/user/home; commit --wait;"
+      loop:
+        - { 'name': 'compute', 'fs': 'gpfs4' }
+        - { 'name': 'login', 'fs': 'gpfs4' }
+        - { 'name': 'compute-gpfs5', 'fs': 'gpfs5' }
+        - { 'name': 'login-gpfs5', 'fs': 'gpfs5' }
+
+    - name: Config servername
+      ansible.builtin.replace:
+        path: "/cm/images/{{ item.image }}/etc/ood/config/ood_portal.yml"
+        regexp: "^#?(servername:).*$"
+        replace: "{{ item.replace }}"
+      with_items:
+        - { image: "login-image", replace: '\1 login001.cm.cluster' }
+        - { image: "login-gpfs5-image", replace: '\1 login002.cm.cluster' }
+
+    - name: Config cod ssh host
+      ansible.builtin.replace:
+        path: "/cm/images/{{ item.image }}/etc/ood/config/clusters.d/CoD.yml"
+        regexp: '(^\s+host:).*$'
+        replace: "{{ item.replace }}"
+        backup: true
+      with_items:
+        - { image: "login-image", replace: '\1 "login001.cm.cluster"' }
+        - { image: "login-gpfs5-image", replace: '\1 "login002.cm.cluster"' }
+
+    - name: Rebuild ood portal apache config
+      ansible.builtin.command: chroot "/cm/images/{{ item }}" sh -c '/opt/ood/ood-portal-generator/sbin/update_ood_portal'
+      loop:
+        - login-image
+        - login-gpfs5-image
+
+    - name: Set category and reboot the node
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "device; use {{ item.node }}; set category {{ item.category }}; commit --wait; reboot;"
+      loop:
+        - { 'node': 'c0001', 'category': 'compute' }
+        - { 'node': 'c0002', 'category': 'compute' }
+        - { 'node': 'c0003', 'category': 'compute-gpfs5' }
+        - { 'node': 'c0004', 'category': 'compute-gpfs5' }
+        - { 'node': 'login001', 'category': 'login' }
+        - { 'node': 'login002', 'category': 'login-gpfs5' }
+
+- name: Setup ssh groups
+  block:
+    - name: Create groups
+      ansible.builtin.import_role:
+        name: ohpc_add_groups
