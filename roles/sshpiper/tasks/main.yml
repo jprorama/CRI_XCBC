@@ -58,21 +58,6 @@
     dest: "{{ sshpiper_dest_dir }}/sshpiperd.yaml"
     backup: true
 
-- name: Update Shorewall rules for SSH and sshpiper
-  ansible.builtin.blockinfile:
-    path: /etc/shorewall/rules
-    insertbefore: "^#LAST LINE"
-    marker: "# {mark} ANSIBLE MANAGED BLOCK"
-    backup: true
-    block: |
-      # -- Allow port 2222 traffic for SSH from internet to master
-      ACCEPT:info   net            fw              tcp     2222
-
-- name: Restart Shorewall
-  ansible.builtin.service:
-    name: shorewall
-    state: restarted
-
 - name: Install systemd service file for sshpiper
   ansible.builtin.template:
     src: sshpiperd.service.j2
