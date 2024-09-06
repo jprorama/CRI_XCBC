@@ -1,11 +1,17 @@
 ---
+- name: Ensure destination directory exists
+  file:
+    path: /tmp/ssh_keys
+    state: directory
+    mode: '0755'
+
 - name: Download SSH host keys tar.gz from S3
   aws_s3:
     mode: get
     s3_url: "{{ s3_endpoint }}"
     bucket: "{{ ssh_host_keys_s3_bucket }}"
     object: "{{ ssh_host_keys_s3_object }}"
-    dest: "/tmp/"
+    dest: "/tmp/ssh_keys/{{ ssh_host_keys_s3_object }}"
     aws_access_key: "{{ lts_access_key }}"
     aws_secret_key: "{{ lts_secret_key }}"
   vars:
@@ -13,7 +19,7 @@
 
 - name: Unpack SSH host keys to /etc/ssh
   unarchive:
-    src: "/tmp/{{ ssh_host_keys_s3_object }}"
+    src: "/tmp/ssh_keys/{{ ssh_host_keys_s3_object }}"
     dest: "/etc/ssh"
     remote_src: yes
 
@@ -21,3 +27,4 @@
   ansible.builtin.service:
     name: sshd
     state: restarted
+
