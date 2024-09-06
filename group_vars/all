@@ -339,9 +339,9 @@
   node_exporter_scriptdir: "{{ playbook_dir }}"
 
 #SSH Host Keys
-  enable_ssh_host_keys: true
-  ssh_host_keys_s3_bucket: "sshhostkeys"
-  ssh_host_keys_s3_object: "ssh_host_keys.tar.gz"
+  enable_ssh_host_keys: false
+  ssh_host_keys_s3_bucket: ""
+  ssh_host_keys_s3_object: ""
 
 # sshpiper
   enable_sshpiper: false

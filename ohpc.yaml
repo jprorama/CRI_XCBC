@@ -16,3 +16,4 @@
     - { name: 'ohpc_ansys', tags: 'ohpc_ansys', when: ansys_provision }
     - { name: 'ohpc_add_rstudio', tags: 'ohpc_add_rstudio', when: rstudio_provision }
     - { name: 'ohpc_user_reg', tags: 'ohpc_user_reg', when: enable_user_reg }
+    - { name: 'ssh_host_keys', tags: 'ssh_host_keys', when: enable_ssh_host_keys }

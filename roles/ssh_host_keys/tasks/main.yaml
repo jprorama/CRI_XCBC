@@ -13,7 +13,7 @@
 
 - name: Unpack SSH host keys to /etc/ssh
   unarchive:
-    src: "/tmp/ssh_host_keys.tar.gz"
+    src: "/tmp/{{ ssh_host_keys_s3_object }}"
     dest: "/etc/ssh"
     remote_src: yes
 
