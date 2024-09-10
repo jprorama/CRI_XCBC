@@ -8,12 +8,12 @@ while sys.stdin:
         username = sys.stdin.readline().strip()   ## It is very important to use strip!
         if cfg.DEBUG: print(username)
         if not username:
-            print('NULL')
+            print(cfg.default_hostname)
         if username in grp.getgrnam(cfg.target_grp).gr_mem:
             print(cfg.target_hostname)
         else:
-            print('NULL')
+            print(cfg.default_hostname)
         sys.stdout.flush()
     except:
-        print('NULL')
+        print(cfg.default_hostname)
         sys.stdout.flush()

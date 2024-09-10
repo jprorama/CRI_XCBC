@@ -51,14 +51,14 @@
     RewriteCond %{HTTP:Upgrade} !websocket [NC]
     RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
     #RewriteCond "%{REMOTE_USER}" ^(.+)$
-    RewriteCond "${grp:%1|login001.cm.cluster}" ^(.+)$
+    RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "http://%1%{REQUEST_URI}" [P]
 
     RewriteCond %{HTTP:Upgrade} websocket [NC]
     RewriteCond %{HTTP:Connection} upgrade [NC]
     RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
     #RewriteCond "%{LA-U:REMOTE_USER}" ^(.+)$
-    RewriteCond "${grp:%1|login001.cm.cluster}" ^(.+)$
+    RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "ws://%1%{REQUEST_URI}" [P,L]
 
   </Location>
