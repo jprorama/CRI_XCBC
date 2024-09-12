@@ -132,3 +132,11 @@
     - name: Create groups
       ansible.builtin.import_role:
         name: ohpc_add_groups
+
+    - name: Create gpfs groups
+      ansible.builtin.import_role:
+        name: ohpc_add_groups
+      vars:
+        ssh_groups:
+          - {"name": "gpfs4"}
+          - {"name": "gpfs5"}
