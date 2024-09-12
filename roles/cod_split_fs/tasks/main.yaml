@@ -65,6 +65,20 @@
         - /gpfs4/scratch
         - /gpfs5/data/user/home
         - /gpfs5/scratch
+        - /data
+        - /scratch
+
+    - name: Mount dirs required for ansible scripts to function
+      mount:
+        src: "{{ item.src }}"
+        path: "{{ item.dest }}"
+        opts: bind
+        fstype: none
+        state: mounted
+      loop:
+        - {"src": "/gpfs4/data/user/home", "dest": "/home"}
+        - {"src": "/gpfs4/data", "dest": "/data"}
+        - {"src": "/gpfs4/scratch", "dest": "/scratch"}
 
     - name: Add fsexport
       ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "device; use cluster-on-demand; fsexports; add {{ item }}; set network internalnet; set write yes; commit;"
