@@ -1,0 +1,131 @@
+---
+- name: Install necessary packages
+  block:
+    - name: Add shibboleth openSUSE build service repository
+      ansible.builtin.yum_repository:
+        name: shibboleth
+        description: Shibboleth (CentOS_7)
+        mirrorlist: https://shibboleth.net/cgi-bin/mirrorlist.cgi/CentOS_7
+        gpgkey: https://shibboleth.net/downloads/service-provider/RPMS/repomd.xml.key
+        gpgcheck: no
+        enabled: yes
+
+    - name: install necessary packages
+      ansible.builtin.yum:
+        state: latest
+        name: "{{ item }}"
+      loop:
+        - httpd
+        - mod_ssl
+        - python3
+        - python3-pip
+        - shibboleth
+
+    - name: Install require package
+      ansible.builtin.pip:
+        name: boto3
+        extra_args: "--extra-index-url https://pypi.python.org/simple"
+        executable: "/usr/bin/pip3"
+
+- name: Install and config shibboleth
+  block:
+    - name: Download shibboleth tar from S3
+      aws_s3:
+        mode: get
+        s3_url: "{{ s3_endpoint }}"
+        bucket: "{{ s3_shibboleth_bucket_name }}"
+        object: "{{ s3_shibboleth_object_name }}"
+        dest: "/tmp/{{ s3_shibboleth_object_name }}"
+        aws_access_key: "{{ lts_access_key }}"
+        aws_secret_key: "{{ lts_secret_key }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Extract shib_conf.tar.gz into /etc/
+      ansible.builtin.unarchive:
+        src: "/tmp/{{ s3_shibboleth_object_name }}"
+        dest: /
+        remote_src: true
+
+    - name: Recursively change ownership of a /etc/shibboleth to root
+      ansible.builtin.file:
+        path: /etc/shibboleth
+        state: directory
+        recurse: true
+        owner: root
+        group: root
+
+    - name: Change file ownership, group and permissions
+      ansible.builtin.file:
+        path: "/etc/shibboleth/{{ item }}"
+        owner: shibd
+        group: shibd
+      loop:
+        - sp-encrypt-key.pem
+        - sp-signing-key.pem
+        - sp-encrypt-cert.pem
+        - sp-signing-cert.pem
+
+    - name: Restart services
+      ansible.builtin.service:
+        name: shibd
+        enabled: true
+        state: restarted
+
+- name: Install and config httpd
+  block:
+    - name: Download SSL Certs from S3
+      aws_s3:
+        mode: get
+        s3_url: "{{ s3_endpoint }}"
+        bucket: "ood-ssl-certs"
+        object: "{{ item }}"
+        dest: "/etc/pki/tls/certs/{{ item }}"
+        aws_access_key: "{{ lts_access_key }}"
+        aws_secret_key: "{{ lts_secret_key }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+      loop:
+        - "{{ ood_servername }}-2048-incommon-cert.crt"
+        - "{{ ood_servername }}-2048-incommon-interm.crt"
+
+    - name: Download SSL key from S3
+      aws_s3:
+        mode: get
+        s3_url: "{{ s3_endpoint }}"
+        bucket: "ood-ssl-certs"
+        object: "{{ ood_servername }}-2048.key"
+        dest: "/etc/pki/tls/private/{{ ood_servername }}-2048.key"
+        aws_access_key: "{{ lts_access_key }}"
+        aws_secret_key: "{{ lts_secret_key }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Add apache conf for proxy
+      ansible.builtin.template:
+        src: front-end_conf.j2
+        dest: /etc/httpd/conf.d/front-end.conf
+
+    - name: Add apache rewritemap script config
+      ansible.builtin.copy:
+        src: rewritemap_config.py
+        mode: '755'
+        dest: /var/www/rewritemap_config.py
+
+    - name: Add apache rewritemap script
+      ansible.builtin.copy:
+        src: rewrite_map.py
+        mode: '755'
+        dest: /var/www/rewrite_map.py
+
+    - name: Disable server details in server banner
+      ansible.builtin.lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        state: present
+        line: "ServerTokens Prod"
+
+    - name: Restart services
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+

@@ -1,0 +1,65 @@
+<VirtualHost *:80>
+  ServerName {{ ood_servername }}
+  RewriteEngine On
+  RewriteRule ^(.*) https://{{ ood_servername }}:443$1 [R=301,NE,L]
+</VirtualHost>
+<VirtualHost *:443>
+  ServerName {{ ood_servername }}
+
+  DirectoryIndex disabled
+
+  RewriteEngine On
+  RewriteCond %{HTTP_HOST} !^({{ ood_servername }}(:443)?)?$ [NC]
+  RewriteRule ^(.*) https://{{ ood_servername }}:443$1 [R=301,NE,L]
+
+  RewriteEngine On
+  RewriteMap grp "prg:/var/www/rewrite_map.py"
+
+  Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+
+  SSLEngine On
+  SSLCertificateFile "/etc/pki/tls/certs/{{ ood_servername }}-2048-incommon-cert.crt"
+  SSLCertificateChainFile "/etc/pki/tls/certs/{{ ood_servername }}-2048-incommon-interm.crt"
+  SSLCertificateKeyFile "/etc/pki/tls/private/{{ ood_servername }}-2048.key"
+  SSLProtocol -all +TLSv1.2
+  SSLHonorCipherOrder On
+  SSLCipherSuite  DHE-RSA-AES256-GCM-SHA384:DHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-RSA-AES128-GCM-SHA256
+  ServerSignature Off
+  TraceEnable Off
+
+  LogLevel alert proxy:info
+  LogLevel alert rewrite:info
+
+  ProxyPassReverse / "http://login001.cm.cluster/"
+  ProxyPassReverse / "http://login002.cm.cluster/"
+
+  <Location "/">
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
+    ShibUseHeaders On
+    RewriteCond %{IS_SUBREQ} ^false$
+    RewriteCond %{HTTP:REMOTE_USER} '{{ ood_user_regex }}'
+    RewriteRule . - [E=PROXY_USER:%1]
+
+    RequestHeader set Proxy-User %{PROXY_USER}e
+
+    RequestHeader set X-Forwarded-Scheme https
+
+    ProxyPreserveHost On
+    RewriteCond %{HTTP:Connection} !upgrade [NC]
+    RewriteCond %{HTTP:Upgrade} !websocket [NC]
+    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
+    #RewriteCond "%{REMOTE_USER}" ^(.+)$
+    RewriteCond "${grp:%1}" ^(.+)$
+    RewriteRule .* "http://%1%{REQUEST_URI}" [P]
+
+    RewriteCond %{HTTP:Upgrade} websocket [NC]
+    RewriteCond %{HTTP:Connection} upgrade [NC]
+    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
+    #RewriteCond "%{LA-U:REMOTE_USER}" ^(.+)$
+    RewriteCond "${grp:%1}" ^(.+)$
+    RewriteRule .* "ws://%1%{REQUEST_URI}" [P,L]
+
+  </Location>
+</VirtualHost>
