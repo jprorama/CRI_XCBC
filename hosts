@@ -18,3 +18,7 @@ sshgroup=compute
 
 [chroot]
 /cm/images/login-image	ansible_connection=chroot
+
+[proxy]
+ssh-proxy
+ood-proxy
