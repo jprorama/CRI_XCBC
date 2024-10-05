@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: true
   roles:
     - { name: 'sshpiper', tags: 'sshpiper' }
     - { name: 'ood_proxy', tags: 'ood_proxy' }
