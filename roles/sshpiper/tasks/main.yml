@@ -4,6 +4,14 @@
     policy: targeted
     state: permissive
 
+- name: Install prerequisite pkgs
+  ansible.builtin.yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - git
+    - gcc
+
 - name: Download Go
   get_url:
     url: "{{ go_download_url }}"
@@ -40,6 +48,7 @@
     chdir: "{{sshpiper_dest_dir}}"
   environment:
     PATH: "{{ ansible_env.PATH }}:{{go_binary_path}}/go/bin"
+    CGO_ENABLED: 1
 
 - name: Change SSH port to 2222
   ansible.builtin.lineinfile:
