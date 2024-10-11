@@ -2,4 +2,5 @@
 - hosts: all
   become: true
   roles:
-    - { name: 'sshpiper', tags: 'sshpiper' }
+    - { name: 'sshpiper', tags: 'sshpiper', when: enable_sshpiper }
+    - { name: 'ood_proxy', tags: 'ood_proxy', when: enable_ood_proxy }
