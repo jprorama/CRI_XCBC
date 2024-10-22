@@ -339,6 +339,11 @@
   node_exporter_sha256: "sha256sums.txt"
   node_exporter_scriptdir: "{{ playbook_dir }}"
 
+#SSH Host Keys
+  enable_ssh_host_keys: false
+  ssh_host_keys_s3_bucket: ""
+  ssh_host_keys_s3_object: ""
+
 # sshpiper
   enable_sshpiper: false
   go_download_url: "https://go.dev/dl/go1.22.4.linux-amd64.tar.gz"
