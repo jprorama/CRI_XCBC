@@ -1,0 +1,35 @@
+---
+- name: Enable setting to prevent cmd from overwriting slurm config
+  ansible.builtin.lineinfile:
+    path: "/cm/local/apps/cmd/etc/cmd.conf"
+    regexp: '^FreezeChangesToSlurmConfig'
+    line: 'FreezeChangesToSlurmConfig = true'
+    state: present
+    backup: yes
+
+- name: Create a comma-separated string from frozen_file_list
+  ansible.builtin.set_fact:
+    frozen_files_joined: "{{ frozen_file_list | map('regex_replace', '(.*)', '\"\\1\"' ) | join(', ') }}"
+
+- name: Add FrozenFile entries to cmd.conf
+  ansible.builtin.lineinfile:
+    path: "/cm/local/apps/cmd/etc/cmd.conf" 
+    regexp: '^FrozenFile'
+    line: 'FrozenFile = { {{ frozen_files_joined }} }'
+    state: present
+    insertafter: '^# FrozenFile'
+    backup: yes
+  when: "'FreezeChangesToSlurmConfig = true' in lookup('file', '/cm/local/apps/cmd/etc/cmd.conf')"
+
+- name: Template slurm.conf
+  ansible.builtin.template:
+    src: slurm.conf.j2
+    dest: "{{ slurm_conf_path }}"
+
+- name: Reconfigure Slurm
+  ansible.builtin.command: scontrol reconfigure
+
+- name: Restart cmd
+  ansible.builtin.service:
+    name: cmd
+    state: restarted

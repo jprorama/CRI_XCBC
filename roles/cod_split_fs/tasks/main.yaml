@@ -81,7 +81,7 @@
         - {"src": "/gpfs4/scratch", "dest": "/scratch"}
 
     - name: Add fsexport
-      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "device; use cluster-on-demand; fsexports; add {{ item }}; set network internalnet; set write yes; commit;"
+      ansible.builtin.command: /cm/local/apps/cmd/bin/cmsh -c "device; use cluster-on-demand; fsexports; add {{ item }}; set network internalnet; set write yes; set rootsquash yes; commit;"
       loop:
         - /gpfs4
         - /gpfs5

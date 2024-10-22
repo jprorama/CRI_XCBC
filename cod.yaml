@@ -3,5 +3,8 @@
   roles:
     - { name: 'enable_lmod', tags: 'enable_lmod' }
     - { name: 'enable_lmod', tags: 'enable_lmod_image', vars: [{ enable_lmod_prefix: "{{ cm_def_img_path }}" }] }
+    - { name: 'cod_rabbitmq_agents_cloud', tags: 'cod_rabbitmq_agents_cloud' }
     - { name: 'cod_login_node', tags: 'cod_login_node' }
     - { name: 'cod_compute_node', tags: 'cod_compute_node' }
+    - { name: 'cod_slurm', tags: 'cod_slurm'}
+    - { name: 'job_submit_plugin', tags: 'job_submit_plugin', when: enable_job_submit_plugin}
