@@ -1,0 +1,18 @@
+---
+- name: Add JobSubmitPlugins=lua if not present in Slurm.conf
+  ansible.builtin.lineinfile:
+    path: "{{ slurm_conf_path }}"
+    regexp: '^JobSubmitPlugins=lua'
+    line: 'JobSubmitPlugins=lua'
+    state: present
+    create: no
+    backup: yes
+
+- name: Download job_submit.lua from GitHub Slurm repository
+  ansible.builtin.get_url:
+    url: "{{ job_submit_lua_url }}"
+    dest: "{{ job_submit_lua_dest }}"
+    mode: '0644'
+
+- name: reconfigure compute nodes with new config
+  ansible.builtin.command: scontrol reconfigure
