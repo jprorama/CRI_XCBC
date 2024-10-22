@@ -4,10 +4,13 @@
     policy: targeted
     state: permissive
 
-- name: Install gcc to build sshpiper against it
+- name: Install prerequisite pkgs
   ansible.builtin.yum:
-    name: gcc
+    name: "{{ item }}"
     state: present
+  loop:
+    - git
+    - gcc
 
 - name: Download Go
   get_url:
