@@ -352,6 +352,9 @@
     - {"name": "gpfs4", "authorized_keys":"/gpfs4/data/user/home/$DOWNSTREAM_USER/.ssh/authorized_keys", "host": "login001", "private_key":"/gpfs4/data/user/home/$DOWNSTREAM_USER/.ssh/id_ecdsa"}
     - {"name": "gpfs5", "authorized_keys":"/gpfs5/data/user/home/$DOWNSTREAM_USER/.ssh/authorized_keys", "host": "login002", "private_key":"/gpfs5/data/user/home/$DOWNSTREAM_USER/.ssh/id_ecdsa"}
 
+# ood_proxy
+  enable_ood_proxy: false
+
 # cod_slurm
   frozen_file_list:
     - /cm/shared/apps/slurm/var/etc/slurm/cgroup.conf
