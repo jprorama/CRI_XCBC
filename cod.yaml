@@ -7,3 +7,4 @@
     - { name: 'cod_login_node', tags: 'cod_login_node' }
     - { name: 'cod_compute_node', tags: 'cod_compute_node' }
     - { name: 'cod_slurm', tags: 'cod_slurm'}
+    - { name: 'job_submit_plugin', tags: 'job_submit_plugin', when: enable_job_submit_plugin}

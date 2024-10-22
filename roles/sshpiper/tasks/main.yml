@@ -4,6 +4,11 @@
     policy: targeted
     state: permissive
 
+- name: Install gcc to build sshpiper against it
+  ansible.builtin.yum:
+    name: gcc
+    state: present
+
 - name: Download Go
   get_url:
     url: "{{ go_download_url }}"
@@ -40,6 +45,7 @@
     chdir: "{{sshpiper_dest_dir}}"
   environment:
     PATH: "{{ ansible_env.PATH }}:{{go_binary_path}}/go/bin"
+    CGO_ENABLED: 1
 
 - name: Change SSH port to 2222
   ansible.builtin.lineinfile:

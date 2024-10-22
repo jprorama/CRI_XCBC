@@ -358,3 +358,7 @@
     - /cm/shared/apps/slurm/var/etc/slurm/slurm.conf 
     - /cm/shared/apps/slurm/var/etc/slurm/gres.conf
 
+# job_submit_plugin
+  enable_job_submit_plugin: true
+  job_submit_lua_url: "https://gitlab.rc.uab.edu/rc/slurm-factory/-/raw/main/etc/slurm/job_submit.lua"
+  job_submit_lua_dest: "/etc/slurm/job_submit.lua"
