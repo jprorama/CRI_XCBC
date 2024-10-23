@@ -26,30 +26,10 @@
         - { path: 'cm-lmod-init.sh', regexp: 'LMOD=.*$', replace: 'LMOD=1'}
         - { path: 'cm-lmod-init.csh', regexp: 'LMOD.*$', replace: 'LMOD "1"'}
 
-    - name: Update Lmod Spider Cache setting
-      ansible.builtin.replace:
-        path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
-        regexp: '(\["{{ item.key }}"\] = ).*$'
-        replace: \1 "{{ item.value }}",
-      loop:
-        - {"key": "dir", "value": "{{ lmod_cache_loc }}/sysCacheDir"}
-        - {"key": "timestamp", "value": "{{ lmod_cache_loc }}/sysCacheTS.txt"}
   when: '"cm" in ansible_facts.packages.Lmod[0].release'
 
 - name: Tasks only needed in non-cm version
   block:
-    - name: Add Lmod Spider Cache setting
-      ansible.builtin.blockinfile:
-        marker: "-- {mark} ANSIBLE MANAGED BLOCK"
-        path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
-        block: |
-          scDescriptT = {
-            {
-              ["dir"] = "{{ lmod_cache_loc }}/sysCacheDir",
-              ["timestamp"] = "{{ lmod_cache_loc }}/sysCacheTS.txt",
-            },
-          }
-
     - name: Add shared module
       ansible.builtin.copy:
         src: shared
@@ -69,3 +49,35 @@
   template:
     src: DefaultModules.lua.j2
     dest: "{{ enable_lmod_prefix }}{{ lmod_default_modulepath }}/DefaultModules.lua"
+
+- name: Check Lmod Spider Cache setting
+  ansible.builtin.lineinfile:
+    path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
+    regex: 'scDescriptT ='
+    state: absent
+  check_mode: yes
+  register: result
+
+- name: Update Lmod Spider Cache setting if already present
+  ansible.builtin.replace:
+    path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
+    regexp: '(\["{{ item.key }}"\] = ).*$'
+    replace: \1 "{{ item.value }}",
+  loop:
+    - {"key": "dir", "value": "{{ lmod_cache_loc }}/sysCacheDir"}
+    - {"key": "timestamp", "value": "{{ lmod_cache_loc }}/sysCacheTS.txt"}
+  when: result.changed
+
+- name: Add Lmod Spider Cache setting if not present
+  ansible.builtin.blockinfile:
+    marker: "-- {mark} ANSIBLE MANAGED BLOCK"
+    path: "{{ enable_lmod_prefix }}{{ lmod_loc }}/init/lmodrc.lua"
+    block: |
+      scDescriptT = {
+        {
+          ["dir"] = "{{ lmod_cache_loc }}/sysCacheDir",
+          ["timestamp"] = "{{ lmod_cache_loc }}/sysCacheTS.txt",
+        },
+      }
+  when: not result.changed
+
