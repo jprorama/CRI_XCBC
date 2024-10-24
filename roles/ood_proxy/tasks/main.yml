@@ -124,6 +124,11 @@
         state: present
         line: "ServerTokens Prod"
 
+    - name: Set SELinux to permissive mode
+      ansible.posix.selinux:
+        policy: targeted
+        state: permissive
+
     - name: Restart services
       ansible.builtin.service:
         name: httpd
