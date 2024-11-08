@@ -3,6 +3,7 @@
   ansible.posix.selinux:
     policy: targeted
     state: permissive
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Install prerequisite pkgs
   ansible.builtin.yum:
@@ -11,6 +12,18 @@
   loop:
     - git
     - gcc
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Install prerequisite packages for Ubuntu
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  loop:
+    - git
+    - gcc
+    - make
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Download Go
   get_url:
@@ -60,6 +73,13 @@
   ansible.builtin.systemd:
     name: sshd
     state: restarted
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Restart SSH service for Ubuntu
+  ansible.builtin.systemd:
+    name: ssh
+    state: restarted
+  when: ansible_facts['os_family'] == 'Debian'
 
 - name: Configure sshpiper yaml plugin
   ansible.builtin.template:
