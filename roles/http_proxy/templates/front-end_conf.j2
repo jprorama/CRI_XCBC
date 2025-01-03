@@ -49,14 +49,14 @@
     ProxyPreserveHost On
     RewriteCond %{HTTP:Connection} !upgrade [NC]
     RewriteCond %{HTTP:Upgrade} !websocket [NC]
-    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
+    RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
     #RewriteCond "%{REMOTE_USER}" ^(.+)$
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "http://%1%{REQUEST_URI}" [P]
 
     RewriteCond %{HTTP:Upgrade} websocket [NC]
     RewriteCond %{HTTP:Connection} upgrade [NC]
-    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
+    RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
     #RewriteCond "%{LA-U:REMOTE_USER}" ^(.+)$
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "ws://%1%{REQUEST_URI}" [P,L]
@@ -79,8 +79,7 @@
       Require valid-user
       ShibUseHeaders On
       RewriteCond %{IS_SUBREQ} ^false$
-      RewriteCond %{HTTP:REMOTE_USER} ([a-zA-Z0-9_.+-]+)@uab.edu$ [OR]
-      RewriteCond %{HTTP:REMOTE_USER} urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$
+      RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
       RewriteRule . - [E=REMOTE_USER:%1]
       RequestHeader set REMOTE_USER %{REMOTE_USER}e
   </Location>
