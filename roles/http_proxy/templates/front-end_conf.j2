@@ -72,20 +72,20 @@
   ProxyPassReverse /static http://account-app:8000/static
 
   <Location /account>
-      AuthType shibboleth
-      ShibRequestSetting requireSession 1
-      Require valid-user
-      ShibUseHeaders On
-      RewriteCond %{IS_SUBREQ} ^false$
-      RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
-      RewriteRule . - [E=REMOTE_USER:%1]
-      RequestHeader set REMOTE_USER %{REMOTE_USER}e
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
+    ShibUseHeaders On
+    RewriteCond %{IS_SUBREQ} ^false$
+    RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
+    RewriteRule . - [E=REMOTE_USER:%1]
+    RequestHeader set REMOTE_USER %{REMOTE_USER}e
   </Location>
 
   <Location "/static/">
-      AuthType shibboleth
-      ShibRequestSetting requireSession 1
-      Require valid-user
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
   </Location>
 
 </VirtualHost>
