@@ -50,14 +50,12 @@
     RewriteCond %{HTTP:Connection} !upgrade [NC]
     RewriteCond %{HTTP:Upgrade} !websocket [NC]
     RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
-    #RewriteCond "%{REMOTE_USER}" ^(.+)$
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "http://%1%{REQUEST_URI}" [P]
 
     RewriteCond %{HTTP:Upgrade} websocket [NC]
     RewriteCond %{HTTP:Connection} upgrade [NC]
     RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
-    #RewriteCond "%{LA-U:REMOTE_USER}" ^(.+)$
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "ws://%1%{REQUEST_URI}" [P,L]
   </Location>
