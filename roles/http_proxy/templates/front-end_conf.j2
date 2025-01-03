@@ -36,7 +36,7 @@
     Require valid-user
     ShibUseHeaders On
     RewriteCond %{IS_SUBREQ} ^false$
-    RewriteCond %{HTTP:REMOTE_USER} '{{ ood_user_regex }}'
+    RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
     RewriteRule . - [E=PROXY_USER:%1]
 
     RequestHeader set Proxy-User %{PROXY_USER}e
@@ -79,8 +79,8 @@
       Require valid-user
       ShibUseHeaders On
       RewriteCond %{IS_SUBREQ} ^false$
-      RewriteCond %{HTTP:REMOTE_USER} '([a-zA-Z0-9_.+-]+)@uab.edu$' [OR]
-      RewriteCond %{HTTP:REMOTE_USER} 'urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$'
+      RewriteCond %{HTTP:REMOTE_USER} ([a-zA-Z0-9_.+-]+)@uab.edu$ [OR]
+      RewriteCond %{HTTP:REMOTE_USER} urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$
       RewriteRule . - [E=REMOTE_USER:%1]
       RequestHeader set REMOTE_USER %{REMOTE_USER}e
   </Location>
