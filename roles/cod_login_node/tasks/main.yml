@@ -60,10 +60,6 @@
     - home
     - CRI_XCBC
 
-- name: Run the Ansible roles related to login image
-  command: ansible-playbook -c chroot -i '{{ bright_cod_login_chroot_loc }}/CRI_XCBC/hosts' /CRI_XCBC/ood-cod.yaml -b
-  changed_when: True
-
 - name: Unmount mounted dirs
   mount:
     path: "{{ bright_cod_login_chroot_loc }}/{{ item }}"
