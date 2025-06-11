@@ -292,6 +292,7 @@
   cod_deploy: true
   post_create_script: PostAddUserScript.sh
   cm_def_img_path: "/cm/images/default-image"
+  centos_base_url: "http://vault.centos.org"
 
 # Lmod
   lmod_loc: "/usr/share/lmod/lmod"

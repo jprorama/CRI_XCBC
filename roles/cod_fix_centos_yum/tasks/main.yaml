@@ -22,6 +22,6 @@
   ansible.builtin.replace:
     path: "{{ item }}"
     regexp: '^#baseurl=http://mirror.centos.org'
-    replace: 'baseurl=http://vault.centos.org'
+    replace: "baseurl={{centos_base_url}}"
     backup: yes
   with_items: "{{ repo_files }}"
