@@ -13,15 +13,15 @@
 - name: Remove mirrorlist from CentOS repo files
   ansible.builtin.replace:
     path: "{{ item }}"
-    regexp: '^mirrorlist'
-    replace: '#mirrorlist'
+    regexp: "^mirrorlist"
+    replace: "#mirrorlist"
     backup: yes
   with_items: "{{ repo_files }}"
 
 - name: Use vault baseurl to CentOS repo files
   ansible.builtin.replace:
     path: "{{ item }}"
-    regexp: '^#baseurl=http://mirror.centos.org'
-    replace: 'baseurl=http://vault.centos.org'
+    regexp: "^#baseurl=http://mirror.centos.org"
+    replace: "baseurl=http://archive.kernel.org"
     backup: yes
   with_items: "{{ repo_files }}"
