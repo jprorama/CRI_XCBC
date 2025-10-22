@@ -65,14 +65,14 @@
 
   RedirectMatch ^/$ "/pun/sys/dashboard"
 
-  ProxyPass /socket.io/ http://account-app:8000/socket.io/
-  ProxyPassReverse /socket.io/ http://account-app:8000/socket.io/
+  ProxyPass /socket.io/ http://account-app:8001/socket.io/
+  ProxyPassReverse /socket.io/ http://account-app:8001/socket.io/
 
-  ProxyPass /account http://account-app:8000/
-  ProxyPassReverse /account http://account-app:8000/
+  ProxyPass /account http://account-app:8001/
+  ProxyPassReverse /account http://account-app:8001/
 
-  ProxyPass /static http://account-app:8000/static
-  ProxyPassReverse /static http://account-app:8000/static
+  ProxyPass /static http://account-app:8001/static
+  ProxyPassReverse /static http://account-app:8001/static
 
   <Location /account>
       AuthType shibboleth
