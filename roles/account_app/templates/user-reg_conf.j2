@@ -1,0 +1,24 @@
+ProxyPass /socket.io/ http://127.0.0.1:{{ account_app_port }}/socket.io/
+ProxyPassReverse /socket.io/ http://127.0.0.1:{{ account_app_port }}/socket.io/
+
+ProxyPass /{{ account_app }} http://127.0.0.1:{{ account_app_port }}/
+ProxyPassReverse /{{ account_app }} http://127.0.0.1:{{ account_app_port }}/
+
+ProxyPass /static http://127.0.0.1:{{ account_app_port }}/static
+ProxyPassReverse /static http://127.0.0.1:{{ account_app_port }}/static
+
+<Location /{{ account_app }}>
+        AuthType Basic
+        AuthName "Private"
+        AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"
+        RequestHeader unset Authorization
+        Require valid-user
+</Location>
+
+<Location "/static/">
+        AuthType Basic
+        AuthName "Private"
+        AuthUserFile "/opt/rh/httpd24/root/etc/httpd/.htpasswd"
+        RequestHeader unset Authorization
+        Require valid-user
+</Location>

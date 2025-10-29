@@ -1,0 +1,16 @@
+[Unit]
+Description=uWSGI server for flask user registration
+After=network.target
+
+[Service]
+Type=simple
+User={{ RegUser_app_user }}
+Group={{ RegUser_app_user }}
+Restart=always
+RestartSec=5
+WorkingDirectory={{ account_app_path }}
+Environment="PATH={{ account_app_path }}/venv/bin"
+ExecStart={{ account_app_path }}/venv/bin/gunicorn -k gevent -c {{ account_app }}.ini wsgi:application
+
+[Install]
+WantedBy=multi-user.target

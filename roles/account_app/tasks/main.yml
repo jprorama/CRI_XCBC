@@ -1,0 +1,177 @@
+---
+- name: Show the hostname before enabling epel repo
+  debug:
+    msg: "Running on hostname: {{ ansible_hostname }}"
+
+- name: Print the OS distribution
+  debug:
+    msg: "The OS distribution is {{ ansible_distribution }}"
+
+- name: Print hostname and OS details
+  debug:
+    msg:
+      - "Running on hostname: {{ ansible_hostname }}"
+      - "OS Distribution: {{ ansible_distribution }}"
+      - "OS Family: {{ ansible_os_family }}"
+      - "OS Version: {{ ansible_distribution_version }}"
+      - "OS Major Version: {{ ansible_distribution_major_version }}"
+      
+- name: Enable epel repo if not done already
+  yum:
+    name: "epel-release"
+    state: present
+
+- name: Enable the Software Collections repository
+  yum:
+    name: "centos-release-scl"
+    state: present
+  when: ansible_distribution == "CentOS"
+
+- name: Enable the Software Collections repository on RHEL 7
+  rhsm_repository:
+    name: rhel-server-rhscl-7-rpms
+    state: enabled
+  when: ansible_distribution == "RedHat" and ansible_distribution_major_version == '7'
+
+- name: Fix failing SCL RH7 repo with static baseurl
+  ini_file:
+    path: "/etc/yum.repos.d/{{ item.filename }}"
+    section: "{{ item.section }}"
+    option: baseurl
+    value: "{{ centos_base_url }}/centos/7/sclo/$basearch/{{ item.subfolder }}/"
+    backup: yes
+  loop:
+    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh", "subfolder": "rh"}
+    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo", "subfolder": "sclo"}
+
+- name: Fix remove mirrorlist from SCL RH7
+  ini_file:
+    path: "/etc/yum.repos.d/{{ item.filename }}"
+    section: "{{ item.section }}"
+    state: absent
+    option: mirrorlist
+    backup: no
+  loop:
+    - {"filename": "CentOS-SCLo-scl-rh.repo", "section": "centos-sclo-rh"}
+    - {"filename": "CentOS-SCLo-scl.repo", "section": "centos-sclo-sclo"}
+
+- name: Install packages via yum
+  yum:
+    name:
+      - python3-pip
+      - python3-devel
+    state: latest
+
+- name: Create RegUser on OOD
+  user:
+    name: "{{ RegUser_app_user }}"
+    comment: "{{ RegUser_app_user_full_name }}"
+    shell: /bin/bash
+    createhome: no
+    state: present
+    system: yes
+
+- name: Remove existing user register app install
+  file:
+    path: "{{ account_app_path }}"
+    state: absent
+
+- name: Ensure account_app_path exists with root ownership
+  file:
+    path: "{{ account_app_path }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Clone user register app from gitlab
+  git:
+    repo: "{{ account_app_repo }}"
+    dest: "{{ account_app_path }}"
+    refspec: "{{ account_app_refspec }}"
+    version: "{{ account_app_tag }}"
+  become: yes
+
+- name: Change ownership of directory
+  file:
+    path: "{{ account_app_path }}"
+    owner: root
+    group: root
+    state: directory
+    recurse: yes
+
+- name: Create __pycache__ directories with proper ownership
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
+  loop:
+    - "{{ account_app_path }}/__pycache__"
+    - "{{ account_app_path }}/app/__pycache__"
+
+- name: Copy Self-Reg app variables file
+  template:
+    src: app_vars.j2
+    dest: "{{ account_app_path }}/app_vars.py"
+
+- name: Install requirements in virtualenv
+  pip:
+    requirements: requirements.txt
+    virtualenv: venv
+    virtualenv_command: /usr/bin/python3 -m venv
+    chdir: "{{ account_app_path }}"
+    
+- name: Install gunicorn in virtualenv
+  pip:
+    name: gunicorn
+    virtualenv: "{{ account_app_path }}/venv"
+    virtualenv_command: /usr/bin/python3 -m venv
+    chdir: "{{ account_app_path }}"
+  become: yes
+
+- name: Create log directory
+  file:
+    path: "/var/log/{{ account_app }}"
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
+    state: directory
+
+- name: Set up log rotate for module usage
+  template:
+    src: logrotate.j2
+    dest: "/etc/logrotate.d/{{ account_app }}"
+
+- name: Copy Celery service template
+  template:
+    src: celery.service.j2
+    dest: "/etc/systemd/system/celery-{{ account_app }}.service"
+
+- name: Enable celery.service
+  systemd:
+    name: celery-{{ account_app }}.service
+    enabled: yes
+  become: yes
+
+- name: Create log directory
+  file:
+    path: "/var/log/{{ account_app }}"
+    owner: "{{ RegUser_app_user }}"
+    group: "{{ RegUser_app_user }}"
+    state: directory
+
+- name: Put gunicorn config file in place
+  template:
+    src: ini.j2
+    dest: "{{ account_app_path }}/{{ account_app }}.ini"
+
+- name: Create gunicorn system service
+  template:
+    src: service.j2
+    dest: "/etc/systemd/system/{{ account_app }}.service"
+
+- name: Start and enable flask app gunicorn service
+  service:
+    name: "{{ account_app }}"
+    enabled: yes
+  become: yes
