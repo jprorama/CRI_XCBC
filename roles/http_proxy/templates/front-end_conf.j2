@@ -36,7 +36,7 @@
     Require valid-user
     ShibUseHeaders On
     RewriteCond %{IS_SUBREQ} ^false$
-    RewriteCond %{HTTP:REMOTE_USER} '{{ ood_user_regex }}'
+    RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
     RewriteRule . - [E=PROXY_USER:%1]
 
     RequestHeader set Proxy-User %{PROXY_USER}e
@@ -50,15 +50,13 @@
     ProxyPreserveHost On
     RewriteCond %{HTTP:Connection} !upgrade [NC]
     RewriteCond %{HTTP:Upgrade} !websocket [NC]
-    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
-    #RewriteCond "%{REMOTE_USER}" ^(.+)$
+    RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "http://%1%{REQUEST_URI}" [P]
 
     RewriteCond %{HTTP:Upgrade} websocket [NC]
     RewriteCond %{HTTP:Connection} upgrade [NC]
-    RewriteCond "%{ENV:PROXY_USER}" ^(.+)$
-    #RewriteCond "%{LA-U:REMOTE_USER}" ^(.+)$
+    RewriteCond "%{ENV:PROXY_USER}" {{ ood_user_regex }}
     RewriteCond "${grp:%1}" ^(.+)$
     RewriteRule .* "ws://%1%{REQUEST_URI}" [P,L]
   </LocationMatch>
@@ -75,21 +73,20 @@
   ProxyPassReverse /static http://account-app:8000/static
 
   <Location /account>
-      AuthType shibboleth
-      ShibRequestSetting requireSession 1
-      Require valid-user
-      ShibUseHeaders On
-      RewriteCond %{IS_SUBREQ} ^false$
-      RewriteCond %{HTTP:REMOTE_USER} '([a-zA-Z0-9_.+-]+)@uab.edu$' [OR]
-      RewriteCond %{HTTP:REMOTE_USER} 'urn:mace:incommon:uab.edu!https://uabgrid.uab.edu/shibboleth!(.+)$'
-      RewriteRule . - [E=REMOTE_USER:%1]
-      RequestHeader set REMOTE_USER %{REMOTE_USER}e
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
+    ShibUseHeaders On
+    RewriteCond %{IS_SUBREQ} ^false$
+    RewriteCond %{HTTP:REMOTE_USER} {{ ood_user_regex }}
+    RewriteRule . - [E=REMOTE_USER:%1]
+    RequestHeader set REMOTE_USER %{REMOTE_USER}e
   </Location>
 
   <Location "/static/">
-      AuthType shibboleth
-      ShibRequestSetting requireSession 1
-      Require valid-user
+    AuthType shibboleth
+    ShibRequestSetting requireSession 1
+    Require valid-user
   </Location>
 
   <Location /public>
