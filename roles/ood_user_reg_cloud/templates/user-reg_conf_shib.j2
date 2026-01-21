@@ -1,11 +1,11 @@
-ProxyPass /socket.io/ http://127.0.0.1:{{ account_app_port }}/socket.io/
-ProxyPassReverse /socket.io/ http://127.0.0.1:{{ account_app_port }}/socket.io/
+ProxyPass        /socket.io/ http://{{ user_register_app_host }}:{{ user_register_app_port }}/socket.io/
+ProxyPassReverse /socket.io/ http://{{ user_register_app_host }}:{{ user_register_app_port }}/socket.io/
 
-ProxyPass /{{ account_app }} http://127.0.0.1:{{ account_app_port }}/
-ProxyPassReverse /{{ account_app }} http://127.0.0.1:{{ account_app_port }}/
+ProxyPass        /{{ user_register_app }} http://{{ user_register_app_host }}:{{ user_register_app_port }}/
+ProxyPassReverse /{{ user_register_app }} http://{{ user_register_app_host }}:{{ user_register_app_port }}/
 
-ProxyPass /static http://127.0.0.1:{{ account_app_port }}/static
-ProxyPassReverse /static http://127.0.0.1:{{ account_app_port }}/static
+ProxyPass        /static http://{{ user_register_app_host }}:{{ user_register_app_port }}/static
+ProxyPassReverse /static http://{{ user_register_app_host }}:{{ user_register_app_port }}/static
 
 <Location /{{ account_app }}>
     AuthType shibboleth
@@ -13,7 +13,7 @@ ProxyPassReverse /static http://127.0.0.1:{{ account_app_port }}/static
     Require valid-user
     ShibUseHeaders On
     RewriteCond %{IS_SUBREQ} ^false$
-    RewriteCond %{HTTP:REMOTE_USER} '{{ ood_user_regex }}'
+    RewriteCond %{HTTP:Proxy-user} '{{ ood_user_regex }}'
     RewriteRule . - [E=REMOTE_USER:%1]
     RequestHeader set REMOTE_USER %{REMOTE_USER}e
 </Location>
