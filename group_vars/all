@@ -249,6 +249,10 @@
   valid_eppa:  ["faculty", "staff", "student", "affiliate"]
   activate_namespace: true
 
+# PCP
+  enable_pcp: true
+  PCP_LOG_DIR: "/home/pcp/supremm"
+
 # RabbitMQ
   rabbitmq_provision: true
   rabbitmq_user: "reggie"

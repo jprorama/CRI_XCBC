@@ -1,0 +1,88 @@
+---
+
+- name: Install PCP related packages
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - pcp-4.3.2
+    - pcp-manager-4.3.2
+    - pcp-conf-4.3.2
+    - pcp-libs-4.3.2
+    - python-pcp-4.3.2
+    - perl-PCP-PMDA-4.3.2
+    - pcp-system-tools-4.3.2
+    - pcp-pmda-slurm-4.3.2
+    - pcp-pmda-gpfs-4.3.2
+    - pcp-pmda-lustre-4.3.2
+    - pcp-pmda-infiniband-4.3.2
+    - pcp-pmda-mic-4.3.2
+    - pcp-pmda-nvidia-gpu-4.3.2
+    - pcp-pmda-nfsclient-4.3.2
+    - pcp-pmda-perfevent-4.3.2
+    - pcp-pmda-json-4.3.2
+
+- name: pmlogger control file template
+  template:
+    src: control.j2
+    dest: /etc/pcp/pmlogger/control
+    owner: root
+    group: root
+    mode: 0644
+
+- name: remove existing files under /etc/pcp/pmlogger/control.d/
+  file:
+    path: /etc/pcp/pmlogger/control.d/local
+    state: absent
+
+- name: pmlogger supremm config file template
+  template:
+    src: pmlogger-supremm.config.j2
+    dest: /etc/pcp/pmlogger/pmlogger-supremm.config
+    owner: root
+    group: root
+    mode: 0644
+
+- name: process logging config file template
+  template:
+    src: hotproc.conf.j2
+    dest: /var/lib/pcp/pmdas/proc/hotproc.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable logging modules PMDAs
+  file:
+    path: '/var/lib/pcp/pmdas/{{ item }}'
+    state: touch
+    owner: root
+    group: root
+  loop:
+    - slurm/.NeedInstall
+    - nvidia/.NeedInstall
+    - gpfs/.NeedInstall
+    - nfsclient/.NeedInstall
+    - perfevent/.NeedInstall
+    - mic/.NeedInstall
+
+- name: Configure Global process capture
+  template:
+    src: pmcd.conf.j2
+    dest: /etc/pcp/pmcd/pmcd.conf
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Disable daily archive rollup
+  template:
+    src: pcp-pmlogger.j2
+    dest: /etc/cron.d/pcp-pmlogger
+    owner: root
+    group: root
+    mode: 0644
+
+- name: enable pmcd and pmlogger
+  command: systemctl enable pmcd pmlogger
+
+- name: start pmcd and pmlogger
+  command: systemctl start pmcd pmlogger
