@@ -11,6 +11,7 @@
 - name: Create Cluster keys for RegUser on OHPC
   script: /usr/bin/cluster-env
   become_user: "{{ RegUser_app_user }}"
+  remote_user: true
 
 - name: WareWulf Sync for RegUser on OHPC
   command: wwsh file resync passwd group shadow
